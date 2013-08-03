@@ -1,0 +1,14 @@
+
+	Main Activity	: Initialize ApplicationManager (Register Required Elements)
+		  |
+		  |
+		  |
+		  V
+	DodgeGameActivity ---- creates ---> DodgeGameView
+		  |
+		  |
+		  |
+		  V
+	RankingActivity	: Report Result And Receive User Name
+					  Get Country Code
+					  Using NetworkManager, Register [ Name / Score / CountryCode ] to Server through JSON Object
