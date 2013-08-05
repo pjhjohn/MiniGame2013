@@ -1,7 +1,7 @@
 package game.dodge.activity;
 
 import game.framework.ApplicationManager;
-import game.dodge.main.R;
+import game.main.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,7 +15,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 public class DodgeGameActivity extends Activity implements OnSeekBarChangeListener{
-	private DodgeGameView 	m_view;
+	private DodgeGameView 	dodgeView;
 	private static TextView DIALOG_TEXT;
 	private static SeekBar 	SEEKBAR;
 	private static int 		INIT_PROGRESS;
@@ -28,12 +28,12 @@ public class DodgeGameActivity extends Activity implements OnSeekBarChangeListen
 		ApplicationManager.setContext(this);
 		ApplicationManager.setAlertDialog(getControllerSensitivityAlertDialog());
 		// Set ControllerMode
-		m_view = new DodgeGameView(this);
-		setContentView(m_view);
+		dodgeView = new DodgeGameView(this);
+		setContentView(dodgeView);
 	}
 	protected void onDestroy(){
 		super.onDestroy();
-		m_view.onDestroy();		// unregister sensors
+		dodgeView.onDestroy();		// unregister sensors
 	}
 	
 	//	Implement OnSeekBarChangeListener

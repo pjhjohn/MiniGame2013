@@ -10,7 +10,7 @@ import game.framework.state.IState;
 import game.framework.unit.AUnit;
 import game.framework.unit.CUnitFactory;
 import game.framework.unit.IFactory;
-import game.dodge.main.R;
+import game.main.R;
 
 import java.util.ArrayList;
 import java.util.Random;

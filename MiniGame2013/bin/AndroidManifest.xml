@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="game.dodge.main"
+    package="game.main"
     android:versionCode="1"
     android:versionName="1.0" >
     <uses-sdk
@@ -12,13 +12,18 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="game.dodge.main.MainActivity"
+            android:name="game.main.AppMainActivity"
             android:label="@string/app_name" 
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="game.dodge.DodgeActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape">
         </activity>
         <activity
             android:name="game.dodge.activity.DodgeGameActivity"
@@ -29,6 +34,16 @@
             android:name="game.dodge.rank.RankingActivity"
             android:label="@string/app_name" 
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="game.bubble.BubbleActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name="game.snow.SnowActivity"
+            android:label="@string/app_name" 
+            android:screenOrientation="landscape">
         </activity>
     </application>
 </manifest>

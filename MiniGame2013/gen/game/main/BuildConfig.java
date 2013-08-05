@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package game.dodge.main;
+package game.main;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

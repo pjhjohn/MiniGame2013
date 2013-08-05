@@ -1,12 +1,10 @@
-package game.dodge.main;
+package game.main;
 
-import game.dodge.activity.DodgeGameActivity;
-import game.dodge.rank.RankingActivity;
+import game.bubble.BubbleActivity;
+import game.dodge.DodgeActivity;
 import game.framework.ApplicationManager;
 import game.framework.ApplicationOption;
-import game.framework.controller.CControllerJoystic;
-import game.framework.controller.CControllerTilt;
-import game.framework.controller.CControllerTouch;
+import game.snow.SnowActivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -27,8 +25,8 @@ import android.widget.Button;
  * ApplicationManager.setResources|setSensorManager|setContext
  * 2. MainActivity Also determines controlling mode for DodgeGame.
  */
-public class MainActivity extends Activity {
-	MainView mainView;
+public class AppMainActivity extends Activity {
+	AppMainView mainView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,17 +38,17 @@ public class MainActivity extends Activity {
 		ApplicationManager.setSensorManager((SensorManager)this.getSystemService(SENSOR_SERVICE));
 		ApplicationManager.setContext(this);
 
-		mainView = new MainView(this);
+		mainView = new AppMainView(this);
 		setContentView(mainView);
 		// Set View & Click-event Listeners to Buttons
-		((Button)mainView.findViewById(MainView.ID_BTN1)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(MainView.ID_BTN2)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(MainView.ID_BTN3)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(MainView.ID_BTN4)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(MainView.ID_BTN1)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(MainView.ID_BTN2)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(MainView.ID_BTN3)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(MainView.ID_BTN4)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
+		((Button)mainView.findViewById(AppMainView.ID_BTN1)).setOnClickListener(buttonClickListerForIntent);
+		((Button)mainView.findViewById(AppMainView.ID_BTN2)).setOnClickListener(buttonClickListerForIntent);
+		((Button)mainView.findViewById(AppMainView.ID_BTN3)).setOnClickListener(buttonClickListerForIntent);
+//		((Button)mainView.findViewById(AppMainView.ID_BTN4)).setOnClickListener(buttonClickListerForIntent);
+		((Button)mainView.findViewById(AppMainView.ID_BTN1)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
+		((Button)mainView.findViewById(AppMainView.ID_BTN2)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
+		((Button)mainView.findViewById(AppMainView.ID_BTN3)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
+//		((Button)mainView.findViewById(AppMainView.ID_BTN4)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
 	}
 	
 	@SuppressLint("NewApi")
@@ -70,19 +68,19 @@ public class MainActivity extends Activity {
 	private Button.OnClickListener buttonClickListerForIntent = new View.OnClickListener() {
 		public void onClick(View v){
 			switch(v.getId()){
-				case MainView.ID_BTN1 :	ApplicationManager.setController(CControllerTouch.getInstance());	break;
-				case MainView.ID_BTN2 :	ApplicationManager.setController(CControllerJoystic.getInstance());	break;
-				case MainView.ID_BTN3 :	ApplicationManager.setController(CControllerTilt.getInstance());	break;
-				case MainView.ID_BTN4 : startActivity(new Intent(MainActivity.this, RankingActivity.class));
+				case AppMainView.ID_BTN1 : startActivity(new Intent(AppMainActivity.this, SnowActivity.class));		break;
+				case AppMainView.ID_BTN2 : startActivity(new Intent(AppMainActivity.this, DodgeActivity.class));	break;
+				case AppMainView.ID_BTN3 : startActivity(new Intent(AppMainActivity.this, BubbleActivity.class));	break;
+				//case AppMainView.ID_BTN4 : startActivity(new Intent(AppMainActivity.this, RankingActivity.class));
 				default : return;
-			}	startActivity(new Intent(MainActivity.this, DodgeGameActivity.class));
+			}
 		}
 	};
 	private Button.OnTouchListener buttonTouchListenerForChangeTextColor = new View.OnTouchListener() {
 		public boolean onTouch(View v, MotionEvent e) {
 			switch(e.getAction()){
 				case MotionEvent.ACTION_DOWN : ((Button)v).setTextColor(Color.rgb(0xff, 0xad, 0x33));	break;
-				case MotionEvent.ACTION_UP : ((Button)v).setTextColor(Color.WHITE);						break;
+				case MotionEvent.ACTION_UP   : ((Button)v).setTextColor(Color.WHITE);					break;
 			}	return false;
 		}
 	};

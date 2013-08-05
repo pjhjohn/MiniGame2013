@@ -5,7 +5,7 @@ import game.framework.ApplicationOption;
 import game.framework.SettingButton;
 import game.framework.SoundManager;
 import game.framework.unit.CUnitFactory;
-import game.dodge.main.R;
+import game.main.R;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

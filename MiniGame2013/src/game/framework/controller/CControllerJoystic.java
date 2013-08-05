@@ -3,7 +3,7 @@ package game.framework.controller;
 import game.framework.ApplicationManager;
 import game.framework.ApplicationOption;
 import game.framework.ImageObject;
-import game.dodge.main.R;
+import game.main.R;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
