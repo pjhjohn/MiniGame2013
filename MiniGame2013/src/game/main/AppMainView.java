@@ -1,4 +1,4 @@
-package game.dodge.main;
+package game.main;
 
 import game.framework.customview.CustomView;
 import game.framework.customview.CustomViewBackground;
@@ -10,7 +10,7 @@ import android.graphics.Typeface;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-public class MainView extends RelativeLayout{
+public class AppMainView extends RelativeLayout{
 	public static final int ID_BACKGROUND 	= 0x01;
 	public static final int ID_BTN1 		= 0x10;
 	public static final int ID_BTN2 		= 0x11;
@@ -25,7 +25,7 @@ public class MainView extends RelativeLayout{
 	private CustomView[] surfaceViews;
 	private CustomViewSurfaceContainer surfContainer;
 	
-	public MainView(Context context) {
+	public AppMainView(Context context) {
 		super(context);
 		surfaceViews = new CustomView[2];
 		surfaceViews[0] = new CustomViewStarText(context);			surfaceViews[0].setId(ID_STARTEXT);
@@ -33,10 +33,10 @@ public class MainView extends RelativeLayout{
 		surfContainer = new CustomViewSurfaceContainer(getContext(), surfaceViews);
 		this.addView(surfContainer);
 		
-		btnTouch = makeButton("Touch"  , ID_BTN1, 0, 0);
-		btnCtrl = makeButton("Joystic", ID_BTN2, RelativeLayout.BELOW, btnTouch.getId());
-		btnTilt = makeButton("Tilt"   , ID_BTN3, RelativeLayout.BELOW, btnCtrl.getId());
-		btnRank = makeButton("Ranking", ID_BTN4, RelativeLayout.BELOW, btnTilt.getId());
+		btnTouch = makeButton("SnowCraft"  , ID_BTN1, 0, 0);
+		btnCtrl = makeButton("MissleDodge", ID_BTN2, RelativeLayout.BELOW, btnTouch.getId());
+		btnTilt = makeButton("BubbleBubble"   , ID_BTN3, RelativeLayout.BELOW, btnCtrl.getId());
+		btnRank = makeButton("Application Setting", ID_BTN4, RelativeLayout.BELOW, btnTilt.getId());
 		this.addView(btnTouch);
 		this.addView(btnCtrl);
 		this.addView(btnTilt);

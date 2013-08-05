@@ -1,6 +1,6 @@
 package game.framework;
 
-import game.dodge.main.R;
+import game.main.R;
 
 public class SettingButton extends ImageObject {
 	private static SettingButton singleton = new SettingButton();

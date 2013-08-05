@@ -1,6 +1,6 @@
 package game.dodge.rank;
 
-import game.dodge.main.R;
+import game.main.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
