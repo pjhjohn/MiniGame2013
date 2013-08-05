@@ -1,7 +1,6 @@
 package game.framework.controller;
 
 import game.framework.ApplicationOption;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
