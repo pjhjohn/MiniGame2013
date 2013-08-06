@@ -1,4 +1,4 @@
-package game.bubble;
+package game.snowcraft;
 
 import org.pjhjohn.framework.customview.CustomView;
 import org.pjhjohn.framework.customview.CustomViewBackground;
@@ -11,7 +11,7 @@ import android.graphics.Typeface;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
-public class BubbleView extends RelativeLayout{
+public class SnowCraftView extends RelativeLayout{
 	public static final int ID_BACKGROUND 	= 0x01;
 	public static final int ID_BTN1 		= 0x10;
 	public static final int ID_BTN2 		= 0x11;
@@ -26,7 +26,7 @@ public class BubbleView extends RelativeLayout{
 	private CustomView[] surfaceViews;
 	private CustomViewSurfaceContainer surfContainer;
 	
-	public BubbleView(Context context) {
+	public SnowCraftView(Context context) {
 		super(context);
 		surfaceViews = new CustomView[2];
 		surfaceViews[0] = new CustomViewStarText(context);			surfaceViews[0].setId(ID_STARTEXT);
