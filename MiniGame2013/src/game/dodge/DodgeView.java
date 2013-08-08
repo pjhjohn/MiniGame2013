@@ -1,9 +1,10 @@
 package game.dodge;
 
-import game.framework.customview.CustomView;
-import game.framework.customview.CustomViewBackground;
-import game.framework.customview.CustomViewStarText;
-import game.framework.customview.CustomViewSurfaceContainer;
+import org.pjhjohn.framework.customview.CustomView;
+import org.pjhjohn.framework.customview.CustomViewBackground;
+import org.pjhjohn.framework.customview.CustomViewStarText;
+import org.pjhjohn.framework.customview.CustomViewSurfaceContainer;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;

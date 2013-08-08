@@ -1,11 +1,12 @@
 package game.bubble;
 
-import game.dodge.activity.DodgeGameActivity;
-import game.dodge.rank.RankingActivity;
-import game.framework.ApplicationManager;
-import game.framework.controller.CControllerJoystic;
-import game.framework.controller.CControllerTilt;
-import game.framework.controller.CControllerTouch;
+import org.pjhjohn.framework.ApplicationManager;
+import org.pjhjohn.framework.controller.CControllerJoystic;
+import org.pjhjohn.framework.controller.CControllerTilt;
+import org.pjhjohn.framework.controller.CControllerTouch;
+import org.pjhjohn.framework.rank.RankingActivity;
+
+import game.dodge.DodgeGameActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
