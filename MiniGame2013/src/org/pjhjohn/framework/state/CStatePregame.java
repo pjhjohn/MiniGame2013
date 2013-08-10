@@ -1,11 +1,11 @@
 package org.pjhjohn.framework.state;
 
 import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.ApplicationOption;
-import org.pjhjohn.framework.SettingButton;
+import org.pjhjohn.framework.Option;
 import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.CUnitFactory;
+import org.pjhjohn.framework.widget.SettingButton;
 
+import game.dodge.unit.CUnitFactory;
 import game.main.R;
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -51,7 +51,7 @@ public class CStatePregame extends AState {
 					AlertDialog dialog = ApplicationManager.getAlertDialog();
 					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();  
 					lp.copyFrom(dialog.getWindow().getAttributes());  
-					lp.width = (int) (ApplicationOption.getDeviceWidth()/(float)1.5);  
+					lp.width = (int) (Option.getDeviceWidth()/(float)1.5);  
 					lp.height = WindowManager.LayoutParams.WRAP_CONTENT;  
 					dialog.show();
 					Window window = dialog.getWindow();  

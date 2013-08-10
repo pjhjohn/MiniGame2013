@@ -29,7 +29,7 @@ public class BubbleView extends RelativeLayout{
 	public BubbleView(Context context) {
 		super(context);
 		surfaceViews = new CustomView[2];
-		surfaceViews[0] = new CustomViewStarText(context);			surfaceViews[0].setId(ID_STARTEXT);
+		surfaceViews[0] = new CustomViewStarText(context, "PuzzleBubble");			surfaceViews[0].setId(ID_STARTEXT);
 		surfaceViews[1] = new CustomViewBackground(getContext());	surfaceViews[1].setId(ID_BACKGROUND);
 		surfContainer = new CustomViewSurfaceContainer(getContext(), surfaceViews);
 		this.addView(surfContainer);

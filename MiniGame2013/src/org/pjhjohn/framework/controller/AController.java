@@ -1,7 +1,8 @@
 package org.pjhjohn.framework.controller;
 
+import game.dodge.unit.CUnitFactory;
+
 import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.CUnitFactory;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;

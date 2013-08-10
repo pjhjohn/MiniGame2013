@@ -1,7 +1,7 @@
 package org.pjhjohn.framework.controller;
 
 import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.ApplicationOption;
+import org.pjhjohn.framework.Option;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -20,7 +20,7 @@ public class CControllerTilt extends AController implements SensorEventListener{
 	private static IController singleton = new CControllerTilt();
 	private CControllerTilt() {
 		super();		
-		super.sensitivity = ApplicationOption.SENSITIVITY_TILT_DEFAULT;
+		super.sensitivity = (Option.Dodge.Sensitivity.TILT_MIN + Option.Dodge.Sensitivity.TILT_MAX)/2;
 		sensorManager = ApplicationManager.getSensorManager();
 		Log.i("sensor","sensormanager received");
 	}
@@ -75,11 +75,11 @@ public class CControllerTilt extends AController implements SensorEventListener{
 	}
 	@Override
 	public void setSensitivity(int _current, int _max) {
-		super.sensitivity = ApplicationOption.SENSITIVITY_TILT_MIN + (ApplicationOption.SENSITIVITY_TILT_MAX - ApplicationOption.SENSITIVITY_TILT_MIN) * (float)_current / (float)_max;
+		super.sensitivity = Option.Dodge.Sensitivity.TILT_MIN + (Option.Dodge.Sensitivity.TILT_MAX - Option.Dodge.Sensitivity.TILT_MIN) * (float)_current / (float)_max;
 	}
 	@Override
 	public float getProgressRatio() {
-		return (super.sensitivity - ApplicationOption.SENSITIVITY_TILT_MIN) / (ApplicationOption.SENSITIVITY_TILT_MAX - ApplicationOption.SENSITIVITY_TILT_MIN);
+		return (super.sensitivity - Option.Dodge.Sensitivity.TILT_MIN) / (Option.Dodge.Sensitivity.TILT_MAX - Option.Dodge.Sensitivity.TILT_MIN);
 	}
 	@Override
 	public float getSensitivity() {
@@ -87,6 +87,6 @@ public class CControllerTilt extends AController implements SensorEventListener{
 	}
 	@Override
 	public void setDefaultSensitivity() {
-		super.sensitivity = ApplicationOption.SENSITIVITY_TILT_DEFAULT;
+		super.sensitivity = (Option.Dodge.Sensitivity.TILT_MIN + Option.Dodge.Sensitivity.TILT_MAX)/2;
 	}
 }

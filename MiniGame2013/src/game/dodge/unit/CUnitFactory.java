@@ -1,7 +1,9 @@
-package org.pjhjohn.framework.unit;
+package game.dodge.unit;
 
 
 import org.pjhjohn.framework.ApplicationManager;
+import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.framework.unit.IFactory;
 
 import game.main.R;
 

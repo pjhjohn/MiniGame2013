@@ -1,7 +1,7 @@
 package org.pjhjohn.framework.customview;
 
-import org.pjhjohn.framework.ApplicationOption;
-import org.pjhjohn.framework.StarText;
+import org.pjhjohn.framework.Option;
+import org.pjhjohn.framework.widget.StarText;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,15 +12,15 @@ public class CustomViewStarText extends CustomView {
 	private float textY = 180;
 	private float textSize = 100;
 
-	private float starSpeedMin = 1;
-	private float starSpeedRange = 3;
-	private int   starNumber = 10000;
+	private float starSpeedMin = (float)0.5;
+	private float starSpeedRange = (float)2.5;
+	private int   starNumber = 5000;
 
 	private StarText starText;
 
-	public CustomViewStarText(Context context) {
+	public CustomViewStarText(Context context, String text) {
 		super(context);
-		init();
+		init(text);
 	}
 	
 	public void update(){
@@ -31,13 +31,13 @@ public class CustomViewStarText extends CustomView {
 		starText.draw(canvas);
 	}
 	
-	private void init(){
-		starText = new StarText("Missile Dodge");
+	private void init(String text){
+		starText = new StarText(text);
 		starText.setStarNumber(starNumber);
 		starText.setStarSpeed(starSpeedMin, starSpeedRange);
 		starText.setPosition(textX, textY);
 		starText.setTextSize(textSize);
-		starText.setBackgroundSize(ApplicationOption.getDeviceWidth(), ApplicationOption.getDeviceHeight());
+		starText.setBackgroundSize(Option.getDeviceWidth(), Option.getDeviceHeight());
 		starText.setStarSize(1, 2);
 		starText.setTextAlign(Align.CENTER);
 	}

@@ -1,6 +1,9 @@
-package org.pjhjohn.framework;
+package org.pjhjohn.framework.widget;
 
 import java.util.Random;
+
+import org.pjhjohn.framework.Option;
+import org.pjhjohn.framework.ImageObj;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -15,7 +18,7 @@ import android.graphics.Typeface;
 /* StarText : drilling text-shaped hole in the background with falling stars behind.						 *
  * To provide this as a meaningful library component, this should be provided as subclass of ANDROID.VIEW	 * 
  * Study view-hierachy, and make it. [NAME'LL BE STARVIEW : contains StarViewThread]						 */
-public class StarText extends ImageObject {
+public class StarText extends ImageObj {
 	// SuperType variables : (float)super.x | (float)super.y | (Bitmap)super.bitmap
 	private String 	text;
 	private Paint 	textPaint;
@@ -62,9 +65,9 @@ public class StarText extends ImageObject {
 	private void setStarPosition(){
 		for(int i=0; i<stars.length; i++){
 			switch(this.textPaint.getTextAlign()){
-			case LEFT   : left = x; 			  right = x + textWidth; 	top = y + textBounds.top; bottom = y + textBounds.top + textHeight;	break;
-			case CENTER : left = x - textWidth/2; right = x + textWidth/2;  top = y + textBounds.top; bottom = y + textBounds.top + textHeight;	break;
-			case RIGHT  : left = x - textWidth;   right = x;				top = y + textBounds.top; bottom = y + textBounds.top + textHeight;	break;
+			case LEFT   : left = posX; 			  right = posX + textWidth; 	top = posY + textBounds.top; bottom = posY + textBounds.top + textHeight;	break;
+			case CENTER : left = posX - textWidth/2; right = posX + textWidth/2;top = posY + textBounds.top; bottom = posY + textBounds.top + textHeight;	break;
+			case RIGHT  : left = posX - textWidth;   right = posX;				top = posY + textBounds.top; bottom = posY + textBounds.top + textHeight;	break;
 			}
 			stars[i].setBound(left, right, top, bottom);
 			stars[i].setPosition(left + rand.nextFloat() * Math.abs(right - left), top + rand.nextFloat() * Math.abs(top - bottom));
@@ -73,11 +76,11 @@ public class StarText extends ImageObject {
 	public StarText(String text) {
 		this.text = text;
 		// Set Default super.bitmap
-		bitmap = Bitmap.createBitmap((int)ApplicationOption.getDeviceWidth(), (int)ApplicationOption.getDeviceHeight(), Bitmap.Config.ARGB_8888);
+		bitmap = Bitmap.createBitmap((int)Option.getDeviceWidth(), (int)Option.getDeviceHeight(), Bitmap.Config.ARGB_8888);
 		Canvas cTemp = new Canvas(bitmap);
 		Paint pTemp = new Paint();
 		pTemp.setColor(Color.BLACK);
-		cTemp.drawRect(0, 0, ApplicationOption.getDeviceWidth(), ApplicationOption.getDeviceHeight(), pTemp);
+		cTemp.drawRect(0, 0, Option.getDeviceWidth(), Option.getDeviceHeight(), pTemp);
 		setBitmap(bitmap);
 		
 		setTextSize(40);
@@ -105,7 +108,7 @@ public class StarText extends ImageObject {
 		mask = null;
 		mask = Bitmap.createBitmap((int)this.dstRect.width(), (int)this.dstRect.height(), Bitmap.Config.ARGB_8888);
 		Canvas canvasForMask = new Canvas(mask);
-		canvasForMask.drawText(text,this.x,this.y,this.textPaint);
+		canvasForMask.drawText(text,this.posX,this.posY,this.textPaint);
 
 		Canvas resultCanvas = new Canvas(result);
 		resultCanvas.drawBitmap(this.bitmap, srcRect, dstRect, null);
@@ -135,8 +138,8 @@ public class StarText extends ImageObject {
 	}
 	@Override
 	public void setPosition(float x, float y){
-		this.x = x;
-		this.y = y;
+		this.posX = x;
+		this.posY = y;
 		this.setStarPosition();
 	}
 	public void setStarSize(float width, float height){
@@ -161,7 +164,7 @@ public class StarText extends ImageObject {
 			while(true){
 				this.textPaint.setTextSize(size);
 				this.textPaint.getTextBounds(text, 0, text.length(), textBounds);
-				if(textBounds.width()>ApplicationOption.getDeviceWidth()){
+				if(textBounds.width()>Option.getDeviceWidth()){
 					this.textPaint.setTextSize((float) (size - 0.5));
 					break;
 				} else size += 0.5;
@@ -170,7 +173,7 @@ public class StarText extends ImageObject {
 			while(true){
 				this.textPaint.setTextSize(size);
 				this.textPaint.getTextBounds(text, 0, text.length(), textBounds);
-				if(textBounds.height()>ApplicationOption.getDeviceHeight()){
+				if(textBounds.height()>Option.getDeviceHeight()){
 					this.textPaint.setTextSize((float) (size - 0.5));
 					break;
 				} else size += 0.5;

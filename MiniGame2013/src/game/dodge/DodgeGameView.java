@@ -1,20 +1,20 @@
 package game.dodge;
 
+import game.dodge.unit.CUnitFactory;
 import game.main.R;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.ApplicationOption;
-import org.pjhjohn.framework.ImageObject;
-import org.pjhjohn.framework.SettingButton;
-import org.pjhjohn.framework.Star;
+import org.pjhjohn.framework.Option;
+import org.pjhjohn.framework.ImageObj;
 import org.pjhjohn.framework.state.CStatePregame;
 import org.pjhjohn.framework.state.IState;
 import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.CUnitFactory;
 import org.pjhjohn.framework.unit.IFactory;
+import org.pjhjohn.framework.widget.SettingButton;
+import org.pjhjohn.framework.widget.Star;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -28,6 +28,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
 |* TODO : Use System Clock to Check Score									   *|
@@ -37,11 +38,11 @@ import android.view.View.OnTouchListener;
 |* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 public class DodgeGameView extends SurfaceView implements OnTouchListener, IGameManager, SurfaceHolder.Callback {
-	private IFactory 		 unitFactory = (IFactory) CUnitFactory.getInstance();
-	private IState 			 state;
-	private AUnit 			 player;
-	private Star[]			 stars;
-	private ImageObject 	 settingBtn = SettingButton.getInstance();
+	private IFactory 	unitFactory = (IFactory) CUnitFactory.getInstance();
+	private IState 		state;
+	private AUnit 		player;
+	private Star[]		stars;
+	private ImageObj 	settingBtn = SettingButton.getInstance();
 	private ArrayList<AUnit> asteroids;
 	private DodgeGameViewThread mGameThread;
 	
@@ -56,9 +57,9 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 		super(context);
 		this.textPaint.setColor(Color.WHITE);
 		this.textPaint.setAntiAlias(true);
-		this.textPaint.setTextSize(ApplicationOption.getDeviceHeight()/16);
+		this.textPaint.setTextSize(Option.getDeviceHeight()/16);
 		this.asteroids = new ArrayList<AUnit>();
-		this.stars = new Star[ApplicationOption.NUMBER_OF_STAR];
+		this.stars = new Star[Option.Dodge.NUMBER_OF_STAR];
 		this.highScore= 0;
 		
 		this.state = CStatePregame.getInstance();
@@ -76,17 +77,17 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 		// Layer 0 : BLACK BACKGROUND
 		canvas.drawColor(Color.BLACK);
 		// Layer 1 : Background-floating Stars
-		for(int i = 0; i < ApplicationOption.NUMBER_OF_STAR; i++) this.stars[i].draw(canvas);
+		for(int i = 0; i < Option.Dodge.NUMBER_OF_STAR; i++) this.stars[i].draw(canvas);
 		// Layer 2 : Asteroids
-		for(AUnit asteroid:asteroids) asteroid.draw(canvas);
+		for(AUnit asteroid:asteroids) asteroid.draw(canvas, ImageObj.Align.CENTER);
 		// Layer 3 : Score & Time 
 		this.textPaint.setTextAlign(Align.LEFT);
-		canvas.drawText("Hi - Score : " + String.valueOf((int)highScore), ApplicationOption.PADDING_SCORETEXT , this.textPaint.getTextSize() + ApplicationOption.PADDING_SCORETEXT, this.textPaint);
+		canvas.drawText("최고득점: " + String.valueOf((int)highScore), Option.Dodge.PADDING_SCORETEXT , this.textPaint.getTextSize() + Option.Dodge.PADDING_SCORETEXT, this.textPaint);
 		this.textPaint.setTextAlign(Align.RIGHT);
-		canvas.drawText("Time : "+score2string(this.score), ApplicationOption.getDeviceWidth() - ApplicationOption.PADDING_SCORETEXT, this.textPaint.getTextSize() + ApplicationOption.PADDING_SCORETEXT, this.textPaint);		
+		canvas.drawText("시간 : "+score2string(this.score), Option.getDeviceWidth() - Option.Dodge.PADDING_SCORETEXT, this.textPaint.getTextSize() + Option.Dodge.PADDING_SCORETEXT, this.textPaint);		
 		// Layer 4 : Setting Button & Player & Controller(Optional)
-		this.settingBtn.draw(canvas);
-		this.player.draw(canvas);
+		this.settingBtn.draw(canvas, ImageObj.Align.CENTER);
+		this.player.draw(canvas, ImageObj.Align.CENTER);
 		ApplicationManager.getController().draw(canvas);
 	}
 
@@ -104,13 +105,13 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 			AUnit newUnit = unitFactory.create((threadCount%600==0) ? CUnitFactory.UnitType.GUIDED_ASTEROID : CUnitFactory.UnitType.ASTEROID);
 			int rand = random.nextInt(4);
 			switch(rand){
-				case 0: newUnit.initPosition(0, random.nextFloat() * ApplicationOption.getDeviceHeight());									break;
-				case 1: newUnit.initPosition(ApplicationOption.getDeviceWidth(), random.nextFloat() * ApplicationOption.getDeviceHeight());	break;
-				case 2: newUnit.initPosition(random.nextFloat() * ApplicationOption.getDeviceWidth(), 0);									break;
-				case 3: newUnit.initPosition(random.nextFloat() * ApplicationOption.getDeviceWidth(), ApplicationOption.getDeviceHeight());	break;
+				case 0: newUnit.setPosition(0, random.nextFloat() * Option.getDeviceHeight());									break;
+				case 1: newUnit.setPosition(Option.getDeviceWidth(), random.nextFloat() * Option.getDeviceHeight());	break;
+				case 2: newUnit.setPosition(random.nextFloat() * Option.getDeviceWidth(), 0);									break;
+				case 3: newUnit.setPosition(random.nextFloat() * Option.getDeviceWidth(), Option.getDeviceHeight());	break;
 			} this.asteroids.add(AsteroidWithInitialSpeed(newUnit));
-		} player.move();
-		for(AUnit asteroid:asteroids) asteroid.move();
+		} player.update();
+		for(AUnit asteroid:asteroids) asteroid.update();
 		this.highScore = (highScore < score)? score : highScore;
 	}
 	public void updateBackground(){
@@ -136,20 +137,20 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 		ApplicationManager.setThreadFlag(true);
 		this.threadCount = 0;
 		this.player = unitFactory.create(CUnitFactory.UnitType.PLAYER);
-		this.player.setPosition(ApplicationOption.getDeviceWidth() / 2, ApplicationOption.getDeviceHeight() / 2);
+		this.player.setPosition(Option.getDeviceWidth() / 2, Option.getDeviceHeight() / 2);
 		// Initialize Asteroids
-		for (int i = 0; i < ApplicationOption.NUMBER_OF_STAR; i++){
+		for (int i = 0; i < Option.Dodge.NUMBER_OF_STAR; i++){
 			stars[i] = new Star();
 			stars[i].setRandomColor();
-			stars[i].setPosition(ApplicationOption.getDeviceWidth()*random.nextFloat(), ApplicationOption.getDeviceHeight()*random.nextFloat());
-			stars[i].setSpeed(0,ApplicationOption.STAR_SPEED_MIN + ApplicationOption.STAR_SPEED_RANGE * random.nextFloat());
+			stars[i].setPosition(Option.getDeviceWidth()*random.nextFloat(), Option.getDeviceHeight()*random.nextFloat());
+			stars[i].setSpeed(0,Option.Dodge.STAR_SPEED_MIN + Option.Dodge.STAR_SPEED_RANGE * random.nextFloat());
 		}
 		this.asteroids.clear();
-		for (int i = 0; i < ApplicationOption.NUMBER_OF_ASTEROID; i++) {
+		for (int i = 0; i < Option.Dodge.NUMBER_OF_ASTEROID; i++) {
 			AUnit newUnit = unitFactory.create(CUnitFactory.UnitType.ASTEROID);
 			while (true) {
-				newUnit.initPosition(random.nextFloat() * ApplicationOption.getDeviceWidth(), random.nextFloat() * ApplicationOption.getDeviceHeight());
-				if(player.getDistance(newUnit) > ApplicationOption.ASTEROID_SAFETY_RANGE) break;
+				newUnit.setPosition(random.nextFloat() * Option.getDeviceWidth(), random.nextFloat() * Option.getDeviceHeight());
+				if(player.getDistance(newUnit) > Option.Dodge.ASTEROID_SAFETY_RANGE) break;
 			} this.asteroids.add(AsteroidWithInitialSpeed(newUnit));
 		}
 	}
@@ -174,13 +175,15 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 		this.mGameThread = new DodgeGameViewThread(this.getHolder());
 		this.mGameThread.start();
 	}
-	@Override public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {}
-	@Override public void surfaceDestroyed(SurfaceHolder holder) {
+	@Override 
+	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {}
+	@Override 
+	public void surfaceDestroyed(SurfaceHolder holder) {
 		ApplicationManager.setThreadFlag(false);
 	}
 
 //	Private Class & Methods
-	private String score2string(float score){//1000 -> 1*60*10 + 400
+	private String score2string(float score){
 		int min, sec, ms = (int)score;
 		min = ms/600;		ms = ms - min * 600;
 		sec = ms/10;		ms = ms - sec * 10;
@@ -189,9 +192,9 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 	private AUnit AsteroidWithInitialSpeed(AUnit asteroid){
 		float diff_x = asteroid.getX() - player.getX();
 		float diff_y = asteroid.getY() - player.getY();
-		double degree = Math.toDegrees(Math.atan(diff_y / diff_x)) + (random.nextFloat() * 2 * ApplicationOption.ASTEROID_ANGLE_RANGE - ApplicationOption.ASTEROID_ANGLE_RANGE);
-		asteroid.setSpeedX((float) (ApplicationOption.ASTEROID_SPEED * Math.cos(Math.toRadians(degree))) * (-diff_x)/Math.abs(diff_x));
-		asteroid.setSpeedY((float) (ApplicationOption.ASTEROID_SPEED * Math.sin(Math.toRadians(degree))) * (-diff_x)/Math.abs(diff_x));
+		double degree = Math.toDegrees(Math.atan(diff_y / diff_x)) + (random.nextFloat() * 2 * Option.Dodge.ASTEROID_ANGLE_RANGE - Option.Dodge.ASTEROID_ANGLE_RANGE);
+		asteroid.setSpeedX((float) (Option.Dodge.ASTEROID_SPEED * Math.cos(Math.toRadians(degree))) * (-diff_x)/Math.abs(diff_x));
+		asteroid.setSpeedY((float) (Option.Dodge.ASTEROID_SPEED * Math.sin(Math.toRadians(degree))) * (-diff_x)/Math.abs(diff_x));
 		return asteroid;
 	}
 	private class DodgeGameViewThread extends Thread{ 
@@ -216,5 +219,17 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 				}
 			} Log.i(this.toString(),"ThreadStop");
 		}
+	}
+	@Override
+	public void onResume() {
+		Toast.makeText(this.getContext(), "((IGameManager)DodgeGameView).onResume() Triggered", Toast.LENGTH_SHORT).show();		
+	}
+	@Override
+	public void onPause() {
+		Toast.makeText(this.getContext(), "((IGameManager)DodgeGameView).onPause() Triggered", Toast.LENGTH_SHORT).show();		
+	}
+	@Override
+	public void onStop() {
+		Toast.makeText(this.getContext(), "((IGameManager)DodgeGameView).onStop() Triggered", Toast.LENGTH_SHORT).show();		
 	}
 }

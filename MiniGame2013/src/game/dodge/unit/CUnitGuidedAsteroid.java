@@ -1,6 +1,8 @@
-package org.pjhjohn.framework.unit;
+package game.dodge.unit;
 
-import org.pjhjohn.framework.ApplicationOption;
+import org.pjhjohn.framework.Option;
+import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.framework.unit.IUnit;
 
 public class CUnitGuidedAsteroid extends AUnit {
 	private AUnit player;
@@ -12,14 +14,14 @@ public class CUnitGuidedAsteroid extends AUnit {
 		return this.getDistance((AUnit)_target) < ((this.bitmap.getWidth() + ((AUnit)_target).getBitmap().getWidth())/2) - 2 ;
 	}
 	@Override
-	public void move() {
-		super.setPosition(this.x+this.sx, this.y+this.sy);
+	public void update() {
+		super.setPosition(this.posX+this.speedX, this.posY+this.speedY);
 		// Apply Move and find next speed
-		float dist_x = player.getX() - this.x;
-		float dist_y = player.getY() - this.y;
+		float dist_x = player.getX() - this.posX;
+		float dist_y = player.getY() - this.posY;
 		float dist = this.getDistance(player);
-		super.setSpeedX(ApplicationOption.GUIDED_ASTEROID_SPEED * dist_x / dist);
-		super.setSpeedY(ApplicationOption.GUIDED_ASTEROID_SPEED * dist_y / dist);
+		super.setSpeedX(Option.Dodge.GUIDED_ASTEROID_SPEED * dist_x / dist);
+		super.setSpeedY(Option.Dodge.GUIDED_ASTEROID_SPEED * dist_y / dist);
 	}
 	// Disable Methods those must not triggered
 	@Override public void setPosition(float x, float y){}
