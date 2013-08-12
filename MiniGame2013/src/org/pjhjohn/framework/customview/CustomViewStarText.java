@@ -1,5 +1,6 @@
 package org.pjhjohn.framework.customview;
 
+import org.pjhjohn.framework.ImageObj;
 import org.pjhjohn.framework.Option;
 import org.pjhjohn.framework.widget.StarText;
 
@@ -28,7 +29,7 @@ public class CustomViewStarText extends CustomView {
 	}
 	@Override 
 	public void onDraw(Canvas canvas){
-		starText.draw(canvas);
+		starText.draw(canvas, ImageObj.Align.CENTER);
 	}
 	
 	private void init(String text){

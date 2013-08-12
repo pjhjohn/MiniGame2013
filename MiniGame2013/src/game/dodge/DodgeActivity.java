@@ -34,19 +34,19 @@ public class DodgeActivity extends Activity {
 		mainView = new DodgeView(this);
 		setContentView(mainView);
 		// Set View & Click-event Listeners to Buttons
-		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
+		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnTouchListener(btnOnTouchListener);
 	}
 		
-	private Button.OnClickListener buttonClickListerForIntent = new View.OnClickListener() {
-		public void onClick(View v){
-			switch(v.getId()){
+	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {
+		public void onClick(View view){
+			switch(view.getId()){
 				case DodgeView.ID_BTN1 : ApplicationManager.setController(CControllerTouch.getInstance());		break;
 				case DodgeView.ID_BTN2 : ApplicationManager.setController(CControllerJoystic.getInstance());	break;
 				case DodgeView.ID_BTN3 : ApplicationManager.setController(CControllerTilt.getInstance());		break;
@@ -55,11 +55,11 @@ public class DodgeActivity extends Activity {
 			}	startActivity(new Intent(DodgeActivity.this, DodgeGameActivity.class));
 		}
 	};
-	private Button.OnTouchListener buttonTouchListenerForChangeTextColor = new View.OnTouchListener() {
-		public boolean onTouch(View v, MotionEvent e) {
-			switch(e.getAction()){
-				case MotionEvent.ACTION_DOWN : ((Button)v).setTextColor(Color.rgb(0xff, 0xad, 0x33));	break;
-				case MotionEvent.ACTION_UP : ((Button)v).setTextColor(Color.WHITE);						break;
+	private Button.OnTouchListener btnOnTouchListener = new View.OnTouchListener() {
+		public boolean onTouch(View view, MotionEvent event) {
+			switch(event.getAction()){
+				case MotionEvent.ACTION_DOWN : ((Button)view).setTextColor(Color.rgb(0xff, 0xad, 0x33));	break;
+				case MotionEvent.ACTION_UP : ((Button)view).setTextColor(Color.WHITE);						break;
 			}	return false;
 		}
 	};

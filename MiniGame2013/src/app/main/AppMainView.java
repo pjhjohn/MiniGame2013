@@ -1,7 +1,5 @@
 package app.main;
 
-import game.main.R;
-
 import org.pjhjohn.framework.customview.CustomView;
 import org.pjhjohn.framework.customview.CustomViewBackground;
 import org.pjhjohn.framework.customview.CustomViewStarText;

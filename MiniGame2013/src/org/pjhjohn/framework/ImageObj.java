@@ -39,11 +39,7 @@ public class ImageObj {
 		return false;
 	}
 	
-	public void draw(Canvas canvas){
-		Log.e("Deprecated","ImageObj.draw");
-		canvas.drawBitmap(bitmap, posX, posY, null);
-		// Not Recommended
-	}
+
 	public void draw(Canvas canvas, ImageObj.Align align){
 		switch(align){
 		case UPPER_LEFT  : canvas.drawBitmap(bitmap, posX, posY, null);

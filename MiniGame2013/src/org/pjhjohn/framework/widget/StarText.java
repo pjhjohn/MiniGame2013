@@ -65,7 +65,7 @@ public class StarText extends ImageObj {
 	private void setStarPosition(){
 		for(int i=0; i<stars.length; i++){
 			switch(this.textPaint.getTextAlign()){
-			case LEFT   : left = posX; 			  right = posX + textWidth; 	top = posY + textBounds.top; bottom = posY + textBounds.top + textHeight;	break;
+			case LEFT   : left = posX; 			 	 right = posX + textWidth; 	top = posY + textBounds.top; bottom = posY + textBounds.top + textHeight;	break;
 			case CENTER : left = posX - textWidth/2; right = posX + textWidth/2;top = posY + textBounds.top; bottom = posY + textBounds.top + textHeight;	break;
 			case RIGHT  : left = posX - textWidth;   right = posX;				top = posY + textBounds.top; bottom = posY + textBounds.top + textHeight;	break;
 			}
@@ -101,9 +101,9 @@ public class StarText extends ImageObj {
 		this.textHeight = textBounds.height();
 	}
 	@Override
-	public void draw(Canvas canvas){
+	public void draw(Canvas canvas, ImageObj.Align align){
 		canvas.drawBitmap(bitmap, srcRect, dstRect, null);
-		for(int i=0; i<starNumber; i++) stars[i].draw(canvas);
+		for(int i=0; i<starNumber; i++) stars[i].draw(canvas, ImageObj.Align.CENTER);
 
 		mask = null;
 		mask = Bitmap.createBitmap((int)this.dstRect.width(), (int)this.dstRect.height(), Bitmap.Config.ARGB_8888);

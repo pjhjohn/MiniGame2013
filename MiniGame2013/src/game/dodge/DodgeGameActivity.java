@@ -39,15 +39,19 @@ public class DodgeGameActivity extends Activity implements OnSeekBarChangeListen
 	
 	//	Implement OnSeekBarChangeListener
 	@Override
-	public void onProgressChanged(SeekBar _seekbar, int _current, boolean _userValid) {
+	public void onProgressChanged(SeekBar _seekbar, int _current, boolean _userValid){
 		ApplicationManager.getController().setSensitivity(_current, _seekbar.getMax());
 		DIALOG_TEXT.setText("LEVEL : "+_seekbar.getProgress()+"  Value : "+ApplicationManager.getController().getSensitivity());
 		DIALOG_TEXT.invalidate();
 	}
-	@Override public void onStartTrackingTouch(SeekBar _seekbar) {
+	@Override 
+	public void onStartTrackingTouch(SeekBar _seekbar){
 		_seekbar.setProgress((int) (_seekbar.getMax() * ApplicationManager.getController().getProgressRatio()));
 	}
-	@Override public void onStopTrackingTouch(SeekBar _seekbar) {}
+	@Override 
+	public void onStopTrackingTouch(SeekBar _seekbar){
+		
+	}
 	private AlertDialog getControllerSensitivityAlertDialog(){
 		View dialog_view = getLayoutInflater().inflate(R.layout.dialog_view, null);
 		DIALOG_TEXT = (TextView)dialog_view.findViewById(R.id.textview);

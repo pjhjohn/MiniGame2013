@@ -21,7 +21,7 @@ public class Star extends ImageObj {
 		paint.setColor(Color.rgb(64+rand.nextInt(128),64+rand.nextInt(192),64+rand.nextInt(192)));
 	}
 	@Override
-	public void draw(Canvas canvas){
+	public void draw(Canvas canvas, ImageObj.Align align){
 		canvas.drawRect(posX, posY, posX+width, posY+height, paint);
 	}
 	public void setSpeed(float dx, float dy){

@@ -31,12 +31,16 @@ import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
-|* TODO : Use System Clock to Check Score									   *|
+|* [TODO 1] Use System Clock to Check Score									   *|
 |* CStatePlaying.getInstance().onInit() : Save Initial time					   *|
 |* CurrentScore = time - initialTime										   *|
 |* When HighScore > CurrentScore, represent currentScore -> HighScore realtime *|
 |* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
+/*
+ * [TODO 2] Make Abstract Class for this "GameView" Things.
+ * These things should contain main game sequences such as onCreate / onPause / onResume / onDestroy
+ * Automatically register / unregister corresponding resources / threads.
+ */
 public class DodgeGameView extends SurfaceView implements OnTouchListener, IGameManager, SurfaceHolder.Callback {
 	private IFactory 	unitFactory = (IFactory) CUnitFactory.getInstance();
 	private IState 		state;
@@ -77,7 +81,7 @@ public class DodgeGameView extends SurfaceView implements OnTouchListener, IGame
 		// Layer 0 : BLACK BACKGROUND
 		canvas.drawColor(Color.BLACK);
 		// Layer 1 : Background-floating Stars
-		for(int i = 0; i < Option.Dodge.NUMBER_OF_STAR; i++) this.stars[i].draw(canvas);
+		for(int i = 0; i < Option.Dodge.NUMBER_OF_STAR; i++) this.stars[i].draw(canvas, ImageObj.Align.CENTER);
 		// Layer 2 : Asteroids
 		for(AUnit asteroid:asteroids) asteroid.draw(canvas, ImageObj.Align.CENTER);
 		// Layer 3 : Score & Time 

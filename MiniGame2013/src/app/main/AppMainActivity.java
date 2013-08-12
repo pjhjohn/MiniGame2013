@@ -42,15 +42,15 @@ public class AppMainActivity extends Activity {
 
 		mainView = new AppMainView(this);
 		setContentView(mainView);
-		// Set View & Click-event Listeners to Buttons
-		((Button)mainView.findViewById(AppMainView.ID_BTN_MISSLEDODGE)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(AppMainView.ID_BTN_PUZZLEBUBBLE)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(AppMainView.ID_BTN_SNOWCRAFT)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(AppMainView.ID_BTN_SETTING)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(AppMainView.ID_BTN_MISSLEDODGE)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(AppMainView.ID_BTN_PUZZLEBUBBLE)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(AppMainView.ID_BTN_SNOWCRAFT)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(AppMainView.ID_BTN_SETTING)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
+		// Register View & Click-event Listeners to Buttons
+		((Button)mainView.findViewById(AppMainView.ID_BTN_MISSLEDODGE)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(AppMainView.ID_BTN_PUZZLEBUBBLE)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(AppMainView.ID_BTN_SNOWCRAFT)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(AppMainView.ID_BTN_SETTING)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(AppMainView.ID_BTN_MISSLEDODGE)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(AppMainView.ID_BTN_PUZZLEBUBBLE)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(AppMainView.ID_BTN_SNOWCRAFT)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(AppMainView.ID_BTN_SETTING)).setOnTouchListener(btnOnTouchListener);
 	}
 	
 	@SuppressLint("NewApi")
@@ -67,9 +67,9 @@ public class AppMainActivity extends Activity {
 		}
 	}
 	
-	private Button.OnClickListener buttonClickListerForIntent = new View.OnClickListener() {
-		public void onClick(View v){
-			switch(v.getId()){
+	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {
+		public void onClick(View view){
+			switch(view.getId()){
 				case AppMainView.ID_BTN_MISSLEDODGE  : startActivity(new Intent(AppMainActivity.this, DodgeActivity.class));		break;
 				case AppMainView.ID_BTN_PUZZLEBUBBLE : startActivity(new Intent(AppMainActivity.this, BubbleActivity.class));	break;
 				case AppMainView.ID_BTN_SNOWCRAFT    : startActivity(new Intent(AppMainActivity.this, SnowCraftActivity.class));	break;
@@ -78,11 +78,11 @@ public class AppMainActivity extends Activity {
 			}
 		}
 	};
-	private Button.OnTouchListener buttonTouchListenerForChangeTextColor = new View.OnTouchListener() {
-		public boolean onTouch(View v, MotionEvent e) {
-			switch(e.getAction()){
-				case MotionEvent.ACTION_DOWN : ((Button)v).setTextColor(Color.rgb(0xff, 0xad, 0x33));	break;
-				case MotionEvent.ACTION_UP   : ((Button)v).setTextColor(Color.WHITE);					break;
+	private Button.OnTouchListener btnOnTouchListener = new View.OnTouchListener() {
+		public boolean onTouch(View view, MotionEvent event) {
+			switch(event.getAction()){
+				case MotionEvent.ACTION_DOWN : ((Button)view).setTextColor(Color.rgb(0xff, 0xad, 0x33));	break;
+				case MotionEvent.ACTION_UP   : ((Button)view).setTextColor(Color.WHITE);					break;
 			}	return false;
 		}
 	};

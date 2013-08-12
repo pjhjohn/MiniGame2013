@@ -2,6 +2,7 @@ package org.pjhjohn.framework.customview;
 
 import java.util.Random;
 
+import org.pjhjohn.framework.ImageObj;
 import org.pjhjohn.framework.Option;
 import org.pjhjohn.framework.widget.Star;
 
@@ -27,6 +28,6 @@ public class CustomViewBackground extends CustomView {
 	}
 	@Override
 	public void onDraw(Canvas _canvas) {
-		for (int i = 0; i < Option.Dodge.NUMBER_OF_STAR; i++) this.mStars[i].draw(_canvas);
+		for (int i = 0; i < Option.Dodge.NUMBER_OF_STAR; i++) this.mStars[i].draw(_canvas, ImageObj.Align.CENTER);
 	}
 }
