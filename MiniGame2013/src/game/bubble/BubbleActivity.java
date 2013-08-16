@@ -1,14 +1,10 @@
 package game.bubble;
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.controller.CControllerJoystic;
-import org.pjhjohn.framework.controller.CControllerTilt;
-import org.pjhjohn.framework.controller.CControllerTouch;
-import org.pjhjohn.framework.rank.RankingActivity;
+import game.snowcraft.SnowCraftView;
 
-import game.dodge.DodgeGameActivity;
+import org.pjhjohn.manager.AppManager;
+
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -16,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 /* 1. MainActivity initializes static properties that will be used in further Activities.
  * setDeviceSize
@@ -30,7 +27,7 @@ public class BubbleActivity extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		// ApplicationManager Properties
-		ApplicationManager.setContext(this);
+		AppManager.setContext(this);
 
 		mainView = new BubbleView(this);
 		setContentView(mainView);
@@ -46,14 +43,14 @@ public class BubbleActivity extends Activity {
 	}
 		
 	private Button.OnClickListener buttonClickListerForIntent = new View.OnClickListener() {
-		public void onClick(View v){
-			switch(v.getId()){
-				case BubbleView.ID_BTN1 : ApplicationManager.setController(CControllerTouch.getInstance());		break;
-				case BubbleView.ID_BTN2 : ApplicationManager.setController(CControllerJoystic.getInstance());	break;
-				case BubbleView.ID_BTN3 : ApplicationManager.setController(CControllerTilt.getInstance());		break;
-				case BubbleView.ID_BTN4 : startActivity(new Intent(BubbleActivity.this, RankingActivity.class));
+		public void onClick(View view){
+			switch(view.getId()){
+				case SnowCraftView.ID_BTN1 : Toast.makeText(getApplicationContext(), "ID_BTN1", Toast.LENGTH_SHORT).show(); break;
+				case SnowCraftView.ID_BTN2 : Toast.makeText(getApplicationContext(), "ID_BTN2", Toast.LENGTH_SHORT).show(); break;
+				case SnowCraftView.ID_BTN3 : Toast.makeText(getApplicationContext(), "ID_BTN3", Toast.LENGTH_SHORT).show(); break;
+				case SnowCraftView.ID_BTN4 : Toast.makeText(getApplicationContext(), "ID_BTN4", Toast.LENGTH_SHORT).show(); break;
 				default : return;
-			}	startActivity(new Intent(BubbleActivity.this, DodgeGameActivity.class));
+			}
 		}
 	};
 	private Button.OnTouchListener buttonTouchListenerForChangeTextColor = new View.OnTouchListener() {

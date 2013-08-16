@@ -1,9 +1,9 @@
 package game.dodge;
 
-import org.pjhjohn.framework.customview.CustomView;
-import org.pjhjohn.framework.customview.CustomViewBackground;
-import org.pjhjohn.framework.customview.CustomViewStarText;
-import org.pjhjohn.framework.customview.CustomViewSurfaceContainer;
+import org.pjhjohn.framework.view.CustomView;
+import org.pjhjohn.framework.view.CustomViewBackground;
+import org.pjhjohn.framework.view.CustomViewStarText;
+import org.pjhjohn.framework.view.CustomViewSurfaceContainer;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -29,7 +29,7 @@ public class DodgeView extends RelativeLayout{
 	public DodgeView(Context context) {
 		super(context);
 		surfaceViews = new CustomView[2];
-		surfaceViews[0] = new CustomViewStarText(context);			surfaceViews[0].setId(ID_STARTEXT);
+		surfaceViews[0] = new CustomViewStarText(context, "Missle Dodge");			surfaceViews[0].setId(ID_STARTEXT);
 		surfaceViews[1] = new CustomViewBackground(getContext());	surfaceViews[1].setId(ID_BACKGROUND);
 		surfContainer = new CustomViewSurfaceContainer(getContext(), surfaceViews);
 		this.addView(surfContainer);

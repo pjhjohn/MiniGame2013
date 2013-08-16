@@ -1,8 +1,9 @@
 package game.dodge;
 
-import org.pjhjohn.framework.ApplicationManager;
-
 import game.main.R;
+
+import org.pjhjohn.manager.AppManager;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,8 +27,8 @@ public class DodgeGameActivity extends Activity implements OnSeekBarChangeListen
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		// Set Resource - ResourceManager.getContext()
-		ApplicationManager.setContext(this);
-		ApplicationManager.setAlertDialog(getControllerSensitivityAlertDialog());
+		AppManager.setContext(this);
+		AppManager.setAlertDialog(getControllerSensitivityAlertDialog());
 		// Set ControllerMode
 		dodgeView = new DodgeGameView(this);
 		setContentView(dodgeView);
@@ -39,21 +40,25 @@ public class DodgeGameActivity extends Activity implements OnSeekBarChangeListen
 	
 	//	Implement OnSeekBarChangeListener
 	@Override
-	public void onProgressChanged(SeekBar _seekbar, int _current, boolean _userValid) {
-		ApplicationManager.getController().setSensitivity(_current, _seekbar.getMax());
-		DIALOG_TEXT.setText("LEVEL : "+_seekbar.getProgress()+"  Value : "+ApplicationManager.getController().getSensitivity());
+	public void onProgressChanged(SeekBar _seekbar, int _current, boolean _userValid){
+		AppManager.getController().setSensitivity(_current, _seekbar.getMax());
+		DIALOG_TEXT.setText("LEVEL : "+_seekbar.getProgress()+"  Value : "+AppManager.getController().getSensitivity());
 		DIALOG_TEXT.invalidate();
 	}
-	@Override public void onStartTrackingTouch(SeekBar _seekbar) {
-		_seekbar.setProgress((int) (_seekbar.getMax() * ApplicationManager.getController().getProgressRatio()));
+	@Override 
+	public void onStartTrackingTouch(SeekBar _seekbar){
+		_seekbar.setProgress((int) (_seekbar.getMax() * AppManager.getController().getProgressRatio()));
 	}
-	@Override public void onStopTrackingTouch(SeekBar _seekbar) {}
+	@Override 
+	public void onStopTrackingTouch(SeekBar _seekbar){
+		
+	}
 	private AlertDialog getControllerSensitivityAlertDialog(){
 		View dialog_view = getLayoutInflater().inflate(R.layout.dialog_view, null);
 		DIALOG_TEXT = (TextView)dialog_view.findViewById(R.id.textview);
 		SEEKBAR = ((SeekBar)dialog_view.findViewById(R.id.seekbar));
 		SEEKBAR.setOnSeekBarChangeListener(this);
-		SEEKBAR.setProgress((int) (SEEKBAR.getMax() * ApplicationManager.getController().getProgressRatio()));
+		SEEKBAR.setProgress((int) (SEEKBAR.getMax() * AppManager.getController().getProgressRatio()));
 		INIT_PROGRESS = SEEKBAR.getProgress();
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Choose Sensitivity");

@@ -1,6 +1,5 @@
 package org.pjhjohn.framework.state;
 
-import game.dodge.IGameManager;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;

@@ -1,10 +1,11 @@
 package game.dodge;
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.controller.CControllerJoystic;
-import org.pjhjohn.framework.controller.CControllerTilt;
-import org.pjhjohn.framework.controller.CControllerTouch;
+import game.dodge.controller.CControllerJoystic;
+import game.dodge.controller.CControllerTilt;
+import game.dodge.controller.CControllerTouch;
+
 import org.pjhjohn.framework.rank.RankingActivity;
+import org.pjhjohn.manager.AppManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,37 +30,37 @@ public class DodgeActivity extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		// ApplicationManager Properties
-		ApplicationManager.setContext(this);
+		AppManager.setContext(this);
 
 		mainView = new DodgeView(this);
 		setContentView(mainView);
 		// Set View & Click-event Listeners to Buttons
-		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnClickListener(buttonClickListerForIntent);
-		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
-		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnTouchListener(buttonTouchListenerForChangeTextColor);
+		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnTouchListener(btnOnTouchListener);
 	}
 		
-	private Button.OnClickListener buttonClickListerForIntent = new View.OnClickListener() {
-		public void onClick(View v){
-			switch(v.getId()){
-				case DodgeView.ID_BTN1 : ApplicationManager.setController(CControllerTouch.getInstance());		break;
-				case DodgeView.ID_BTN2 : ApplicationManager.setController(CControllerJoystic.getInstance());	break;
-				case DodgeView.ID_BTN3 : ApplicationManager.setController(CControllerTilt.getInstance());		break;
+	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {
+		public void onClick(View view){
+			switch(view.getId()){
+				case DodgeView.ID_BTN1 : AppManager.setController(CControllerTouch.getInstance());		break;
+				case DodgeView.ID_BTN2 : AppManager.setController(CControllerJoystic.getInstance());	break;
+				case DodgeView.ID_BTN3 : AppManager.setController(CControllerTilt.getInstance());		break;
 				case DodgeView.ID_BTN4 : startActivity(new Intent(DodgeActivity.this, RankingActivity.class));
 				default : return;
 			}	startActivity(new Intent(DodgeActivity.this, DodgeGameActivity.class));
 		}
 	};
-	private Button.OnTouchListener buttonTouchListenerForChangeTextColor = new View.OnTouchListener() {
-		public boolean onTouch(View v, MotionEvent e) {
-			switch(e.getAction()){
-				case MotionEvent.ACTION_DOWN : ((Button)v).setTextColor(Color.rgb(0xff, 0xad, 0x33));	break;
-				case MotionEvent.ACTION_UP : ((Button)v).setTextColor(Color.WHITE);						break;
+	private Button.OnTouchListener btnOnTouchListener = new View.OnTouchListener() {
+		public boolean onTouch(View view, MotionEvent event) {
+			switch(event.getAction()){
+				case MotionEvent.ACTION_DOWN : ((Button)view).setTextColor(Color.rgb(0xff, 0xad, 0x33));	break;
+				case MotionEvent.ACTION_UP : ((Button)view).setTextColor(Color.WHITE);						break;
 			}	return false;
 		}
 	};
