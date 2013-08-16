@@ -1,12 +1,8 @@
 package game.snowcraft;
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.controller.CControllerJoystic;
-import org.pjhjohn.framework.controller.CControllerTilt;
-import org.pjhjohn.framework.rank.RankingActivity;
+import org.pjhjohn.manager.AppManager;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -29,7 +25,7 @@ public class SnowCraftActivity extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		// ApplicationManager Properties
-		ApplicationManager.setContext(this);
+		AppManager.setContext(this);
 
 		mainView = new SnowCraftView(this);
 		setContentView(mainView);
@@ -45,14 +41,14 @@ public class SnowCraftActivity extends Activity {
 	}
 		
 	private Button.OnClickListener buttonClickListerForIntent = new View.OnClickListener() {
-		public void onClick(View v){
-			switch(v.getId()){
-				case SnowCraftView.ID_BTN1 : Toast.makeText(getApplicationContext(), "Toast", Toast.LENGTH_SHORT).show();
-				case SnowCraftView.ID_BTN2 : ApplicationManager.setController(CControllerJoystic.getInstance());	break;
-				case SnowCraftView.ID_BTN3 : ApplicationManager.setController(CControllerTilt.getInstance());		break;
-				case SnowCraftView.ID_BTN4 : startActivity(new Intent(SnowCraftActivity.this, RankingActivity.class));
+		public void onClick(View view){
+			switch(view.getId()){
+				case SnowCraftView.ID_BTN1 : Toast.makeText(getApplicationContext(), "ID_BTN1", Toast.LENGTH_SHORT).show(); break;
+				case SnowCraftView.ID_BTN2 : Toast.makeText(getApplicationContext(), "ID_BTN2", Toast.LENGTH_SHORT).show(); break;
+				case SnowCraftView.ID_BTN3 : Toast.makeText(getApplicationContext(), "ID_BTN3", Toast.LENGTH_SHORT).show(); break;
+				case SnowCraftView.ID_BTN4 : Toast.makeText(getApplicationContext(), "ID_BTN4", Toast.LENGTH_SHORT).show(); break;
 				default : return;
-			}//	startActivity(new Intent(SnowActivity.this, DodgeGameActivity.class));
+			}
 		}
 	};
 	private Button.OnTouchListener buttonTouchListenerForChangeTextColor = new View.OnTouchListener() {

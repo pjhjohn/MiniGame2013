@@ -1,8 +1,7 @@
-package org.pjhjohn.framework;
+package org.pjhjohn.framework.obj2d;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
 
 public class ImageObj {
 	protected Bitmap bitmap = null;
@@ -37,8 +36,7 @@ public class ImageObj {
 	}
 	public boolean isInside(float x, float y){ // IMPLEMENT IF NEEDED
 		return false;
-	}
-	
+	}	
 
 	public void draw(Canvas canvas, ImageObj.Align align){
 		switch(align){

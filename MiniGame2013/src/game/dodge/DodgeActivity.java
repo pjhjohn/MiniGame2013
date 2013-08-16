@@ -1,10 +1,11 @@
 package game.dodge;
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.controller.CControllerJoystic;
-import org.pjhjohn.framework.controller.CControllerTilt;
-import org.pjhjohn.framework.controller.CControllerTouch;
+import game.dodge.controller.CControllerJoystic;
+import game.dodge.controller.CControllerTilt;
+import game.dodge.controller.CControllerTouch;
+
 import org.pjhjohn.framework.rank.RankingActivity;
+import org.pjhjohn.manager.AppManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,7 +30,7 @@ public class DodgeActivity extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		// ApplicationManager Properties
-		ApplicationManager.setContext(this);
+		AppManager.setContext(this);
 
 		mainView = new DodgeView(this);
 		setContentView(mainView);
@@ -47,9 +48,9 @@ public class DodgeActivity extends Activity {
 	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {
 		public void onClick(View view){
 			switch(view.getId()){
-				case DodgeView.ID_BTN1 : ApplicationManager.setController(CControllerTouch.getInstance());		break;
-				case DodgeView.ID_BTN2 : ApplicationManager.setController(CControllerJoystic.getInstance());	break;
-				case DodgeView.ID_BTN3 : ApplicationManager.setController(CControllerTilt.getInstance());		break;
+				case DodgeView.ID_BTN1 : AppManager.setController(CControllerTouch.getInstance());		break;
+				case DodgeView.ID_BTN2 : AppManager.setController(CControllerJoystic.getInstance());	break;
+				case DodgeView.ID_BTN3 : AppManager.setController(CControllerTilt.getInstance());		break;
 				case DodgeView.ID_BTN4 : startActivity(new Intent(DodgeActivity.this, RankingActivity.class));
 				default : return;
 			}	startActivity(new Intent(DodgeActivity.this, DodgeGameActivity.class));

@@ -1,6 +1,6 @@
 package org.pjhjohn.framework.unit;
 
-import org.pjhjohn.framework.ImageObj;
+import org.pjhjohn.framework.obj2d.ImageObj;
 
 public abstract class AUnit extends ImageObj implements IUnit {
 	

@@ -1,7 +1,8 @@
-package org.pjhjohn.framework.controller;
+package game.dodge.controller;
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.Option;
+import org.pjhjohn.framework.controller.AController;
+import org.pjhjohn.framework.controller.IController;
+import org.pjhjohn.manager.AppManager;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,6 +11,7 @@ import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import app.main.AppOption;
 
 public class CControllerTilt extends AController implements SensorEventListener{
 	private SensorManager sensorManager;
@@ -20,8 +22,8 @@ public class CControllerTilt extends AController implements SensorEventListener{
 	private static IController singleton = new CControllerTilt();
 	private CControllerTilt() {
 		super();		
-		super.sensitivity = (Option.Dodge.Sensitivity.TILT_MIN + Option.Dodge.Sensitivity.TILT_MAX)/2;
-		sensorManager = ApplicationManager.getSensorManager();
+		super.sensitivity = (AppOption.Dodge.Sensitivity.TILT_MIN + AppOption.Dodge.Sensitivity.TILT_MAX)/2;
+		sensorManager = AppManager.getSensorManager();
 		Log.i("sensor","sensormanager received");
 	}
 	public static IController getInstance(){
@@ -75,11 +77,11 @@ public class CControllerTilt extends AController implements SensorEventListener{
 	}
 	@Override
 	public void setSensitivity(int _current, int _max) {
-		super.sensitivity = Option.Dodge.Sensitivity.TILT_MIN + (Option.Dodge.Sensitivity.TILT_MAX - Option.Dodge.Sensitivity.TILT_MIN) * (float)_current / (float)_max;
+		super.sensitivity = AppOption.Dodge.Sensitivity.TILT_MIN + (AppOption.Dodge.Sensitivity.TILT_MAX - AppOption.Dodge.Sensitivity.TILT_MIN) * (float)_current / (float)_max;
 	}
 	@Override
 	public float getProgressRatio() {
-		return (super.sensitivity - Option.Dodge.Sensitivity.TILT_MIN) / (Option.Dodge.Sensitivity.TILT_MAX - Option.Dodge.Sensitivity.TILT_MIN);
+		return (super.sensitivity - AppOption.Dodge.Sensitivity.TILT_MIN) / (AppOption.Dodge.Sensitivity.TILT_MAX - AppOption.Dodge.Sensitivity.TILT_MIN);
 	}
 	@Override
 	public float getSensitivity() {
@@ -87,6 +89,6 @@ public class CControllerTilt extends AController implements SensorEventListener{
 	}
 	@Override
 	public void setDefaultSensitivity() {
-		super.sensitivity = (Option.Dodge.Sensitivity.TILT_MIN + Option.Dodge.Sensitivity.TILT_MAX)/2;
+		super.sensitivity = (AppOption.Dodge.Sensitivity.TILT_MIN + AppOption.Dodge.Sensitivity.TILT_MAX)/2;
 	}
 }

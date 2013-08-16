@@ -1,11 +1,11 @@
 package game.dodge.unit;
 
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IFactory;
-
+import game.common.IFactory;
 import game.main.R;
+
+import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.manager.AppManager;
 
 
 public class CUnitFactory implements IFactory {
@@ -22,15 +22,15 @@ public class CUnitFactory implements IFactory {
 		switch(type){
 		case PLAYER : 
 			rtn_unit = CUnitPlayer.getInstance();
-			if(rtn_unit.getBitmap()==null) rtn_unit.setBitmap(ApplicationManager.getBitmap(R.drawable.ship));
+			if(rtn_unit.getBitmap()==null) rtn_unit.setBitmap(AppManager.getBitmap(R.drawable.ship));
 			break;
 		case ASTEROID : 
 			rtn_unit = new CUnitAsteroid();
-			rtn_unit.setBitmap(ApplicationManager.getBitmap(R.drawable.asteroid_small));
+			rtn_unit.setBitmap(AppManager.getBitmap(R.drawable.asteroid_small));
 			break;
 		case GUIDED_ASTEROID :
 			rtn_unit = new CUnitGuidedAsteroid();
-			rtn_unit.setBitmap(ApplicationManager.getBitmap(R.drawable.guide_asteroid_small));
+			rtn_unit.setBitmap(AppManager.getBitmap(R.drawable.guide_asteroid_small));
 			break;
 		}
 		return rtn_unit;

@@ -1,6 +1,8 @@
-package org.pjhjohn.framework.state;
+package game.dodge.state;
 
-import org.pjhjohn.framework.ApplicationManager;
+import org.pjhjohn.framework.state.AState;
+import org.pjhjohn.framework.state.IState;
+import org.pjhjohn.manager.AppManager;
 
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,18 +17,18 @@ public class CStatePlaying extends AState {
 	@Override
 	public void init() {
 		// Initialize Controller ( Especially Gravity Controller )
-		this.gameManager.onStart();
-		ApplicationManager.getController().init();
+		this.gameManager.onGameStart();
+		AppManager.getController().init();
 	}
 
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		return ApplicationManager.getController().onTouch(view,event);
+		return AppManager.getController().onTouch(view,event);
 	}
 	@Override
 	public void update(){
 		this.gameManager.update();
 		this.gameManager.updateBackground();
-		if(this.gameManager.isGameOver()) this.gameManager.setCurrentState(CStateGameover.getInstance());
+		if(this.gameManager.isGameOver()) this.gameManager.setState(CStateGameover.getInstance());
 	}
 }

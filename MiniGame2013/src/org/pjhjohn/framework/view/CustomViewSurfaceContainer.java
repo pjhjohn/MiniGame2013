@@ -1,4 +1,4 @@
-package org.pjhjohn.framework.customview;
+package org.pjhjohn.framework.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -1,13 +1,16 @@
-package org.pjhjohn.framework.controller;
-
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.Option;
-import org.pjhjohn.framework.ImageObj;
+package game.dodge.controller;
 
 import game.main.R;
+
+import org.pjhjohn.framework.controller.AController;
+import org.pjhjohn.framework.controller.IController;
+import org.pjhjohn.framework.obj2d.ImageObj;
+import org.pjhjohn.manager.AppManager;
+
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.View;
+import app.main.AppOption;
 
 public class CControllerJoystic extends AController {
 	private static IController singleton = new CControllerJoystic();
@@ -25,13 +28,13 @@ public class CControllerJoystic extends AController {
 	
 	private CControllerJoystic() {
 		super();
-		super.sensitivity = (Option.Dodge.Sensitivity.JOYSTIC_MIN + Option.Dodge.Sensitivity.JOYSTIC_MAX)/2;
-		controller_background.setBitmap(ApplicationManager.getBitmap(R.drawable.joystic_background));
-		controller_handle.setBitmap(ApplicationManager.getBitmap(R.drawable.joystic_handle));
+		super.sensitivity = (AppOption.Dodge.Sensitivity.JOYSTIC_MIN + AppOption.Dodge.Sensitivity.JOYSTIC_MAX)/2;
+		controller_background.setBitmap(AppManager.getBitmap(R.drawable.joystic_background));
+		controller_handle.setBitmap(AppManager.getBitmap(R.drawable.joystic_handle));
 		controller_background_radius = controller_background.getBitmap().getWidth()/2;
 		controller_handle_radius = controller_handle.getBitmap().getWidth()/2;
-		controller_x = Option.getDeviceWidth() - Option.Dodge.PADDING_JOYSTIC - controller_background_radius;
-		controller_y = Option.getDeviceHeight() - Option.Dodge.PADDING_JOYSTIC - controller_background_radius;
+		controller_x = AppOption.getDeviceWidth() - AppOption.Dodge.PADDING_JOYSTIC - controller_background_radius;
+		controller_y = AppOption.getDeviceHeight() - AppOption.Dodge.PADDING_JOYSTIC - controller_background_radius;
 		
 		controller_background.setPosition(controller_x, controller_y);
 		controller_handle.setPosition(controller_x, controller_y);
@@ -73,15 +76,15 @@ public class CControllerJoystic extends AController {
 		controller_handle.setPosition(controller_x, controller_y);
 	}
 	@Override public void setSensitivity(int _current, int _max) {
-		super.sensitivity = Option.Dodge.Sensitivity.JOYSTIC_MIN + (Option.Dodge.Sensitivity.JOYSTIC_MAX - Option.Dodge.Sensitivity.JOYSTIC_MIN) * (float)_current / (float)_max;
+		super.sensitivity = AppOption.Dodge.Sensitivity.JOYSTIC_MIN + (AppOption.Dodge.Sensitivity.JOYSTIC_MAX - AppOption.Dodge.Sensitivity.JOYSTIC_MIN) * (float)_current / (float)_max;
 	}
 	@Override public float getProgressRatio() {
-		return (super.sensitivity - Option.Dodge.Sensitivity.JOYSTIC_MIN) / (Option.Dodge.Sensitivity.JOYSTIC_MAX - Option.Dodge.Sensitivity.JOYSTIC_MIN);
+		return (super.sensitivity - AppOption.Dodge.Sensitivity.JOYSTIC_MIN) / (AppOption.Dodge.Sensitivity.JOYSTIC_MAX - AppOption.Dodge.Sensitivity.JOYSTIC_MIN);
 	}
 	@Override public float getSensitivity() {
 		return super.sensitivity;
 	}
 	@Override public void setDefaultSensitivity() {
-		super.sensitivity = (Option.Dodge.Sensitivity.JOYSTIC_MIN + Option.Dodge.Sensitivity.JOYSTIC_MAX)/2;
+		super.sensitivity = (AppOption.Dodge.Sensitivity.JOYSTIC_MIN + AppOption.Dodge.Sensitivity.JOYSTIC_MAX)/2;
 	}
 }

@@ -1,8 +1,9 @@
 package game.dodge.unit;
 
-import org.pjhjohn.framework.Option;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.unit.IUnit;
+
+import app.main.AppOption;
 
 public class CUnitGuidedAsteroid extends AUnit {
 	private AUnit player;
@@ -20,8 +21,8 @@ public class CUnitGuidedAsteroid extends AUnit {
 		float dist_x = player.getX() - this.posX;
 		float dist_y = player.getY() - this.posY;
 		float dist = this.getDistance(player);
-		super.setSpeedX(Option.Dodge.GUIDED_ASTEROID_SPEED * dist_x / dist);
-		super.setSpeedY(Option.Dodge.GUIDED_ASTEROID_SPEED * dist_y / dist);
+		super.setSpeedX(AppOption.Dodge.GUIDED_ASTEROID_SPEED * dist_x / dist);
+		super.setSpeedY(AppOption.Dodge.GUIDED_ASTEROID_SPEED * dist_y / dist);
 	}
 	// Disable Methods those must not triggered
 	@Override public void setPosition(float x, float y){}

@@ -1,9 +1,9 @@
 package game.snowcraft;
 
-import org.pjhjohn.framework.customview.CustomView;
-import org.pjhjohn.framework.customview.CustomViewBackground;
-import org.pjhjohn.framework.customview.CustomViewStarText;
-import org.pjhjohn.framework.customview.CustomViewSurfaceContainer;
+import org.pjhjohn.framework.view.CustomView;
+import org.pjhjohn.framework.view.CustomViewBackground;
+import org.pjhjohn.framework.view.CustomViewStarText;
+import org.pjhjohn.framework.view.CustomViewSurfaceContainer;
 
 import android.content.Context;
 import android.graphics.Color;

@@ -1,15 +1,17 @@
-package org.pjhjohn.framework.controller;
+package game.dodge.controller;
 
-import org.pjhjohn.framework.Option;
+import org.pjhjohn.framework.controller.AController;
+import org.pjhjohn.framework.controller.IController;
 
 import android.view.MotionEvent;
 import android.view.View;
+import app.main.AppOption;
 
 public class CControllerTouch extends AController {
 	private static IController singleton = new CControllerTouch();
 	private CControllerTouch() {
 		super();
-		super.sensitivity = (Option.Dodge.Sensitivity.TOUCH_MIN + Option.Dodge.Sensitivity.TOUCH_MAX)/2;
+		super.sensitivity = (AppOption.Dodge.Sensitivity.TOUCH_MIN + AppOption.Dodge.Sensitivity.TOUCH_MAX)/2;
 	}
 	public static IController getInstance(){
 		return singleton;
@@ -37,11 +39,11 @@ public class CControllerTouch extends AController {
 	}
 	@Override
 	public void setSensitivity(int _current, int _max) {
-		super.sensitivity = Option.Dodge.Sensitivity.TOUCH_MIN + (Option.Dodge.Sensitivity.TOUCH_MAX - Option.Dodge.Sensitivity.TOUCH_MIN) * (float)_current / (float)_max;
+		super.sensitivity = AppOption.Dodge.Sensitivity.TOUCH_MIN + (AppOption.Dodge.Sensitivity.TOUCH_MAX - AppOption.Dodge.Sensitivity.TOUCH_MIN) * (float)_current / (float)_max;
 	}
 	@Override
 	public float getProgressRatio() {
-		return (super.sensitivity - Option.Dodge.Sensitivity.TOUCH_MIN) / (Option.Dodge.Sensitivity.TOUCH_MAX - Option.Dodge.Sensitivity.TOUCH_MIN);
+		return (super.sensitivity - AppOption.Dodge.Sensitivity.TOUCH_MIN) / (AppOption.Dodge.Sensitivity.TOUCH_MAX - AppOption.Dodge.Sensitivity.TOUCH_MIN);
 	}
 	@Override
 	public float getSensitivity() {
@@ -49,6 +51,6 @@ public class CControllerTouch extends AController {
 	}
 	@Override
 	public void setDefaultSensitivity() {
-		super.sensitivity = (Option.Dodge.Sensitivity.TOUCH_MIN + Option.Dodge.Sensitivity.TOUCH_MAX)/2;
+		super.sensitivity = (AppOption.Dodge.Sensitivity.TOUCH_MIN + AppOption.Dodge.Sensitivity.TOUCH_MAX)/2;
 	}
 }

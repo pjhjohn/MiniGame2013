@@ -1,11 +1,11 @@
 package app.main;
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.Option;
-
 import game.bubble.BubbleActivity;
 import game.dodge.DodgeActivity;
 import game.snowcraft.SnowCraftActivity;
+
+import org.pjhjohn.manager.AppManager;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -36,9 +36,9 @@ public class AppMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		// ApplicationManager Properties
 		setDeviceSize();
-		ApplicationManager.setResources(getResources());
-		ApplicationManager.setSensorManager((SensorManager)this.getSystemService(SENSOR_SERVICE));
-		ApplicationManager.setContext(this);
+		AppManager.setResources(getResources());
+		AppManager.setSensorManager((SensorManager)this.getSystemService(SENSOR_SERVICE));
+		AppManager.setContext(this);
 
 		mainView = new AppMainView(this);
 		setContentView(mainView);
@@ -60,19 +60,19 @@ public class AppMainActivity extends Activity {
 		WindowManager windowManager = getWindowManager();
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
 			windowManager.getDefaultDisplay().getSize(size);
-			Option.setDeviceSize(size.x, size.y);
+			AppOption.setDeviceSize(size.x, size.y);
 		} else {
 			Display display = windowManager.getDefaultDisplay();
-			Option.setDeviceSize(display.getWidth(), display.getHeight());
+			AppOption.setDeviceSize(display.getWidth(), display.getHeight());
 		}
 	}
 	
 	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {
 		public void onClick(View view){
 			switch(view.getId()){
-				case AppMainView.ID_BTN_MISSLEDODGE  : startActivity(new Intent(AppMainActivity.this, DodgeActivity.class));		break;
+				case AppMainView.ID_BTN_MISSLEDODGE  : startActivity(new Intent(AppMainActivity.this, DodgeActivity.class));	break;
 				case AppMainView.ID_BTN_PUZZLEBUBBLE : startActivity(new Intent(AppMainActivity.this, BubbleActivity.class));	break;
-				case AppMainView.ID_BTN_SNOWCRAFT    : startActivity(new Intent(AppMainActivity.this, SnowCraftActivity.class));	break;
+				case AppMainView.ID_BTN_SNOWCRAFT    : startActivity(new Intent(AppMainActivity.this, SnowCraftActivity.class));break;
 				case AppMainView.ID_BTN_SETTING : Toast.makeText(getApplicationContext(), "세팅 미구현", Toast.LENGTH_SHORT).show();
 				default : return;
 			}

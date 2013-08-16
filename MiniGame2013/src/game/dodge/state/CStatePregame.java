@@ -1,12 +1,14 @@
-package org.pjhjohn.framework.state;
+package game.dodge.state;
 
-import org.pjhjohn.framework.ApplicationManager;
-import org.pjhjohn.framework.Option;
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.widget.SettingButton;
-
+import game.dodge.GameSpeedButton;
 import game.dodge.unit.CUnitFactory;
 import game.main.R;
+
+import org.pjhjohn.framework.state.AState;
+import org.pjhjohn.framework.state.IState;
+import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.manager.AppManager;
+
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import app.main.AppOption;
 
 
 // Disable Previous Thread & Assign New Thread
@@ -27,37 +30,37 @@ public class CStatePregame extends AState {
 	public void init() {
 		// Initialize player unit
 		AUnit player = CUnitFactory.getInstance().create(CUnitFactory.UnitType.PLAYER);
-		player.setBitmap(ApplicationManager.getBitmap(R.drawable.ship));
+		player.setBitmap(AppManager.getBitmap(R.drawable.ship));
 		player.setSpeedX(0);
 		player.setSpeedY(0);
 		player.setAccX(0);
 		player.setAccY(0);
 		// Initialize controller unit
-		ApplicationManager.getController().init();
+		AppManager.getController().init();
 		// Initialize game Process
-		this.gameManager.onInit();
+		this.gameManager.onGameReady();
 	}
 	// Touch SettingBtn : Alert Dialog | Other : To CStatePlaying
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
+	public boolean onTouch(View view, MotionEvent event) {
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN :
-			if(SettingButton.getInstance().isInside(event.getX(), event.getY())) isSettingBtnDown = true;
+			if(GameSpeedButton.getInstance().isInside(event.getX(), event.getY())) isSettingBtnDown = true;
 			isActionDown = true;
 			break;
 		case MotionEvent.ACTION_UP :
 			if(isActionDown){
 				if(isSettingBtnDown){
-					AlertDialog dialog = ApplicationManager.getAlertDialog();
+					AlertDialog dialog = AppManager.getAlertDialog();
 					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();  
 					lp.copyFrom(dialog.getWindow().getAttributes());  
-					lp.width = (int) (Option.getDeviceWidth()/(float)1.5);  
+					lp.width = (int) (AppOption.getDeviceWidth()/(float)1.5);  
 					lp.height = WindowManager.LayoutParams.WRAP_CONTENT;  
 					dialog.show();
 					Window window = dialog.getWindow();  
 					window.setAttributes(lp);  
 					window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));  
-				} else gameManager.setCurrentState(CStatePlaying.getInstance());
+				} else gameManager.setState(CStatePlaying.getInstance());
 			} isActionDown = false;
 			isSettingBtnDown = false;
 		} return isActionDown;
