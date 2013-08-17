@@ -1,8 +1,10 @@
 package game.dodge;
 
-import game.common.IFactory;
 import game.dodge.state.CStatePregame;
 import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypeAsteroid;
+import game.dodge.unit.CUnitTypeGuidedAsteroid;
+import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import org.pjhjohn.framework.obj2d.ImageObj;
 import org.pjhjohn.framework.obj2d.Star;
 import org.pjhjohn.framework.state.IState;
 import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.framework.unit.IFactory;
 import org.pjhjohn.framework.view.AGameView;
 import org.pjhjohn.manager.AppManager;
 
@@ -69,7 +72,7 @@ public class DodgeGameView extends AGameView {
 	@Override
 	public void onGameReady() {
 		this.threadCount = 0;
-		this.player = unitFactory.create(CUnitFactory.UnitType.PLAYER);
+		this.player = unitFactory.create(CUnitTypePlayer.getInstance());
 		this.player.setPosition(AppOption.getDeviceWidth() / 2, AppOption.getDeviceHeight() / 2);
 		// Initialize Asteroids
 		for (int i = 0; i < AppOption.Dodge.NUMBER_OF_STAR; i++){
@@ -80,7 +83,7 @@ public class DodgeGameView extends AGameView {
 		}
 		this.asteroids.clear();
 		for (int i = 0; i < AppOption.Dodge.NUMBER_OF_ASTEROID; i++) {
-			AUnit newUnit = unitFactory.create(CUnitFactory.UnitType.ASTEROID);
+			AUnit newUnit = unitFactory.create(CUnitTypeAsteroid.getInstance());
 			while (true) {
 				newUnit.setPosition(random.nextFloat() * AppOption.getDeviceWidth(), random.nextFloat() * AppOption.getDeviceHeight());
 				if(player.getDistance(newUnit) > AppOption.Dodge.ASTEROID_SAFETY_RANGE) break;
@@ -118,7 +121,7 @@ public class DodgeGameView extends AGameView {
 		threadCount++;
 		score = (System.currentTimeMillis() - this.startSystemTime) / 100;
 		if(threadCount%200==0){
-			AUnit newUnit = unitFactory.create((threadCount%600==0) ? CUnitFactory.UnitType.GUIDED_ASTEROID : CUnitFactory.UnitType.ASTEROID);
+			AUnit newUnit = unitFactory.create((threadCount%600==0) ? CUnitTypeGuidedAsteroid.getInstance() : CUnitTypeAsteroid.getInstance());
 			int rand = random.nextInt(4);
 			switch(rand){
 				case 0: newUnit.setPosition(0, random.nextFloat() * AppOption.getDeviceHeight());									break;

@@ -2,6 +2,7 @@ package game.dodge.state;
 
 import game.dodge.GameSpeedButton;
 import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
 import org.pjhjohn.framework.state.AState;
@@ -61,7 +62,7 @@ public class CStateGameover extends AState {
 	@Override
 	public void init() {
 		Log.i("ApplicationState","Start Initializing"+this.toString());
-		CUnitFactory.getInstance().create(CUnitFactory.UnitType.PLAYER).setBitmap(AppManager.getBitmap(R.drawable.ship_destroyed_mid));
+		CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance()).setBitmap(AppManager.getBitmap(R.drawable.ship_destroyed_mid));
 		this.m_soundManager.play(0, SoundManager.PLAY_SINGLE);
 	}
 	@Override

@@ -2,6 +2,7 @@ package game.dodge.state;
 
 import game.dodge.GameSpeedButton;
 import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
 import org.pjhjohn.framework.state.AState;
@@ -29,7 +30,7 @@ public class CStatePregame extends AState {
 	@Override
 	public void init() {
 		// Initialize player unit
-		AUnit player = CUnitFactory.getInstance().create(CUnitFactory.UnitType.PLAYER);
+		AUnit player = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 		player.setBitmap(AppManager.getBitmap(R.drawable.ship));
 		player.setSpeedX(0);
 		player.setSpeedY(0);

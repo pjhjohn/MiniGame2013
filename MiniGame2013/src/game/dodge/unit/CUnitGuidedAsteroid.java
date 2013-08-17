@@ -8,7 +8,7 @@ import app.main.AppOption;
 public class CUnitGuidedAsteroid extends AUnit {
 	private AUnit player;
 	public CUnitGuidedAsteroid() {
-		this.player = CUnitFactory.getInstance().create(CUnitFactory.UnitType.PLAYER);
+		this.player = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 	}
 	@Override
 	public boolean isCrashed(IUnit _target) {

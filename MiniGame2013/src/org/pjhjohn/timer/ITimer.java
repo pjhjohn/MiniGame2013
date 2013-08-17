@@ -1,4 +1,4 @@
-package org.pjhjohn.time;
+package org.pjhjohn.timer;
 
 public interface ITimer {
 	public void reset();	// Reset Timer

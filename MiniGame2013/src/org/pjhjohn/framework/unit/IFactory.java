@@ -1,8 +1,5 @@
-package game.common;
+package org.pjhjohn.framework.unit;
 
-import game.dodge.unit.CUnitFactory;
-
-import org.pjhjohn.framework.unit.AUnit;
 
 /* 2013.08.16 Updated by pjhjohn */
 /* 
@@ -17,5 +14,5 @@ import org.pjhjohn.framework.unit.AUnit;
  */
 
 public interface IFactory {
-	AUnit create(CUnitFactory.UnitType type);
+	AUnit create(IUnitType type);
 }
