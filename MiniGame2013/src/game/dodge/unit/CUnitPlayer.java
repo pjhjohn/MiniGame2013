@@ -2,8 +2,7 @@ package game.dodge.unit;
 
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.unit.IUnit;
-
-import app.main.AppOption;
+import org.pjhjohn.manager.AppManager;
 
 public class CUnitPlayer extends AUnit{
 	private static AUnit singleton = new CUnitPlayer();
@@ -12,11 +11,11 @@ public class CUnitPlayer extends AUnit{
 	@Override 
 	public void setPosition(float x, float y){
 		if(x < 0) this.posX = 0;
-		else if(x > AppOption.getDeviceWidth()) this.posX = AppOption.getDeviceWidth();
+		else if(x > AppManager.getDeviceWidth()) this.posX = AppManager.getDeviceWidth();
 		else this.posX = x;
 		
 		if(y < 0) this.posY = 0;
-		else if(y > AppOption.getDeviceHeight()) this.posY = AppOption.getDeviceHeight();
+		else if(y > AppManager.getDeviceHeight()) this.posY = AppManager.getDeviceHeight();
 		else this.posY = y;
 	}
 	@Override

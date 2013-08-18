@@ -1,5 +1,6 @@
 package game.dodge.state;
 
+import org.pjhjohn.framework.sensorlistener.CListenerTouch;
 import org.pjhjohn.framework.state.AState;
 import org.pjhjohn.framework.state.IState;
 import org.pjhjohn.manager.AppManager;
@@ -23,7 +24,8 @@ public class CStatePlaying extends AState {
 
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		return AppManager.getController().onTouch(view,event);
+		return ((CListenerTouch)CListenerTouch.getInstance()).onTouch(view, event);
+//		return AppManager.getController().onTouch(view,event);
 	}
 	@Override
 	public void update(){

@@ -2,11 +2,11 @@ package org.pjhjohn.framework.view;
 
 import org.pjhjohn.framework.obj2d.ImageObj;
 import org.pjhjohn.framework.obj2d.StarText;
+import org.pjhjohn.manager.AppManager;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
-import app.main.AppOption;
 
 public class CustomViewStarText extends CustomView {
 	private float textX = 400;
@@ -40,7 +40,7 @@ public class CustomViewStarText extends CustomView {
 		starText.setStarSpeed(starSpeedMin, starSpeedRange);
 		starText.setPosition(textX, textY);
 		starText.setTextSize(textSize);
-		starText.setBackgroundSize(AppOption.getDeviceWidth(), AppOption.getDeviceHeight());
+		starText.setBackgroundSize(AppManager.getDeviceWidth(), AppManager.getDeviceHeight());
 		starText.setStarSize(1, 2);
 		starText.setTextAlign(Align.CENTER);
 	}

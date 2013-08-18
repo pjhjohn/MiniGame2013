@@ -23,17 +23,13 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 	protected AGameViewThread gameThread;
 	
 	private AGameView(Context context){
-		super(context);	// But Nobody can call this.
+		super(context);	// But Nobody can call this outside.
 	}
 	public AGameView(Context context, IState initialState){
 		super(context);
-		this.onGameCreate();
+		this.onCreate();
 		
-		this.state = initialState;
-		this.state.setGameManager(this);				// Set GameManager -> State
-		AppManager.setState(this.state);				// Set State -> Thread
-		this.state.init();								// Start State
-		
+		setState(initialState);		
 		
 		this.gameThread = new AGameViewThread(this.getHolder());
 		this.gameThread.start();
@@ -50,7 +46,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 //	Implement IGameManager
 	@Override
 	public void setState(IState nextState) {
-		this.state.dismiss();					// Exit State
+		if(this.state!=null) this.state.dismiss();					// Exit State
 		this.state = nextState;					// Change to Next State
 		this.state.setGameManager(this);		// Set GameManager -> State
 		AppManager.setState(this.state);		// Set State -> Thread
@@ -62,7 +58,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 		this.onDraw(canvas);
 	}
 
-	public void onGameCreate() {
+	public void onCreate() {
 		Log.i("AGameView", "onGameCreate");
 		AppManager.setThreadFlag(true);
 	}

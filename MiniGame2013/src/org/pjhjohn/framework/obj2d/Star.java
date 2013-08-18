@@ -2,13 +2,14 @@ package org.pjhjohn.framework.obj2d;
 
 import java.util.Random;
 
+import org.pjhjohn.manager.AppManager;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import app.main.AppOption;
 
 public class Star extends ImageObj {
-	private float left=0, right=AppOption.getDeviceWidth(), top=0, bottom=AppOption.getDeviceHeight();
+	private float left=0, right=AppManager.getDeviceWidth(), top=0, bottom=AppManager.getDeviceHeight();
 	private Paint paint = new Paint();
 	private Random rand = new Random();
 	private float dx;

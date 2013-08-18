@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.pjhjohn.framework.obj2d.ImageObj;
 import org.pjhjohn.framework.obj2d.Star;
+import org.pjhjohn.manager.AppManager;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -18,7 +19,7 @@ public class CustomViewBackground extends CustomView {
 		for (int i = 0; i < AppOption.Dodge.NUMBER_OF_STAR; i++){
 			mStars[i] = new Star();
 			mStars[i].setRandomColor();
-			mStars[i].setPosition(AppOption.getDeviceWidth()*mRand.nextFloat(), AppOption.getDeviceHeight()*mRand.nextFloat());
+			mStars[i].setPosition(AppManager.getDeviceWidth()*mRand.nextFloat(), AppManager.getDeviceHeight()*mRand.nextFloat());
 			mStars[i].setSpeed(0,2*(AppOption.Dodge.STAR_SPEED_MIN + AppOption.Dodge.STAR_SPEED_RANGE * mRand.nextFloat()));
 		}
 	}

@@ -33,8 +33,8 @@ public class CControllerJoystic extends AController {
 		controller_handle.setBitmap(AppManager.getBitmap(R.drawable.joystic_handle));
 		controller_background_radius = controller_background.getBitmap().getWidth()/2;
 		controller_handle_radius = controller_handle.getBitmap().getWidth()/2;
-		controller_x = AppOption.getDeviceWidth() - AppOption.Dodge.PADDING_JOYSTIC - controller_background_radius;
-		controller_y = AppOption.getDeviceHeight() - AppOption.Dodge.PADDING_JOYSTIC - controller_background_radius;
+		controller_x = AppManager.getDeviceWidth() - AppOption.Dodge.PADDING_JOYSTIC - controller_background_radius;
+		controller_y = AppManager.getDeviceHeight() - AppOption.Dodge.PADDING_JOYSTIC - controller_background_radius;
 		
 		controller_background.setPosition(controller_x, controller_y);
 		controller_handle.setPosition(controller_x, controller_y);

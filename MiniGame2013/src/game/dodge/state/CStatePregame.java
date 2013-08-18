@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import app.main.AppOption;
 
 
 // Disable Previous Thread & Assign New Thread
@@ -55,7 +54,7 @@ public class CStatePregame extends AState {
 					AlertDialog dialog = AppManager.getAlertDialog();
 					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();  
 					lp.copyFrom(dialog.getWindow().getAttributes());  
-					lp.width = (int) (AppOption.getDeviceWidth()/(float)1.5);  
+					lp.width = (int) (AppManager.getDeviceWidth()/(float)1.5);  
 					lp.height = WindowManager.LayoutParams.WRAP_CONTENT;  
 					dialog.show();
 					Window window = dialog.getWindow();  

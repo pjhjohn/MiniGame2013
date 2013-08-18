@@ -5,11 +5,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 
 public class CListenerSensor extends AListener implements SensorEventListener{
-	private static IListener singleton = new CListenerSensor();
+	private static AListener singleton = new CListenerSensor();
 	private CListenerSensor() {
 		super();
 	}
-	public static IListener getInstance(){
+	public static AListener getInstance(){
 		return singleton;
 	}
 	

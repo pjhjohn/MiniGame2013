@@ -8,8 +8,6 @@ import org.pjhjohn.framework.unit.IFactory;
 import org.pjhjohn.framework.unit.IUnitType;
 import org.pjhjohn.manager.AppManager;
 
-import android.util.Log;
-
 
 public class CUnitFactory implements IFactory {
 	private static CUnitFactory singleton = new CUnitFactory();

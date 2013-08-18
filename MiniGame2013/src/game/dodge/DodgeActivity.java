@@ -1,10 +1,13 @@
 package game.dodge;
 
+import game.common.ControllerBridge;
 import game.dodge.controller.CControllerJoystic;
 import game.dodge.controller.CControllerTilt;
 import game.dodge.controller.CControllerTouch;
 
 import org.pjhjohn.framework.rank.RankingActivity;
+import org.pjhjohn.framework.sensorlistener.CListenerSensor;
+import org.pjhjohn.framework.sensorlistener.CListenerTouch;
 import org.pjhjohn.manager.AppManager;
 
 import android.app.Activity;
@@ -47,10 +50,21 @@ public class DodgeActivity extends Activity {
 		
 	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {
 		public void onClick(View view){
+			CListenerTouch.getInstance().unregisterAll();
+			CListenerSensor.getInstance().unregisterAll();
 			switch(view.getId()){
-				case DodgeView.ID_BTN1 : AppManager.setController(CControllerTouch.getInstance());		break;
-				case DodgeView.ID_BTN2 : AppManager.setController(CControllerJoystic.getInstance());	break;
-				case DodgeView.ID_BTN3 : AppManager.setController(CControllerTilt.getInstance());		break;
+				case DodgeView.ID_BTN1 : 
+					AppManager.setController(CControllerTouch.getInstance());
+					CListenerTouch.getInstance().registerObserver(ControllerBridge.getInstance());
+					break;
+				case DodgeView.ID_BTN2 : 
+					AppManager.setController(CControllerJoystic.getInstance());
+					CListenerTouch.getInstance().registerObserver(ControllerBridge.getInstance());
+					break;
+				case DodgeView.ID_BTN3 : 
+					AppManager.setController(CControllerTilt.getInstance());
+					CListenerSensor.getInstance().registerObserver(ControllerBridge.getInstance());
+					break;
 				case DodgeView.ID_BTN4 : startActivity(new Intent(DodgeActivity.this, RankingActivity.class));
 				default : return;
 			}	startActivity(new Intent(DodgeActivity.this, DodgeGameActivity.class));

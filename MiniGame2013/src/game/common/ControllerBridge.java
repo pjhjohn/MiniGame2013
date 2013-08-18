@@ -16,7 +16,13 @@ import android.view.MotionEvent;
  * So, after all, ControllerBridge only deals with those triggered-event that state allows to do so.
  */
 public class ControllerBridge implements IObserver{
-
+	private static IObserver singleton = null;
+	private ControllerBridge(){
+	}
+	public static IObserver getInstance(){
+		if(singleton == null) singleton = new ControllerBridge();
+		return singleton;
+	}
 	@Override
 	public void update(MotionEvent event) {
 		AppManager.getController().onTouch(AppManager.getGameView(), event);

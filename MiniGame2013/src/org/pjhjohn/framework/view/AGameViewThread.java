@@ -18,35 +18,34 @@ public class AGameViewThread extends Thread{
 	
 	public void run() {
 		Canvas canvas = null;
-		long beginTime, timeDiff;		// the time when the cycle begun
-		int sleepTime = 0, framesSkipped;		// ms to sleep (<0 if we're behind)
-		
+		long tBegin, tDiff;
+		int tSleep = 0, numOfSkippedFrame; 							// ms to sleep (<0 if we're behind)
 		while (AppManager.isGameThreadActive()) {
 			if(AppManager.getState()==null) AppManager.setThreadFlag(false);
-			else AppManager.getState().update(); 					// update game state 
-			// Try locking the canvas for exclusive pixel editing in the surface
-			try {
+			else AppManager.getState().update(); 
+			try {													// Try locking the canvas for exclusive pixel editing in the surface
 				canvas = holder.lockCanvas(null);
 				synchronized (holder) {
-					beginTime = System.currentTimeMillis();
-					framesSkipped = 0;	// Reset frames skipped
-					AppManager.getState().drawSurface(canvas);			// render state to the screen : draws the canvas on the panel		
-					timeDiff = System.currentTimeMillis() - beginTime;	// calculate how long did the cycle take
-					sleepTime = (int)(FRAME_PERIOD - timeDiff);			// calculate sleep time
-					if (sleepTime > 0) {								// if sleepTime > 0 we're OK
+					tBegin = System.currentTimeMillis();
+					numOfSkippedFrame = 0;							// Reset frames skipped
+					AppManager.getState().drawSurface(canvas);		// Render : Draws the canvas on the panel		
+					tDiff = System.currentTimeMillis() - tBegin;	// Calculate Cycle Length
+					tSleep = FRAME_PERIOD - (int)tDiff;				// calculate sleep time
+					if (tSleep > 0) {								// if sleepTime > 0 we're OK
 						try {
-							// send the thread to sleep for a short period very useful for battery saving
-							Thread.sleep(sleepTime);	
-						} catch (InterruptedException e) {}
+							Thread.sleep(tSleep);					// Sleep Thread for a short period very useful for battery saving	
+						} catch (InterruptedException e) {
+							Log.e("AGameViewThread", e.getStackTrace().toString() + "\n" + e.getMessage());
+						}
 					}					
-					while (sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS) { // Need to catch up update without rendering
+					while (tSleep < 0 && numOfSkippedFrame < MAX_FRAME_SKIPS) { // Need to catch up update without rendering
 						AppManager.getState().update();
-						sleepTime += FRAME_PERIOD; 			// add frame period to check if in next frame	
-						framesSkipped++;
+						tSleep += FRAME_PERIOD; 					// add frame period to check if in next frame	
+						numOfSkippedFrame++;
 					}
 				}
 			} catch (Exception e){
-				Log.e("AGameViewThreadError", e.getStackTrace().toString() + "\n" + e.getMessage());
+				Log.e("AGameViewThread", e.getStackTrace().toString() + "\n" + e.getMessage());
 			} finally {
 				if(canvas!=null) holder.unlockCanvasAndPost(canvas);
 			}

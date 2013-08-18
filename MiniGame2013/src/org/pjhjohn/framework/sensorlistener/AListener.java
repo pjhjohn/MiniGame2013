@@ -6,13 +6,14 @@ import org.pjhjohn.framework.controller.IObserver;
 
 import android.hardware.SensorEvent;
 import android.view.MotionEvent;
-import android.view.View;
 
 public abstract class AListener implements ISubject, IListener{
 	private ArrayList<IObserver> observers;
 	protected MotionEvent motion;
 	protected SensorEvent sensor;
-	protected View view;
+	protected AListener(){
+		this.observers = new ArrayList<IObserver>();
+	}
 	
 	@Override
 	public void registerObserver(IObserver observer) {
@@ -31,6 +32,13 @@ public abstract class AListener implements ISubject, IListener{
 			IObserver observer = (IObserver)observers.get(i);
 			observer.update(motion);
 			observer.update(sensor);
+		}
+	}
+	
+	@Override
+	public void unregisterAll(){
+		for(int i = 0; i < observers.size(); i ++) {
+			observers.remove(0);
 		}
 	}
 
