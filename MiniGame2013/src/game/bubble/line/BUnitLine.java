@@ -5,17 +5,17 @@ import game.bubble.unit.BUnitFactory;
 import game.bubble.unit.BUnitFactory.UnitType;
 
 import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IFactory;
 
 public class BUnitLine {
-	private IFactory unitFactory;
+	private BUnitFactory unitFactory;
 	private AUnit[] ballContainer;
 	private int containerSize;
 	private int remainingBall;
 	private int floor;
 	private float radius = BUnitBall.getRadius();
+	public int getContainerSize(){ return containerSize; }
 	public BUnitLine(boolean length) {
-		unitFactory = (IFactory) BUnitFactory.getInstance();
+		unitFactory = BUnitFactory.getInstance();
 		// TODO Auto-generated constructor stub
 		if(length){
 			containerSize = 8;
@@ -27,16 +27,22 @@ public class BUnitLine {
 		floor = 0;
 	}
 	public void FillLine(){
-		for(int i=0; i<containerSize ; i++){
+		for(int i=0; i<containerSize ; i++)
 			ballContainer[i]=unitFactory.create(UnitType.RAND);
-			ballContainer[i].setPosition( radius * (2*i+1), (float)(radius * (1 + floor*Math.sqrt(3))));
-		}
+		if(containerSize==8)
+			for(int i=0; i<containerSize ; i++){
+				ballContainer[i].setPosition( radius * (2*i+1), (float)(radius * (1 + floor*Math.sqrt(3))));
+			}
+		else
+			for(int i=0; i<containerSize ; i++){
+				ballContainer[i].setPosition( radius * (2*i+2), (float)(radius * (1 + floor*Math.sqrt(3))));
+			}
 		remainingBall = containerSize;
 	}
 	public void IncFloor(){ 
 		floor++;
 		for(int i=0; i<containerSize ; i++)
-			ballContainer[i].setPosition( radius * (2*i+1), (float)(radius * (1 + floor*Math.sqrt(3))));
+			ballContainer[i].setPosition( ballContainer[i].getX(), (float)(radius * (1 + floor*Math.sqrt(3))));
 	}
 	public void Linking(BUnitLine underline){
 		for(int i=0; i<containerSize-1 ; i++){

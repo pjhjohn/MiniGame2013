@@ -2,15 +2,16 @@ package game.bubble.unit;
 
 import game.bubble.unit.BUnitFactory.UnitType;
 
-import org.pjhjohn.framework.Option;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.unit.IUnit;
+
+import app.main.AppOption;
 
 public class BUnitBall extends AUnit implements IUnitBall{
 	private UnitType btype;
 	private boolean moving=false;//Ã³À½¿¡ ½ò¶§ true
 	private boolean RU=false, LU=false, RR=false, LL=false, RD=false, LD=false;
-	private static float radius = Option.getDeviceWidth()/16;
+	private static float radius = AppOption.getDeviceWidth()/16;
 	public BUnitBall(UnitType _balltype) {
 		// TODO Auto-generated constructor stub
 		btype = _balltype; 
