@@ -82,4 +82,26 @@ public class AppManager {
 	public static void setState(IState state) {
 		AppManager.state = state;
 	}
+	
+	//Device Information
+	private static float DEVICE_WIDTH = 0;
+	private static float DEVICE_HEIGHT = 0;
+	private static float DEVICE_DENSITY = 0;
+	public static float getDeviceWidth(){ return DEVICE_WIDTH; }
+	public static float getDeviceHeight(){ return DEVICE_HEIGHT; }
+	public static float getDeviceDensity(){ return DEVICE_DENSITY; }
+	// This Function must be called at the beginning of application
+	public static final void setDeviceSize(float width, float height){
+		DEVICE_WIDTH = width;
+		DEVICE_HEIGHT = height;		
+	}
+	public static void setDeviceDensity(Context context){
+		DEVICE_DENSITY = context.getResources().getDisplayMetrics().density;
+	}
+	public static float dp2px(float dp){
+		return dp * DEVICE_DENSITY;
+	}
+	public static float px2dp(float px){
+		return px / DEVICE_DENSITY;
+	}
 }

@@ -2,6 +2,8 @@ package org.pjhjohn.framework.obj2d;
 
 import java.util.Random;
 
+import org.pjhjohn.manager.AppManager;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,7 +13,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import app.main.AppOption;
 
 /* StarText : drilling text-shaped hole in the background with falling stars behind.						 *
  * To provide this as a meaningful library component, this should be provided as subclass of ANDROID.VIEW	 * 
@@ -74,11 +75,11 @@ public class StarText extends ImageObj {
 	public StarText(String text) {
 		this.text = text;
 		// Set Default super.bitmap
-		bitmap = Bitmap.createBitmap((int)AppOption.getDeviceWidth(), (int)AppOption.getDeviceHeight(), Bitmap.Config.ARGB_8888);
+		bitmap = Bitmap.createBitmap((int)AppManager.getDeviceWidth(), (int)AppManager.getDeviceHeight(), Bitmap.Config.ARGB_8888);
 		Canvas cTemp = new Canvas(bitmap);
 		Paint pTemp = new Paint();
 		pTemp.setColor(Color.BLACK);
-		cTemp.drawRect(0, 0, AppOption.getDeviceWidth(), AppOption.getDeviceHeight(), pTemp);
+		cTemp.drawRect(0, 0, AppManager.getDeviceWidth(), AppManager.getDeviceHeight(), pTemp);
 		setBitmap(bitmap);
 		
 		setTextSize(40);
@@ -162,7 +163,7 @@ public class StarText extends ImageObj {
 			while(true){
 				this.textPaint.setTextSize(size);
 				this.textPaint.getTextBounds(text, 0, text.length(), textBounds);
-				if(textBounds.width()>AppOption.getDeviceWidth()){
+				if(textBounds.width()>AppManager.getDeviceWidth()){
 					this.textPaint.setTextSize((float) (size - 0.5));
 					break;
 				} else size += 0.5;
@@ -171,7 +172,7 @@ public class StarText extends ImageObj {
 			while(true){
 				this.textPaint.setTextSize(size);
 				this.textPaint.getTextBounds(text, 0, text.length(), textBounds);
-				if(textBounds.height()>AppOption.getDeviceHeight()){
+				if(textBounds.height()>AppManager.getDeviceHeight()){
 					this.textPaint.setTextSize((float) (size - 0.5));
 					break;
 				} else size += 0.5;

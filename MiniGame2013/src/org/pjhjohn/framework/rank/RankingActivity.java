@@ -38,16 +38,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class RankingActivity extends Activity {
-	ArrayList<String>	mNameArray = new ArrayList<String>();
-	ArrayList<String>	mScoreArray = new ArrayList<String>();
-	ArrayList<String> 	mCountryArray = new ArrayList<String>();	
-	ArrayList<ListRowData> mListViewArray = new ArrayList<ListRowData>();
-	CustomAdapter mCustomAdapter;
+	ArrayList<String>	nameArray = new ArrayList<String>();
+	ArrayList<String>	scoreArray = new ArrayList<String>();
+	ArrayList<String> 	countryArray = new ArrayList<String>();	
+	ArrayList<ListRowData> listViewArray = new ArrayList<ListRowData>();
+	CustomAdapter customAdapter;
 
-	ListView mListView;
-	EditText mTextName;
-	EditText mTextScore;
-	EditText mTextCountry;
+	ListView listView;
+	EditText textName;
+	EditText textScore;
+	EditText textCountry;
 	//private int HowManyReCentLoc;	// for preference
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,16 +56,16 @@ public class RankingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ranking_layout);
 		findViewById(R.id.linearLayout).setBackgroundColor(Color.BLACK);
-		mListView 	= (ListView)findViewById(R.id.listView);
-		mTextName 	= (EditText)findViewById(R.id.name);
-		mTextScore 	= (EditText)findViewById(R.id.score);
-		mTextCountry= (EditText)findViewById(R.id.country);
+		listView 	= (ListView)findViewById(R.id.listView);
+		textName 	= (EditText)findViewById(R.id.name);
+		textScore 	= (EditText)findViewById(R.id.score);
+		textCountry= (EditText)findViewById(R.id.country);
 		//mTextName.setBackgroundColor(Color.TRANSPARENT);
-		mTextName.setTextColor(Color.WHITE);
+		textName.setTextColor(Color.WHITE);
 		//mTextScore.setBackgroundColor(Color.TRANSPARENT);
-		mTextScore.setTextColor(Color.WHITE);
+		textScore.setTextColor(Color.WHITE);
 		//mTextCountry.setBackgroundColor(Color.TRANSPARENT);
-		mTextCountry.setTextColor(Color.WHITE);
+		textCountry.setTextColor(Color.WHITE);
 		findViewById(R.id.button_read).setOnClickListener(onButtonClickListener);
 		findViewById(R.id.button_send).setOnClickListener(onButtonClickListener);
 		findViewById(R.id.button_clear).setOnClickListener(onButtonClickListener);
@@ -81,7 +81,7 @@ public class RankingActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				} break;
-			case R.id.button_send : sendJSON("http://superwoou.phps.kr/joonho.php", mTextName.getText().toString(), mTextScore.getText().toString(), mTextCountry.getText().toString());
+			case R.id.button_send : sendJSON("http://superwoou.phps.kr/joonho.php", textName.getText().toString(), textScore.getText().toString(), textCountry.getText().toString());
 			break;
 			case R.id.button_clear : sendJSON("http://superwoou.phps.kr/joonho_clear.php", "", "", "");
 			break;
@@ -89,19 +89,19 @@ public class RankingActivity extends Activity {
 		}
 	};
 	private void JSONArraytoAdapter(JSONArray json){
-		mCustomAdapter.clear();
-		mCustomAdapter = new CustomAdapter(this,mListViewArray);
-		mListView.setAdapter(mCustomAdapter);
-		mNameArray.clear();
-		mScoreArray.clear();
-		mCountryArray.clear();
+		customAdapter.clear();
+		customAdapter = new CustomAdapter(this,listViewArray);
+		listView.setAdapter(customAdapter);
+		nameArray.clear();
+		scoreArray.clear();
+		countryArray.clear();
 		for(int i=0; i<json.length(); i++){
 			try {
 				JSONObject obj = json.getJSONObject(i);
-				mNameArray.add(obj.getString("name"));
-				mScoreArray.add(obj.getString("score"));
-				mCountryArray.add(obj.getString("country"));
-				mCustomAdapter.add(new ListRowData(getApplicationContext(),mNameArray.get(i),mScoreArray.get(i),mCountryArray.get(i)));
+				nameArray.add(obj.getString("name"));
+				scoreArray.add(obj.getString("score"));
+				countryArray.add(obj.getString("country"));
+				customAdapter.add(new ListRowData(getApplicationContext(),nameArray.get(i),scoreArray.get(i),countryArray.get(i)));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

@@ -1,6 +1,7 @@
 package org.pjhjohn.framework.controller;
 
 import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
 
 import org.pjhjohn.framework.unit.AUnit;
 
@@ -12,7 +13,7 @@ public abstract class AController implements IController {
 	protected AUnit player;
 	protected float sensitivity;
 	public AController(){
-		player = CUnitFactory.getInstance().create(CUnitFactory.UnitType.PLAYER);
+		player = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 	}
 	public void init(){
 		// TODO : OVERRIDE if necessary

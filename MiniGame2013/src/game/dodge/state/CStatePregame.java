@@ -2,6 +2,7 @@ package game.dodge.state;
 
 import game.dodge.GameSpeedButton;
 import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
 import org.pjhjohn.framework.state.AState;
@@ -16,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import app.main.AppOption;
 
 
 // Disable Previous Thread & Assign New Thread
@@ -29,7 +29,7 @@ public class CStatePregame extends AState {
 	@Override
 	public void init() {
 		// Initialize player unit
-		AUnit player = CUnitFactory.getInstance().create(CUnitFactory.UnitType.PLAYER);
+		AUnit player = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 		player.setBitmap(AppManager.getBitmap(R.drawable.ship));
 		player.setSpeedX(0);
 		player.setSpeedY(0);
@@ -54,7 +54,7 @@ public class CStatePregame extends AState {
 					AlertDialog dialog = AppManager.getAlertDialog();
 					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();  
 					lp.copyFrom(dialog.getWindow().getAttributes());  
-					lp.width = (int) (AppOption.getDeviceWidth()/(float)1.5);  
+					lp.width = (int) (AppManager.getDeviceWidth()/(float)1.5);  
 					lp.height = WindowManager.LayoutParams.WRAP_CONTENT;  
 					dialog.show();
 					Window window = dialog.getWindow();  

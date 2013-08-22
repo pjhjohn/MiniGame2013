@@ -60,10 +60,10 @@ public class AppMainActivity extends Activity {
 		WindowManager windowManager = getWindowManager();
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
 			windowManager.getDefaultDisplay().getSize(size);
-			AppOption.setDeviceSize(size.x, size.y);
+			AppManager.setDeviceSize(size.x, size.y);
 		} else {
 			Display display = windowManager.getDefaultDisplay();
-			AppOption.setDeviceSize(display.getWidth(), display.getHeight());
+			AppManager.setDeviceSize(display.getWidth(), display.getHeight());
 		}
 	}
 	

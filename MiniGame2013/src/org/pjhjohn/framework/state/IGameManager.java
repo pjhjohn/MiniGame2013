@@ -3,7 +3,7 @@ package org.pjhjohn.framework.state;
 import android.graphics.Canvas;
 
 public interface IGameManager {
-	void onGameCreate();	// ONLY ONCE for the first time.
+	void onCreate();	// ONLY ONCE for the first time.
 	void onGameReady();		// Game Ready : Load resources
 	void onGameStart();		// Game Start
 	void onGamePause();		// Game Pause : Release Thread

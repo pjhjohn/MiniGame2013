@@ -41,14 +41,4 @@ public final class AppOption {
 	public final class SnowCraft {
 		
 	}
-	
-	private static float DEVICE_WIDTH;
-	private static float DEVICE_HEIGHT;
-	public static float getDeviceWidth(){ return DEVICE_WIDTH; }
-	public static float getDeviceHeight(){ return DEVICE_HEIGHT; }
-	// This Function must be called at the beginning of application
-	public static final void setDeviceSize(float width, float height){
-		DEVICE_WIDTH = width;
-		DEVICE_HEIGHT = height;		
-	}
 }

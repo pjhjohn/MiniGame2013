@@ -1,4 +1,4 @@
-package org.pjhjohn.time;
+package org.pjhjohn.timer; 
 
 public class Timer implements ITimer{
 	public long startTime;

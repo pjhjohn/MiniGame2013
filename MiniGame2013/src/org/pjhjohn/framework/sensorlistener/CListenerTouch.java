@@ -5,11 +5,11 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 public class CListenerTouch extends AListener implements OnTouchListener{
-	private static IListener singleton = new CListenerTouch();
+	private static AListener singleton = new CListenerTouch();
 	private CListenerTouch() {
 		super();
 	}
-	public static IListener getInstance(){
+	public static AListener getInstance(){
 		return singleton;
 	}
 	

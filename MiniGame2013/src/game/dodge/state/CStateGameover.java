@@ -2,6 +2,7 @@ package game.dodge.state;
 
 import game.dodge.GameSpeedButton;
 import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
 import org.pjhjohn.framework.state.AState;
@@ -17,7 +18,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import app.main.AppOption;
 
 // Disable Thread Enable Flag
 public class CStateGameover extends AState {
@@ -35,7 +35,7 @@ public class CStateGameover extends AState {
 		m_soundManager.addSound(0, R.raw.gamover);
 	}
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
+	public boolean onTouch(View view, MotionEvent event) {
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN :
 			if(GameSpeedButton.getInstance().isInside(event.getX(), event.getY())) isSettingObjDown = true;
@@ -45,13 +45,15 @@ public class CStateGameover extends AState {
 			if(isActionDown){
 				if(isSettingObjDown){
 					AlertDialog dialog = AppManager.getAlertDialog();
-					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();  
-					lp.copyFrom(dialog.getWindow().getAttributes());  
-					lp.width = (int) (AppOption.getDeviceWidth()/(float)1.5);  
-					lp.height = WindowManager.LayoutParams.WRAP_CONTENT;  
 					dialog.show();  
-					Window window = dialog.getWindow();  
-					window.setAttributes(lp);  
+										
+					WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();  
+					layoutParams.copyFrom(dialog.getWindow().getAttributes());  
+					layoutParams.width = (int) (AppManager.getDeviceWidth()/(float)1.5);  
+					layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;  
+					
+					Window window = dialog.getWindow();
+					window.setAttributes(layoutParams);  
 					window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));  
 				} else gameManager.setState(CStatePregame.getInstance());
 			} isActionDown = false;
@@ -61,7 +63,7 @@ public class CStateGameover extends AState {
 	@Override
 	public void init() {
 		Log.i("ApplicationState","Start Initializing"+this.toString());
-		CUnitFactory.getInstance().create(CUnitFactory.UnitType.PLAYER).setBitmap(AppManager.getBitmap(R.drawable.ship_destroyed_mid));
+		CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance()).setBitmap(AppManager.getBitmap(R.drawable.ship_destroyed_mid));
 		this.m_soundManager.play(0, SoundManager.PLAY_SINGLE);
 	}
 	@Override
