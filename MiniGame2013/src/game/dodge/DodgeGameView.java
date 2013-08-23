@@ -10,12 +10,13 @@ import game.main.R;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.pjhjohn.framework.obj2d.ImageObj;
-import org.pjhjohn.framework.obj2d.Star;
+import org.pjhjohn.framework.animatable.Star;
+import org.pjhjohn.framework.drawable.DrawableObj;
+import org.pjhjohn.framework.drawable.IDrawable;
+import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.unit.IFactory;
 import org.pjhjohn.framework.view.AGameView;
-import org.pjhjohn.manager.AppManager;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -40,7 +41,7 @@ public class DodgeGameView extends AGameView {
 	private IFactory 	unitFactory;
 	private AUnit 		player;
 	private Star[]		stars;
-	private ImageObj 	settingBtn;
+	private DrawableObj 	settingBtn;
 	private ArrayList<AUnit> asteroids;
 	
 	private Random 	random;
@@ -85,7 +86,7 @@ public class DodgeGameView extends AGameView {
 			AUnit newUnit = unitFactory.create(CUnitTypeAsteroid.getInstance());
 			while (true) {
 				newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), random.nextFloat() * AppManager.getDeviceHeight());
-				if(player.getDistance(newUnit) > AppOption.Dodge.ASTEROID_SAFETY_RANGE) break;
+				if(player.distanceTo(newUnit) > AppOption.Dodge.ASTEROID_SAFETY_RANGE) break;
 			} this.asteroids.add(AsteroidWithInitialSpeed(newUnit));
 		}
 	}
@@ -96,21 +97,22 @@ public class DodgeGameView extends AGameView {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawColor(Color.BLACK);												 // Layer 0 : BLACK BACKGROUND
-		for(Star star : stars) star.draw(canvas, ImageObj.Align.CENTER);			 // Layer 1 : Background-floating Stars
-		for(AUnit asteroid : asteroids) asteroid.draw(canvas, ImageObj.Align.CENTER);// Layer 2 : Asteroids
+		canvas.drawColor(Color.BLACK);												 	// Layer 0 : BLACK BACKGROUND
+		for(Star star : stars) star.draw(canvas);			 							// Layer 1 : Background-floating Stars
+		for(AUnit asteroid : asteroids) asteroid.draw(canvas, IDrawable.Align.CENTER);	// Layer 2 : Asteroids
 		// Layer 3 : Score & Time 
 		this.textPaint.setTextAlign(Align.LEFT);
 		canvas.drawText("최고득점: " + highScore, AppOption.Dodge.PADDING_SCORETEXT , this.textPaint.getTextSize() + AppOption.Dodge.PADDING_SCORETEXT, this.textPaint);
 		this.textPaint.setTextAlign(Align.RIGHT);
 		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth() - AppOption.Dodge.PADDING_SCORETEXT, this.textPaint.getTextSize() + AppOption.Dodge.PADDING_SCORETEXT, this.textPaint);		
 		// Layer 4 : Setting Button & Player & Controller(Optional)
-		this.settingBtn.draw(canvas, ImageObj.Align.CENTER);
-		this.player.draw(canvas, ImageObj.Align.CENTER);
+		this.settingBtn.draw(canvas, IDrawable.Align.CENTER);
+		this.player.draw(canvas, IDrawable.Align.CENTER);
 		AppManager.getController().draw(canvas);
 	}
 	
 //	Implement IGameManager
+	@Override
 	public void update() {
 		threadCount++;
 		score = (System.currentTimeMillis() - this.startSystemTime) / 100;
@@ -127,8 +129,9 @@ public class DodgeGameView extends AGameView {
 		for(AUnit asteroid:asteroids) asteroid.update();
 		this.highScore = (highScore < score)? score : highScore;
 	}
+	@Override
 	public void updateBackground(){
-		for (int i = 0; i < stars.length; i++) stars[i].move();
+		for (int i = 0; i < stars.length; i++) stars[i].update();
 	}
 	
 	@Override

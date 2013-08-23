@@ -5,10 +5,10 @@ import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
+import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.state.AState;
 import org.pjhjohn.framework.state.IState;
 import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.manager.AppManager;
 
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -45,7 +45,7 @@ public class CStatePregame extends AState {
 	public boolean onTouch(View view, MotionEvent event) {
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN :
-			if(GameSpeedButton.getInstance().isInside(event.getX(), event.getY())) isSettingBtnDown = true;
+			if(GameSpeedButton.getInstance().isHit(event.getX(), event.getY())) isSettingBtnDown = true;
 			isActionDown = true;
 			break;
 		case MotionEvent.ACTION_UP :

@@ -1,19 +1,19 @@
 package org.pjhjohn.framework.unit;
 
-import org.pjhjohn.framework.obj2d.ImageObj;
+import org.pjhjohn.framework.animatable.AnimatableObj;
 
-public abstract class AUnit extends ImageObj implements IUnit {
-	
-	protected float speedX, speedY, accX, accY;
-	
+
+public abstract class AUnit extends AnimatableObj implements IUnit {
+	protected float speedX, speedY, accX, accY;	// Speed/Acceleration variables
 	public AUnit(){
+		super();
 		this.setSpeed(0, 0);
 		this.setAcc(0, 0);
 	}
-	
-	// IUnit Implementation
+	// AnimatableObj Override
+	@Override
 	public void update() {
-		this.setPosition(this.posX + this.speedX, this.posY + this.speedY);
+		this.setPosition(this.x + this.speedX, this.y + this.speedY);
 		this.setSpeed(this.speedX + this.accX, this.speedY + this.accY);
 		// Accelerator as break : Stop at speed zero
 		if(Math.abs(this.getSpeedX())<Math.abs(accX)){
@@ -25,50 +25,49 @@ public abstract class AUnit extends ImageObj implements IUnit {
 			this.setSpeedY(0);
 		}
 	}
-	
-	// Speed
+		
+	// IUnit Implementation
+	@Override
 	public void setSpeed (float speed_x, float speed_y){
 		this.speedX = speed_x;
 		this.speedY = speed_y;
 	}
+	@Override
 	public void setSpeedX(float speed_x){
 		this.speedX = speed_x;		
-	}	
+	}
+	@Override
 	public void setSpeedY(float speed_y){
 		this.speedY = speed_y;
 	}
-	public float getSpeedX(){
-		return this.speedX;
-	}	
-	public float getSpeedY(){
-		return this.speedY;
-	}
-	
-	
-	// Acceleration
+	@Override
 	public void setAcc (float acc_x, float acc_y){
 		this.accX = acc_x;
 		this.accY = acc_y;
 	}
+	@Override
 	public void setAccX(float acc_x){
 		this.accX = acc_x;
 	}	
+	@Override
 	public void setAccY(float acc_y){
 		this.accY = acc_y;
 	}
+	@Override
+	public float getSpeedX(){
+		return this.speedX;
+	}
+	@Override
+	public float getSpeedY(){
+		return this.speedY;
+	}
+	@Override
 	public float getAccX(){
 		return this.accX;
 	}
+	@Override
 	public float getAccY(){
 		return this.accY;
 	}
-	
-	// Etc
-	public abstract boolean isCrashed(IUnit _target);
-	
-	// ImageObj Override
-	@Override
-	public void setPosition(float x, float y){
-		super.setPosition(x, y);
-	}
+	public abstract boolean isCrashed(IUnit another_unit);
 }

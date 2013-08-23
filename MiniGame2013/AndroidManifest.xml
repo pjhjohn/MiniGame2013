@@ -31,7 +31,7 @@
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name="org.pjhjohn.framework.rank.RankingActivity"
+            android:name="dodge.game.rank.RankingActivity"
             android:label="@string/app_name" 
             android:screenOrientation="portrait">
         </activity>

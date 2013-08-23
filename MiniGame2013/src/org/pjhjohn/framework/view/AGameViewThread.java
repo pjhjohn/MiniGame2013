@@ -1,6 +1,6 @@
 package org.pjhjohn.framework.view;
 
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.manager.AppManager;
 
 import android.graphics.Canvas;
 import android.util.Log;
@@ -8,9 +8,7 @@ import android.view.SurfaceHolder;
 
 public class AGameViewThread extends Thread{ 
 	private SurfaceHolder holder;
-	private final static int MAX_FPS = 50;	
-	private final static int MAX_FRAME_SKIPS = 5;	
-	private final static int FRAME_PERIOD = 1000 / MAX_FPS;		
+	private final static int FRAME_PERIOD = 1000 / AppManager.MAX_FPS;		
 	
 	public AGameViewThread(SurfaceHolder holder){
 		this.holder = holder;
@@ -38,7 +36,7 @@ public class AGameViewThread extends Thread{
 							Log.e("AGameViewThread", e.getStackTrace().toString() + "\n" + e.getMessage());
 						}
 					}					
-					while (tSleep < 0 && numOfSkippedFrame < MAX_FRAME_SKIPS) { // Need to catch up update without rendering
+					while (tSleep < 0 && numOfSkippedFrame < AppManager.MAX_FRAME_SKIPS) { // Need to catch up update without rendering
 						AppManager.getState().update();
 						tSleep += FRAME_PERIOD; 					// add frame period to check if in next frame	
 						numOfSkippedFrame++;

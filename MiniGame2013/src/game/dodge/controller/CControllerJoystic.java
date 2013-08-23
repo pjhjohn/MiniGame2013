@@ -4,8 +4,9 @@ import game.main.R;
 
 import org.pjhjohn.framework.controller.AController;
 import org.pjhjohn.framework.controller.IController;
-import org.pjhjohn.framework.obj2d.ImageObj;
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.drawable.DrawableObj;
+import org.pjhjohn.framework.drawable.IDrawable;
+import org.pjhjohn.framework.manager.AppManager;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -16,9 +17,9 @@ public class CControllerJoystic extends AController {
 	private static IController singleton = new CControllerJoystic();
 	public static IController getInstance(){ return singleton; }
 	
-	private ImageObj controller_background = new ImageObj(); 
-	private ImageObj controller_handle = new ImageObj();
-	private ImageObj event_dummy = new ImageObj();
+	private DrawableObj controller_background = new DrawableObj(); 
+	private DrawableObj controller_handle = new DrawableObj();
+	private DrawableObj event_dummy = new DrawableObj();
 	
 	private final float controller_x;
 	private final float controller_y;
@@ -45,15 +46,15 @@ public class CControllerJoystic extends AController {
 		this.event_dummy.setPosition(event.getX(), event.getY());
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN:
-			if(controller_background.getDistance(event_dummy) < controller_background_radius) iscontrolActive = true;
+			if(controller_background.distanceTo(event_dummy) < controller_background_radius) iscontrolActive = true;
 			break;
 		case MotionEvent.ACTION_MOVE:
 			if(iscontrolActive){
-				if(controller_background.getDistance(event_dummy) < controller_handle_radius)	
+				if(controller_background.distanceTo(event_dummy) < controller_handle_radius)	
 					controller_handle.setPosition(event.getX(), event.getY());
 				else controller_handle.setPosition(
-						controller_background.getX() + controller_background_radius * (event.getX() - controller_background.getX())/controller_background.getDistance(event_dummy),
-						controller_background.getY() + controller_background_radius * (event.getY() - controller_background.getY())/controller_background.getDistance(event_dummy)
+						controller_background.getX() + controller_background_radius * (event.getX() - controller_background.getX())/controller_background.distanceTo(event_dummy),
+						controller_background.getY() + controller_background_radius * (event.getY() - controller_background.getY())/controller_background.distanceTo(event_dummy)
 						);				
 				player.setSpeedX(super.sensitivity*(controller_handle.getX() - controller_background.getX()));
 				player.setSpeedY(super.sensitivity*(controller_handle.getY() - controller_background.getY()));
@@ -69,8 +70,8 @@ public class CControllerJoystic extends AController {
 	}
 	@Override
 	public void draw(Canvas canvas){
-		controller_background.draw(canvas, ImageObj.Align.CENTER);
-		controller_handle.draw(canvas, ImageObj.Align.CENTER);
+		controller_background.draw(canvas, IDrawable.Align.CENTER);
+		controller_handle.draw(canvas, IDrawable.Align.CENTER);
 	}
 	public void init(){
 		controller_handle.setPosition(controller_x, controller_y);

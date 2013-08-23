@@ -1,9 +1,8 @@
 package game.bubble;
 
-import org.pjhjohn.framework.view.CustomView;
-import org.pjhjohn.framework.view.CustomViewBackground;
-import org.pjhjohn.framework.view.CustomViewStarText;
-import org.pjhjohn.framework.view.CustomViewSurfaceContainer;
+import org.pjhjohn.framework.animatable.AnimatableObjBackground;
+import org.pjhjohn.framework.animatable.AnimatableObjStarText;
+import org.pjhjohn.framework.animatable.AnimatableSurfaceView;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,16 +22,14 @@ public class BubbleView extends RelativeLayout{
 	private Button btnCtrl;
 	private Button btnTilt;
 	private Button btnRank;
-	private CustomView[] surfaceViews;
-	private CustomViewSurfaceContainer surfContainer;
+	private AnimatableSurfaceView snurfaceView;
 	
 	public BubbleView(Context context) {
 		super(context);
-		surfaceViews = new CustomView[2];
-		surfaceViews[0] = new CustomViewStarText(context, "PuzzleBubble");			surfaceViews[0].setId(ID_STARTEXT);
-		surfaceViews[1] = new CustomViewBackground(getContext());	surfaceViews[1].setId(ID_BACKGROUND);
-		surfContainer = new CustomViewSurfaceContainer(getContext(), surfaceViews);
-		this.addView(surfContainer);
+		snurfaceView = new AnimatableSurfaceView(context, Color.BLACK);
+		snurfaceView.register("bubble", new AnimatableObjStarText("Bubble"));
+		snurfaceView.register("background", new AnimatableObjBackground());
+		this.addView(snurfaceView);
 		
 		btnTouch = makeButton("Touch"  , ID_BTN1, 0, 0);
 		btnCtrl = makeButton("Joystic", ID_BTN2, RelativeLayout.BELOW, btnTouch.getId());

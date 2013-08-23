@@ -1,9 +1,9 @@
 package app.main;
 
-import org.pjhjohn.framework.view.CustomView;
-import org.pjhjohn.framework.view.CustomViewBackground;
-import org.pjhjohn.framework.view.CustomViewStarText;
-import org.pjhjohn.framework.view.CustomViewSurfaceContainer;
+import org.pjhjohn.framework.animatable.AnimatableObjBackground;
+import org.pjhjohn.framework.animatable.AnimatableObjStarText;
+import org.pjhjohn.framework.animatable.AnimatableSurfaceView;
+import org.pjhjohn.framework.manager.AppManager;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -23,41 +23,38 @@ public class AppMainView extends RelativeLayout{
 	private Button btnPuzzleBubble;
 	private Button btnSnowCraft;
 	private Button btnSetting;
-	private CustomView[] aCustomView;
-	private CustomViewSurfaceContainer customViewContainer;
+	private AnimatableSurfaceView surfaceView;
 	
 	public AppMainView(Context context) {
 		super(context);
-		
-		aCustomView	   = new CustomView[2];
-		aCustomView[0] = new CustomViewStarText(context, "MiniGame2013");		 aCustomView[0].setId(ID_STARTEXT);
-		aCustomView[1] = new CustomViewBackground(getContext()); aCustomView[1].setId(ID_BACKGROUND);
-		customViewContainer = new CustomViewSurfaceContainer(getContext(), aCustomView);
-		this.addView(customViewContainer);
-		
+		// Register SurfaceView
+		surfaceView = new AnimatableSurfaceView(getContext(), Color.BLACK);
+		surfaceView.register("2013", new AnimatableObjStarText("MiniGame2013"));
+		surfaceView.register("background", new AnimatableObjBackground());
+		this.addView(surfaceView);
+		// Register Normal Views
 		btnSnowCraft	= makeButton("SnowCraft"   , ID_BTN_SNOWCRAFT, RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.CENTER_VERTICAL);
 		btnMissleDodge	= makeButton("MissleDodge" , ID_BTN_MISSLEDODGE, RelativeLayout.ABOVE, btnSnowCraft.getId());
-		btnPuzzleBubble	= makeButton("PuzzleBubble", ID_BTN_PUZZLEBUBBLE, RelativeLayout.RIGHT_OF, btnSnowCraft.getId());
-		btnSetting		= makeButton("Application Setting", ID_BTN_SETTING, RelativeLayout.BELOW, btnSnowCraft.getId());
+		btnPuzzleBubble	= makeButton("PuzzleBubble", ID_BTN_PUZZLEBUBBLE, RelativeLayout.BELOW, btnSnowCraft.getId());
+		btnSetting		= makeButton("Application Setting", ID_BTN_SETTING, RelativeLayout.BELOW, btnPuzzleBubble.getId());
 		this.addView(btnMissleDodge);
 		this.addView(btnPuzzleBubble);
 		this.addView(btnSnowCraft);
 		this.addView(btnSetting);
 	}
 	private Button makeButton(String text, int id, int verb, int anchor){
-		float scale = getContext().getResources().getDisplayMetrics().density;
-		LayoutParams buttonLayoutParams = new LayoutParams((int)(160*scale), LayoutParams.WRAP_CONTENT);
+		LayoutParams buttonLayoutParams = new LayoutParams(AppManager.dp2px(160), LayoutParams.WRAP_CONTENT);
 		buttonLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
 		buttonLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
 		if(verb!=0)	buttonLayoutParams.addRule(verb, anchor);
-		Button rtnBtn = new Button(getContext());
-		rtnBtn.setBackgroundColor(Color.TRANSPARENT);
-		rtnBtn.setLayoutParams(buttonLayoutParams);
-		rtnBtn.setTypeface(null, Typeface.ITALIC);
-		rtnBtn.setTextColor(Color.WHITE);
-		rtnBtn.setTextSize(22);
-		rtnBtn.setText(text);
-		rtnBtn.setId(id);
-		return rtnBtn;
+		Button button = new Button(getContext());
+		button.setBackgroundColor(Color.TRANSPARENT);
+		button.setLayoutParams(buttonLayoutParams);
+		button.setTypeface(null, Typeface.ITALIC);
+		button.setTextColor(Color.WHITE);
+		button.setTextSize(22);
+		button.setText(text);
+		button.setId(id);
+		return button;
 	}
 }

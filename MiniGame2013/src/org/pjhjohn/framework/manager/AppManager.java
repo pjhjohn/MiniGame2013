@@ -1,4 +1,4 @@
-package org.pjhjohn.manager;
+package org.pjhjohn.framework.manager;
 
 import org.pjhjohn.framework.controller.IController;
 import org.pjhjohn.framework.state.IState;
@@ -48,6 +48,8 @@ public class AppManager {
 	private static IState		 state;
 	private static boolean 		 threadState;
 	public static boolean 		 soundEnable;
+	public static final int MAX_FPS = 30;	
+	public static final int MAX_FRAME_SKIPS = 5;
 	
 	public static void setGameView(AGameView gameView){
 		AppManager.gameView = gameView;
@@ -84,24 +86,20 @@ public class AppManager {
 	}
 	
 	//Device Information
-	private static float DEVICE_WIDTH = 0;
-	private static float DEVICE_HEIGHT = 0;
-	private static float DEVICE_DENSITY = 0;
-	public static float getDeviceWidth(){ return DEVICE_WIDTH; }
-	public static float getDeviceHeight(){ return DEVICE_HEIGHT; }
-	public static float getDeviceDensity(){ return DEVICE_DENSITY; }
+	public static float getDeviceWidth(){
+		return resource.getDisplayMetrics().widthPixels;
+	}
+	public static float getDeviceHeight(){
+		return resource.getDisplayMetrics().heightPixels;
+	}
+	public static float getDeviceDensity(){
+		return resource.getDisplayMetrics().density;
+	}
 	// This Function must be called at the beginning of application
-	public static final void setDeviceSize(float width, float height){
-		DEVICE_WIDTH = width;
-		DEVICE_HEIGHT = height;		
-	}
-	public static void setDeviceDensity(Context context){
-		DEVICE_DENSITY = context.getResources().getDisplayMetrics().density;
-	}
-	public static float dp2px(float dp){
-		return dp * DEVICE_DENSITY;
+	public static int dp2px(float dp){
+		return (int)(dp * resource.getDisplayMetrics().density);
 	}
 	public static float px2dp(float px){
-		return px / DEVICE_DENSITY;
+		return px / resource.getDisplayMetrics().density;
 	}
 }

@@ -4,17 +4,13 @@ import game.bubble.BubbleActivity;
 import game.dodge.DodgeActivity;
 import game.snowcraft.SnowCraftActivity;
 
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.manager.AppManager;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -35,10 +31,9 @@ public class AppMainActivity extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		// ApplicationManager Properties
-		setDeviceSize();
 		AppManager.setResources(getResources());
-		AppManager.setSensorManager((SensorManager)this.getSystemService(SENSOR_SERVICE));
 		AppManager.setContext(this);
+		AppManager.setSensorManager((SensorManager)this.getSystemService(SENSOR_SERVICE));
 
 		mainView = new AppMainView(this);
 		setContentView(mainView);
@@ -51,20 +46,6 @@ public class AppMainActivity extends Activity {
 		((Button)mainView.findViewById(AppMainView.ID_BTN_PUZZLEBUBBLE)).setOnTouchListener(btnOnTouchListener);
 		((Button)mainView.findViewById(AppMainView.ID_BTN_SNOWCRAFT)).setOnTouchListener(btnOnTouchListener);
 		((Button)mainView.findViewById(AppMainView.ID_BTN_SETTING)).setOnTouchListener(btnOnTouchListener);
-	}
-	
-	@SuppressLint("NewApi")
-	@SuppressWarnings("deprecation")
-	private void setDeviceSize(){
-		Point size = new Point();
-		WindowManager windowManager = getWindowManager();
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-			windowManager.getDefaultDisplay().getSize(size);
-			AppManager.setDeviceSize(size.x, size.y);
-		} else {
-			Display display = windowManager.getDefaultDisplay();
-			AppManager.setDeviceSize(display.getWidth(), display.getHeight());
-		}
 	}
 	
 	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {

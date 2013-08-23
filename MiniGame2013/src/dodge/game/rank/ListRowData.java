@@ -1,4 +1,4 @@
-package org.pjhjohn.framework.rank;
+package dodge.game.rank;
 
 import android.content.Context;
 

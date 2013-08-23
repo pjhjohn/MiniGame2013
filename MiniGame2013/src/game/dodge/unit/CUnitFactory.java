@@ -3,10 +3,10 @@ package game.dodge.unit;
 
 import game.main.R;
 
+import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.unit.IFactory;
 import org.pjhjohn.framework.unit.IUnitType;
-import org.pjhjohn.manager.AppManager;
 
 
 public class CUnitFactory implements IFactory {

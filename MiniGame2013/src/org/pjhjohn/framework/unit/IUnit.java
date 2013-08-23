@@ -1,12 +1,12 @@
 package org.pjhjohn.framework.unit;
 
-/* Interface of 2D-Units of this world.
- * Simply, They have position, speed, acceleration, like most of 2D-figures.
- * So, methods for getting/setting components above are declared.
+/* [pjhjohn]
+ * Interface of 2D-Unit.
+ * Only Contains Physically-moving functions.
+ * Drawing/Animating methods are taken by another interface.
  */
 public interface IUnit {
 	// Setter
-	void setPosition(float pos_x, float pos_y);
 	void setSpeed (float speed_x, float speed_y);
 	void setSpeedX(float speed_x);
 	void setSpeedY(float speed_y);
@@ -19,6 +19,5 @@ public interface IUnit {
 	float getAccX();
 	float getAccY();
 	// Etc
-	void update();
 	boolean isCrashed(IUnit another_unit);
 }

@@ -1,4 +1,4 @@
-package org.pjhjohn.manager;
+package org.pjhjohn.framework.manager;
 
 import java.util.HashMap;
 

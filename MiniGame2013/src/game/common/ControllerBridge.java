@@ -1,7 +1,7 @@
 package game.common;
 
 import org.pjhjohn.framework.controller.IObserver;
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.manager.AppManager;
 
 import android.hardware.SensorEvent;
 import android.view.MotionEvent;

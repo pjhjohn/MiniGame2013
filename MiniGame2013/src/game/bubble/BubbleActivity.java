@@ -2,7 +2,7 @@ package game.bubble;
 
 import game.snowcraft.SnowCraftView;
 
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.manager.AppManager;
 
 import android.app.Activity;
 import android.graphics.Color;
