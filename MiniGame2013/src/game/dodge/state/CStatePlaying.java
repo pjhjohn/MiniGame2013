@@ -1,9 +1,9 @@
 package game.dodge.state;
 
+import org.pjhjohn.framework.manager.AState;
 import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.manager.IState;
 import org.pjhjohn.framework.sensorlistener.CListenerTouch;
-import org.pjhjohn.framework.state.AState;
-import org.pjhjohn.framework.state.IState;
 
 import android.view.MotionEvent;
 import android.view.View;

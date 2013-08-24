@@ -5,9 +5,9 @@ import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
+import org.pjhjohn.framework.manager.AState;
 import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.state.AState;
-import org.pjhjohn.framework.state.IState;
+import org.pjhjohn.framework.manager.IState;
 import org.pjhjohn.framework.unit.AUnit;
 
 import android.app.AlertDialog;

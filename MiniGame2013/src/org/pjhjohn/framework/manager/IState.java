@@ -1,4 +1,4 @@
-package org.pjhjohn.framework.state;
+package org.pjhjohn.framework.manager;
 
 import android.graphics.Canvas;
 import android.view.View.OnTouchListener;

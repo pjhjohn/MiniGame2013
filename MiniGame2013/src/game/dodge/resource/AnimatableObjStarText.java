@@ -1,6 +1,7 @@
-package org.pjhjohn.framework.animatable;
+package game.dodge.resource;
 
 
+import org.pjhjohn.framework.animatable.AnimatableObj;
 import org.pjhjohn.framework.manager.AppManager;
 
 import android.graphics.Canvas;

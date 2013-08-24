@@ -1,5 +1,6 @@
 package game.dodge;
 
+import game.dodge.resource.Star;
 import game.dodge.state.CStatePregame;
 import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypeAsteroid;
@@ -10,7 +11,6 @@ import game.main.R;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.pjhjohn.framework.animatable.Star;
 import org.pjhjohn.framework.drawable.DrawableObj;
 import org.pjhjohn.framework.drawable.IDrawable;
 import org.pjhjohn.framework.manager.AppManager;

@@ -1,4 +1,4 @@
-package org.pjhjohn.framework.animatable;
+package org.pjhjohn.framework.view;
 
 import org.pjhjohn.framework.manager.AppManager;
 

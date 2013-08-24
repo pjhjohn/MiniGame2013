@@ -1,8 +1,8 @@
 package org.pjhjohn.framework.view;
 
 import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.state.IGameManager;
-import org.pjhjohn.framework.state.IState;
+import org.pjhjohn.framework.manager.IGameManager;
+import org.pjhjohn.framework.manager.IState;
 
 import android.content.Context;
 import android.graphics.Canvas;
