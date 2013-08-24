@@ -36,32 +36,26 @@ public final class R {
         public static final int transparent=0x7f020016;
     }
     public static final class id {
-        public static final int button1=0x7f080001;
-        public static final int button2=0x7f080002;
-        public static final int button3=0x7f080003;
-        public static final int button_clear=0x7f08000e;
-        public static final int button_read=0x7f08000d;
-        public static final int button_send=0x7f08000c;
-        public static final int cCountry=0x7f080007;
-        public static final int cName=0x7f080005;
-        public static final int cScore=0x7f080006;
-        public static final int country=0x7f080012;
-        public static final int linearLayout=0x7f08000b;
-        public static final int listView=0x7f08000f;
-        public static final int ll=0x7f080008;
-        public static final int mainView=0x7f080000;
-        public static final int menu_settings=0x7f080013;
-        public static final int name=0x7f080010;
-        public static final int score=0x7f080011;
-        public static final int seekbar=0x7f08000a;
-        public static final int textView1=0x7f080004;
-        public static final int textview=0x7f080009;
+        public static final int button_clear=0x7f080009;
+        public static final int button_read=0x7f080008;
+        public static final int button_send=0x7f080007;
+        public static final int cCountry=0x7f080002;
+        public static final int cName=0x7f080000;
+        public static final int cScore=0x7f080001;
+        public static final int country=0x7f08000d;
+        public static final int linearLayout=0x7f080006;
+        public static final int listView=0x7f08000a;
+        public static final int ll=0x7f080003;
+        public static final int menu_settings=0x7f08000e;
+        public static final int name=0x7f08000b;
+        public static final int score=0x7f08000c;
+        public static final int seekbar=0x7f080005;
+        public static final int textview=0x7f080004;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int customview=0x7f030001;
-        public static final int dialog_view=0x7f030002;
-        public static final int ranking_layout=0x7f030003;
+        public static final int customview=0x7f030000;
+        public static final int dialog_view=0x7f030001;
+        public static final int ranking_layout=0x7f030002;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;

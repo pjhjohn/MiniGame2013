@@ -9,10 +9,6 @@ import org.pjhjohn.framework.obj2d.ImageObj;
 import org.pjhjohn.framework.state.IState;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.view.AGameView;
-import org.pjhjohn.framework.view.CustomView;
-import org.pjhjohn.framework.view.CustomViewBackground;
-import org.pjhjohn.framework.view.CustomViewStarText;
-import org.pjhjohn.framework.view.CustomViewSurfaceContainer;
 import org.pjhjohn.manager.AppManager;
 
 import android.content.Context;
@@ -22,10 +18,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.Typeface;
-import android.widget.Button;
-import android.widget.RelativeLayout;
-import app.main.AppOption;
 
 public class BubbleView extends AGameView{
 	private BUnitFactory unitFactory;
@@ -44,14 +36,14 @@ public class BubbleView extends AGameView{
 		super(context, BStatePregame.getInstance());
 	}
 	@Override
-	public void onGameCreate(){
-		super.onGameCreate();
+	public void onCreate(){
+		super.onCreate();
 		this._bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 		this.unitFactory = BUnitFactory.getInstance();
 		this.textPaint = new Paint();
 		this.textPaint.setColor(Color.WHITE);
 		this.textPaint.setAntiAlias(true);
-		this.textPaint.setTextSize(AppOption.getDeviceHeight()/16);
+		this.textPaint.setTextSize(AppManager.getDeviceHeight()/16);
 		this.player = unitFactory.create(BUnitFactory.UnitType.BPLAYER);
 		this.lineManager = BUnitLineManager.getInstance();
 		this.score = 0;
@@ -63,9 +55,9 @@ public class BubbleView extends AGameView{
 		super.onGameReady();
 		this.lineManager.init();
 		this.isGameover = this.lineManager.pushDown();
-		this.player.setPosition(AppOption.getDeviceWidth()/2, (AppOption.getDeviceHeight()*11)/12);
+		this.player.setPosition(AppManager.getDeviceWidth()/2, (AppManager.getDeviceHeight()*11)/12);
 		this.movingBall = unitFactory.create(BUnitFactory.UnitType.RAND);
-		this.movingBall.setPosition(AppOption.getDeviceWidth()/4, (AppOption.getDeviceHeight()*11)/12);
+		this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
 	}
 	@Override
 	public void onGameStart() {
@@ -81,7 +73,7 @@ public class BubbleView extends AGameView{
 		player.draw(canvas, ImageObj.Align.CENTER);
 		lineManager.drawBall(canvas);
 		this.textPaint.setTextAlign(Align.RIGHT);
-		canvas.drawText("시간 : "+score2string(this.score), AppOption.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
+		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
 //		AppManager.getController().draw(canvas);
 	}
 	@Override
@@ -97,19 +89,8 @@ public class BubbleView extends AGameView{
 	@Override
 	public void updateBackground() {
 		// TODO Auto-generated method stub
+	}
 		
-	}
-	
-	
-	@Override
-	public void setState(IState currentState) {
-		// TODO Auto-generated method stub
-		this.state.dismiss();							// Exit State
-		this.state = currentState;						// Change to New State
-		this.state.setGameManager(this);				// Set GameManager -> State
-		AppManager.setState(this.state);				// Set State -> Thread
-		this.state.init();
-	}
 	@Override
 	public boolean isGameOver() {
 		// TODO Auto-generated method stub

@@ -1,20 +1,12 @@
 package game.bubble;
 
-import game.snowcraft.SnowCraftView;
 
 import org.pjhjohn.manager.AppManager;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 /* 1. MainActivity initializes static properties that will be used in further Activities.
  * setDeviceSize
  * ApplicationManager.setResources|setSensorManager|setContext
