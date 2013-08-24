@@ -1,21 +1,19 @@
 package game.bubble;
 
-<<<<<<< HEAD
 import game.bubble.line.BUnitLineManager;
 import game.bubble.state.BStatePregame;
+import game.bubble.unit.BUnitBall;
 import game.bubble.unit.BUnitFactory;
+import game.bubble.unit.BUnitTypePlayer;
+import game.bubble.unit.BUnitTypeRandBall;
 import game.main.R;
 
-import org.pjhjohn.framework.obj2d.ImageObj;
-import org.pjhjohn.framework.state.IState;
+
+import org.pjhjohn.framework.drawable.IDrawable;
+import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.framework.unit.IFactory;
 import org.pjhjohn.framework.view.AGameView;
-import org.pjhjohn.manager.AppManager;
-=======
-import org.pjhjohn.framework.animatable.AnimatableObjBackground;
-import org.pjhjohn.framework.animatable.AnimatableObjStarText;
-import org.pjhjohn.framework.animatable.AnimatableSurfaceView;
->>>>>>> origin/pjhjohn
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -26,18 +24,17 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 
 public class BubbleView extends AGameView{
-	private BUnitFactory unitFactory;
+	private IFactory unitFactory;
 	private AUnit player;
 	private AUnit movingBall;
 	private BUnitLineManager lineManager;
-	
-<<<<<<< HEAD
+
 	private Paint textPaint;
 	private float score;
 	private long startSystemTime;
 	private int threadCount;
 	Bitmap _bg;
-	private boolean isGameover;
+	private boolean Gameover;
 	
 	public BubbleView(Context context) {
 		super(context, BStatePregame.getInstance());
@@ -51,19 +48,22 @@ public class BubbleView extends AGameView{
 		this.textPaint.setColor(Color.WHITE);
 		this.textPaint.setAntiAlias(true);
 		this.textPaint.setTextSize(AppManager.getDeviceHeight()/16);
-		this.player = unitFactory.create(BUnitFactory.UnitType.BPLAYER);
-		this.lineManager = BUnitLineManager.getInstance();
+		this.player = unitFactory.create(BUnitTypePlayer.getInstance());
+//		this.lineManager = BUnitLineManager.getInstance();
+
 		this.score = 0;
-		this.isGameover=false;
+		this.Gameover=false;
 	}
 	
 	@Override
 	public void onGameReady() {
 		super.onGameReady();
-		this.lineManager.init();
-		this.isGameover = this.lineManager.pushDown();
+//		this.lineManager.init();
+		this.lineManager = new BUnitLineManager();
+		this.Gameover = this.lineManager.pushDown();
 		this.player.setPosition(AppManager.getDeviceWidth()/2, (AppManager.getDeviceHeight()*11)/12);
-		this.movingBall = unitFactory.create(BUnitFactory.UnitType.RAND);
+		this.player.setBitmap(Bitmap.createScaledBitmap(AppManager.getBitmap(R.drawable.cannon), (int)BUnitBall.getRadius()*2, (int)BUnitBall.getRadius()*2, true));
+		this.movingBall = unitFactory.create(BUnitTypeRandBall.getInstance());
 		this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
 	}
 	@Override
@@ -76,8 +76,8 @@ public class BubbleView extends AGameView{
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.drawBitmap(_bg, 0, 0, null);
-		movingBall.draw(canvas, ImageObj.Align.CENTER);
-		player.draw(canvas, ImageObj.Align.CENTER);
+		movingBall.draw(canvas, IDrawable.Align.CENTER);
+		player.draw(canvas, IDrawable.Align.CENTER);
 		lineManager.drawBall(canvas);
 		this.textPaint.setTextAlign(Align.RIGHT);
 		canvas.drawText("½Ã°£ : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
@@ -88,8 +88,8 @@ public class BubbleView extends AGameView{
 		// TODO Auto-generated method stub
 		threadCount++;
 		score = (System.currentTimeMillis() - this.startSystemTime) / 100;
-		if(threadCount%200==0)
-			this.isGameover = lineManager.pushDown();
+		if(threadCount%80==0)
+			this.Gameover = lineManager.pushDown();
 		player.update();
 		
 	}
@@ -97,27 +97,13 @@ public class BubbleView extends AGameView{
 	public void updateBackground() {
 		// TODO Auto-generated method stub
 	}
-=======
-	private Button btnTouch;
-	private Button btnCtrl;
-	private Button btnTilt;
-	private Button btnRank;
-	private AnimatableSurfaceView snurfaceView;
 	
-	public BubbleView(Context context) {
-		super(context);
-		snurfaceView = new AnimatableSurfaceView(context, Color.BLACK);
-		snurfaceView.register("bubble", new AnimatableObjStarText("Bubble"));
-		snurfaceView.register("background", new AnimatableObjBackground());
-		this.addView(snurfaceView);
->>>>>>> origin/pjhjohn
-		
 	@Override
 	public boolean isGameOver() {
 		// TODO Auto-generated method stub
-		if(isGameover)
+		if(Gameover)
 			this.player.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ship_destroyed_mid));
-		return isGameover;
+		return Gameover;
 	}
 	private String score2string(float score){
 		int min, sec, ms = (int)score;

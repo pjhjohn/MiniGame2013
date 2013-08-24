@@ -3,8 +3,8 @@ package game.bubble.state;
 import org.pjhjohn.framework.state.AState;
 import org.pjhjohn.framework.state.IState;
 
-import org.pjhjohn.manager.AppManager;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -30,6 +30,7 @@ public class BStatePregame extends AState{
 
 	@Override
 	public void init() {
+
 //		AppManager.getController().init();
 		this.gameManager.onGameReady();
 	}

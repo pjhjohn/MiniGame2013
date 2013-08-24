@@ -2,7 +2,6 @@ package game.bubble.state;
 
 import org.pjhjohn.framework.state.AState;
 import org.pjhjohn.framework.state.IState;
-import org.pjhjohn.manager.AppManager;
 
 import android.view.MotionEvent;
 import android.view.View;

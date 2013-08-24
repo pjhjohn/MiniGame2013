@@ -2,12 +2,13 @@ package game.bubble.line;
 
 import game.bubble.unit.BUnitBall;
 import game.bubble.unit.BUnitFactory;
-import game.bubble.unit.BUnitFactory.UnitType;
+import game.bubble.unit.BUnitTypeRandBall;
 
 import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.framework.unit.IFactory;
 
 public class BUnitLine {
-	private BUnitFactory unitFactory;
+	private IFactory unitFactory;
 	private AUnit[] ballContainer;
 	private int containerSize;
 	private int remainingBall;
@@ -28,7 +29,7 @@ public class BUnitLine {
 	}
 	public void FillLine(){
 		for(int i=0; i<containerSize ; i++)
-			ballContainer[i]=unitFactory.create(UnitType.RAND);
+			ballContainer[i]=unitFactory.create(BUnitTypeRandBall.getInstance());
 		if(containerSize==8)
 			for(int i=0; i<containerSize ; i++){
 				ballContainer[i].setPosition( radius * (2*i+1), (float)(radius * (1 + floor*Math.sqrt(3))));

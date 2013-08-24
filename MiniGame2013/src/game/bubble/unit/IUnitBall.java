@@ -1,9 +1,10 @@
 package game.bubble.unit;
 
-import game.bubble.unit.BUnitFactory.UnitType;
+import org.pjhjohn.framework.unit.IUnitType;
+
 
 public interface IUnitBall {
-	public UnitType getBallType();
+	public IUnitType getBallType();
 	public void setRU(boolean _ru);
 	public void setLU(boolean _lu);
 	public void setRR(boolean _rr);

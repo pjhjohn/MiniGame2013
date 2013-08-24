@@ -1,13 +1,11 @@
 package game.bubble.state;
 
-import game.bubble.unit.BUnitFactory;
-import game.dodge.unit.CUnitFactory;
-import game.main.R;
+
 
 import org.pjhjohn.framework.state.AState;
 import org.pjhjohn.framework.state.IState;
-import org.pjhjohn.manager.AppManager;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -36,7 +34,9 @@ public class BStateGameover extends AState {
 	}
 
 	@Override
-	public void init() {	}
+	public void init() {	
+		
+	}
 	public void update(){
 		this.gameManager.updateBackground();
 	}

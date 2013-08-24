@@ -1,21 +1,20 @@
 package game.bubble.unit;
 
-import game.bubble.unit.BUnitFactory.UnitType;
-
+import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.unit.IUnit;
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.unit.IUnitType;
 
 public class BUnitBall extends AUnit implements IUnitBall{
-	private UnitType btype;
+	private IUnitType btype;
 	private boolean moving=false;//Ã³À½¿¡ ½ò¶§ true
 	private boolean RU=false, LU=false, RR=false, LL=false, RD=false, LD=false;
 	private static float radius = AppManager.getDeviceWidth()/16;
-	public BUnitBall(UnitType _balltype) {
+	public BUnitBall(IUnitType _balltype) {
 		// TODO Auto-generated constructor stub
 		btype = _balltype; 
 	}
-	public UnitType getBallType() { return btype; }
+	public IUnitType getBallType() { return btype; }
 	@Override
 	public boolean isCrashed(IUnit _target) {
 		// TODO Auto-generated method stub
