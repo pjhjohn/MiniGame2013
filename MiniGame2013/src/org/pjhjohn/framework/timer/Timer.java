@@ -1,11 +1,6 @@
 package org.pjhjohn.framework.timer; 
 
-public class Timer extends android.os.CountDownTimer implements ITimer{
-	public Timer(long millisInFuture, long countDownInterval) {
-		super(millisInFuture, countDownInterval);
-		// TODO Auto-generated constructor stub
-	}
-
+public class Timer implements ITimer{
 	public long startTime;
 	public long elapsedTime;
 	@Override
@@ -13,10 +8,10 @@ public class Timer extends android.os.CountDownTimer implements ITimer{
 		elapsedTime = 0;
 	}
 
-//	@Override
-//	public void start() {
-//		this.startTime = System.currentTimeMillis();
-//	}
+	@Override
+	public void start() {
+		this.startTime = System.currentTimeMillis();
+	}
 
 	@Override
 	public long pause() {
@@ -34,19 +29,5 @@ public class Timer extends android.os.CountDownTimer implements ITimer{
 	@Override
 	public long get() {
 		return elapsedTime + System.currentTimeMillis() - startTime;
-	}
-
-	
-	
-	@Override
-	public void onFinish() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onTick(long millisUntilFinished) {
-		// TODO Auto-generated method stub
-		
 	}
 }

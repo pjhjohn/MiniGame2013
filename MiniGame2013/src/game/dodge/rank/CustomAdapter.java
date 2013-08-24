@@ -1,4 +1,4 @@
-package dodge.game.rank;
+package game.dodge.rank;
 
 import game.main.R;
 

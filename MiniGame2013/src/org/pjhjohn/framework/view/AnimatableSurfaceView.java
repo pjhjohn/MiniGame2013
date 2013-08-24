@@ -1,4 +1,7 @@
-package org.pjhjohn.framework.animatable;
+package org.pjhjohn.framework.view;
+
+import org.pjhjohn.framework.animatable.AnimatableObj;
+import org.pjhjohn.framework.animatable.AnimatableObjContainer;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -1,9 +1,10 @@
 package app.main;
 
-import org.pjhjohn.framework.animatable.AnimatableObjBackground;
-import org.pjhjohn.framework.animatable.AnimatableObjStarText;
-import org.pjhjohn.framework.animatable.AnimatableSurfaceView;
+import game.dodge.resource.AnimatableObjBackground;
+import game.dodge.resource.AnimatableObjStarText;
+
 import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.view.AnimatableSurfaceView;
 
 import android.content.Context;
 import android.graphics.Color;

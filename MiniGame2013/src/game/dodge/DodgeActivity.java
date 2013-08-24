@@ -4,12 +4,12 @@ import game.common.ControllerBridge;
 import game.dodge.controller.CControllerJoystic;
 import game.dodge.controller.CControllerTilt;
 import game.dodge.controller.CControllerTouch;
+import game.dodge.rank.RankingActivity;
 
 import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.sensorlistener.CListenerSensor;
 import org.pjhjohn.framework.sensorlistener.CListenerTouch;
 
-import dodge.game.rank.RankingActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;

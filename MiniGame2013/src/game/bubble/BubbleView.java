@@ -1,5 +1,6 @@
 package game.bubble;
 
+<<<<<<< HEAD
 import game.bubble.line.BUnitLineManager;
 import game.bubble.state.BStatePregame;
 import game.bubble.unit.BUnitBall;
@@ -14,6 +15,12 @@ import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.unit.IFactory;
 import org.pjhjohn.framework.view.AGameView;
+=======
+import game.dodge.resource.AnimatableObjBackground;
+import game.dodge.resource.AnimatableObjStarText;
+
+import org.pjhjohn.framework.view.AnimatableSurfaceView;
+>>>>>>> origin/pjhjohn
 
 import android.content.Context;
 import android.graphics.Bitmap;

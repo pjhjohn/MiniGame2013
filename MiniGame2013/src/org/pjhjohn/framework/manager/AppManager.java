@@ -1,7 +1,6 @@
 package org.pjhjohn.framework.manager;
 
 import org.pjhjohn.framework.controller.IController;
-import org.pjhjohn.framework.state.IState;
 import org.pjhjohn.framework.view.AGameView;
 
 import android.app.AlertDialog;
