@@ -12,15 +12,15 @@ public class CUnitGuidedAsteroid extends AUnit {
 	}
 	@Override
 	public boolean isCrashed(IUnit _target) {
-		return this.getDistance((AUnit)_target) < ((this.bitmap.getWidth() + ((AUnit)_target).getBitmap().getWidth())/2) - 2 ;
+		return this.distanceTo((AUnit)_target) < ((this.bmp.getWidth() + ((AUnit)_target).getBitmap().getWidth())/2) - 2 ;
 	}
 	@Override
 	public void update() {
-		super.setPosition(this.posX+this.speedX, this.posY+this.speedY);
+		super.setPosition(this.x+this.speedX, this.y+this.speedY);
 		// Apply Move and find next speed
-		float dist_x = player.getX() - this.posX;
-		float dist_y = player.getY() - this.posY;
-		float dist = this.getDistance(player);
+		float dist_x = player.getX() - this.x;
+		float dist_y = player.getY() - this.y;
+		float dist = this.distanceTo(player);
 		super.setSpeedX(AppOption.Dodge.GUIDED_ASTEROID_SPEED * dist_x / dist);
 		super.setSpeedY(AppOption.Dodge.GUIDED_ASTEROID_SPEED * dist_y / dist);
 	}

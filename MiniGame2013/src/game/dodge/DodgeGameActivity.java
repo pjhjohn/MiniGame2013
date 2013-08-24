@@ -2,7 +2,7 @@ package game.dodge;
 
 import game.main.R;
 
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.manager.AppManager;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,17 +40,17 @@ public class DodgeGameActivity extends Activity implements OnSeekBarChangeListen
 	
 	//	Implement OnSeekBarChangeListener
 	@Override
-	public void onProgressChanged(SeekBar _seekbar, int _current, boolean _userValid){
-		AppManager.getController().setSensitivity(_current, _seekbar.getMax());
-		DIALOG_TEXT.setText("LEVEL : "+_seekbar.getProgress()+"  Value : "+AppManager.getController().getSensitivity());
+	public void onProgressChanged(SeekBar bar, int current, boolean userValid){
+		AppManager.getController().setSensitivity(current, bar.getMax());
+		DIALOG_TEXT.setText("LEVEL : " + bar.getProgress() + "  Value : " + AppManager.getController().getSensitivity());
 		DIALOG_TEXT.invalidate();
 	}
 	@Override 
-	public void onStartTrackingTouch(SeekBar _seekbar){
-		_seekbar.setProgress((int) (_seekbar.getMax() * AppManager.getController().getProgressRatio()));
+	public void onStartTrackingTouch(SeekBar bar){
+		bar.setProgress((int) (bar.getMax() * AppManager.getController().getProgressRatio()));
 	}
 	@Override 
-	public void onStopTrackingTouch(SeekBar _seekbar){
+	public void onStopTrackingTouch(SeekBar bar){
 		
 	}
 	private AlertDialog getControllerSensitivityAlertDialog(){

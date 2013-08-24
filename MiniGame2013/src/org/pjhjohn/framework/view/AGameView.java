@@ -1,8 +1,8 @@
 package org.pjhjohn.framework.view;
 
+import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.state.IGameManager;
 import org.pjhjohn.framework.state.IState;
-import org.pjhjohn.manager.AppManager;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -46,11 +46,11 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 //	Implement IGameManager
 	@Override
 	public void setState(IState nextState) {
-		if(this.state!=null) this.state.dismiss();					// Exit State
-		this.state = nextState;					// Change to Next State
-		this.state.setGameManager(this);		// Set GameManager -> State
-		AppManager.setState(this.state);		// Set State -> Thread
-		this.state.init();						// Start State
+		if(this.state!=null) this.state.dismiss();	// Exit State
+		this.state = nextState;						// Change to Next State
+		this.state.setGameManager(this);			// Set GameManager -> State
+		AppManager.setState(this.state);			// Set State -> Thread
+		this.state.init();							// Start State
 	}
 	
 	@Override 

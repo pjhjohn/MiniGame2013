@@ -1,17 +1,6 @@
 package app.main;
 
 public final class AppOption {
-	// current Game Type
-	private static AppOption.Game gameType;
-	public static enum Game {
-		MISSLE_DODGE, PUZZLE_BUBBLE, SNOW_CRAFT
-	}
-	public static AppOption.Game getCurrentGameType(){
-		return AppOption.gameType;
-	}
-	public static void setCurrentGameType(AppOption.Game currentGame){
-		AppOption.gameType = currentGame;
-	}
 	// Dodge Options
 	public static final class Dodge {
 		public static final float PADDING_JOYSTIC 		= (float) 20;	// in Pixels

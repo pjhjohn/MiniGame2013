@@ -1,14 +1,13 @@
-package org.pjhjohn.framework.view;
+package org.pjhjohn.framework.animatable;
 
-import org.pjhjohn.framework.obj2d.ImageObj;
-import org.pjhjohn.framework.obj2d.StarText;
-import org.pjhjohn.manager.AppManager;
 
-import android.content.Context;
+import org.pjhjohn.framework.manager.AppManager;
+
 import android.graphics.Canvas;
-import android.graphics.Paint.Align;
+import android.graphics.Paint;
+import android.util.Log;
 
-public class CustomViewStarText extends CustomView {
+public class AnimatableObjStarText extends AnimatableObj {
 	private float textX = 400;
 	private float textY = 180;
 	private float textSize = 100;
@@ -18,22 +17,21 @@ public class CustomViewStarText extends CustomView {
 	private int   starNumber = 5000;
 
 	private StarText starText;
-	private CustomViewStarText(Context context){
-		super(context);
-	}
-	public CustomViewStarText(Context context, String text) {
-		super(context);
+	public AnimatableObjStarText(String text) {
 		init(text);
 	}
-	
+	@Override
 	public void update(){
-		starText.move();
+		starText.update();
 	}
-	@Override 
-	public void onDraw(Canvas canvas){
-		starText.draw(canvas, ImageObj.Align.CENTER);
+	@Override
+	public void draw(Canvas canvas){
+		Log.i("AnimatableObjStarText", "Before Draw");
+		starText.draw(canvas);
+		Log.i("AnimatableObjStarText", "After Draw");
 	}
 	
+	// Local Method
 	private void init(String text){
 		starText = new StarText(text);
 		starText.setStarNumber(starNumber);
@@ -42,6 +40,6 @@ public class CustomViewStarText extends CustomView {
 		starText.setTextSize(textSize);
 		starText.setBackgroundSize(AppManager.getDeviceWidth(), AppManager.getDeviceHeight());
 		starText.setStarSize(1, 2);
-		starText.setTextAlign(Align.CENTER);
+		starText.setTextAlign(Paint.Align.CENTER);
 	}
 }

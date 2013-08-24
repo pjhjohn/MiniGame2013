@@ -5,10 +5,10 @@ import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
+import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.manager.SoundManager;
 import org.pjhjohn.framework.state.AState;
 import org.pjhjohn.framework.state.IState;
-import org.pjhjohn.manager.AppManager;
-import org.pjhjohn.manager.SoundManager;
 
 import android.app.AlertDialog;
 import android.graphics.Color;
@@ -38,7 +38,7 @@ public class CStateGameover extends AState {
 	public boolean onTouch(View view, MotionEvent event) {
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN :
-			if(GameSpeedButton.getInstance().isInside(event.getX(), event.getY())) isSettingObjDown = true;
+			if(GameSpeedButton.getInstance().isHit(event.getX(), event.getY())) isSettingObjDown = true;
 			isActionDown = true;
 			break;
 		case MotionEvent.ACTION_UP :

@@ -1,5 +1,6 @@
 package game.bubble;
 
+<<<<<<< HEAD
 import game.bubble.line.BUnitLineManager;
 import game.bubble.state.BStatePregame;
 import game.bubble.unit.BUnitFactory;
@@ -10,6 +11,11 @@ import org.pjhjohn.framework.state.IState;
 import org.pjhjohn.framework.unit.AUnit;
 import org.pjhjohn.framework.view.AGameView;
 import org.pjhjohn.manager.AppManager;
+=======
+import org.pjhjohn.framework.animatable.AnimatableObjBackground;
+import org.pjhjohn.framework.animatable.AnimatableObjStarText;
+import org.pjhjohn.framework.animatable.AnimatableSurfaceView;
+>>>>>>> origin/pjhjohn
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,6 +31,7 @@ public class BubbleView extends AGameView{
 	private AUnit movingBall;
 	private BUnitLineManager lineManager;
 	
+<<<<<<< HEAD
 	private Paint textPaint;
 	private float score;
 	private long startSystemTime;
@@ -90,6 +97,20 @@ public class BubbleView extends AGameView{
 	public void updateBackground() {
 		// TODO Auto-generated method stub
 	}
+=======
+	private Button btnTouch;
+	private Button btnCtrl;
+	private Button btnTilt;
+	private Button btnRank;
+	private AnimatableSurfaceView snurfaceView;
+	
+	public BubbleView(Context context) {
+		super(context);
+		snurfaceView = new AnimatableSurfaceView(context, Color.BLACK);
+		snurfaceView.register("bubble", new AnimatableObjStarText("Bubble"));
+		snurfaceView.register("background", new AnimatableObjBackground());
+		this.addView(snurfaceView);
+>>>>>>> origin/pjhjohn
 		
 	@Override
 	public boolean isGameOver() {

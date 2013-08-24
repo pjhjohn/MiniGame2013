@@ -2,7 +2,7 @@ package game.dodge.controller;
 
 import org.pjhjohn.framework.controller.AController;
 import org.pjhjohn.framework.controller.IController;
-import org.pjhjohn.manager.AppManager;
+import org.pjhjohn.framework.manager.AppManager;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
