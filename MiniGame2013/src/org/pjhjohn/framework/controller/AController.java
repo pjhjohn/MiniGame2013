@@ -6,10 +6,11 @@ import game.dodge.unit.CUnitTypePlayer;
 import org.pjhjohn.framework.unit.AUnit;
 
 import android.graphics.Canvas;
+import android.hardware.SensorEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-public abstract class AController implements IController {
+public abstract class AController implements IObserver, IController {
 	protected AUnit player;
 	protected float sensitivity;
 	public AController(){
@@ -24,6 +25,14 @@ public abstract class AController implements IController {
 	public void draw(Canvas canvas){
 		// TODO : OVERRIDE if necessary
 	}	
+	public void update(SensorEvent event){
+		
+	}
+	public void update(MotionEvent event){
+		
+	}
+	
+	
 	public abstract boolean onTouch(View v, MotionEvent event);
 	public abstract void setSensitivity(int _current, int _max);
 	public abstract void setDefaultSensitivity();

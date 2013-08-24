@@ -69,7 +69,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 	public void onGameOver()  {	Log.i("AGameView", "onGameOver"  );	}
 	public void onDestroy() {
 		Log.i("AGameView", "onGameDestroy");
-		AppManager.getController().destroy();
+		if(AppManager.getController()!=null) AppManager.getController().destroy();
 		AppManager.setState(null);
 	}	
 	
