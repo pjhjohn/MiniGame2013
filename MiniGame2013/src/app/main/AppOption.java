@@ -1,5 +1,7 @@
 package app.main;
 
+import android.app.AlertDialog;
+
 public final class AppOption {
 	// Dodge Options
 	public static final class Dodge {
@@ -11,7 +13,7 @@ public final class AppOption {
 		public static final float ASTEROID_SAFETY_RANGE	= (float) 300; 	// in Pixels
 		public static final float STAR_SPEED_RANGE 		= (float) 2;
 		public static final float STAR_SPEED_MIN 		= (float) 1;
-		public static final int NUMBER_OF_ASTEROID 		= 10;
+		public static final int NUMBER_OF_ASTEROID 		= 1;
 		public static final int NUMBER_OF_STAR 			= 200;
 		public static final int THREAD_INTERVAL 		= 50;
 		public static final class Sensitivity {
@@ -29,5 +31,12 @@ public final class AppOption {
 	}
 	public final class SnowCraft {
 		
+	}
+	private static AlertDialog 	 dialog;
+	public static void setAlertDialog(AlertDialog dialog) {
+		AppOption.dialog = dialog;
+	}
+	public static AlertDialog getAlertDialog() {
+		return dialog;
 	}
 }

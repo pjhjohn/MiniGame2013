@@ -3,9 +3,13 @@ package org.pjhjohn.framework.view;
 import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.manager.IGameManager;
 import org.pjhjohn.framework.manager.IState;
+import org.pjhjohn.framework.sensorlistener.AListener;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -18,29 +22,35 @@ import android.view.View.OnTouchListener;
  * These things should contain main game sequences such as onCreate / onPause / onResume / onDestroy
  * Automatically register / unregister corresponding resources / threads.
  */
-public abstract class AGameView extends SurfaceView implements OnTouchListener, IGameManager, SurfaceHolder.Callback {
+public abstract class AGameView extends SurfaceView implements OnTouchListener, SensorEventListener, IGameManager, SurfaceHolder.Callback{
 	protected IState state;
+	protected AListener listener;
 	protected AGameViewThread gameThread;
 	
 	private AGameView(Context context){
 		super(context);	// But Nobody can call this outside.
 	}
+	
 	public AGameView(Context context, IState initialState){
 		super(context);
 		this.onCreate();
-		
 		setState(initialState);		
-		
 		this.gameThread = new AGameViewThread(this.getHolder());
 		this.gameThread.start();
-		
 		this.setOnTouchListener(this);
 	}
-
 //	Implement OnTouchListener
 	@Override 
 	public boolean onTouch(View view, MotionEvent event) {
 		return this.state.onTouch(view, event);
+	}
+//	Implement SensorEventListener
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+	}
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		//listener.notifyObservers();
 	}
 	
 //	Implement IGameManager
@@ -68,8 +78,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 	public void onGamePause() {	Log.i("AGameView", "onGamePause" );	}
 	public void onGameOver()  {	Log.i("AGameView", "onGameOver"  );	}
 	public void onDestroy() {
-		Log.i("AGameView", "onGameDestroy");
-		AppManager.getController().destroy();
+		if(AppManager.getController()!=null) AppManager.getController().destroy();
 		AppManager.setState(null);
 	}	
 	
@@ -96,6 +105,6 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 				// try again shutting down the thread
 			}
 		}
-		Log.d("pjhjohn", "Thread was shut down cleanly");
+		Log.d("AGameView", "Thread has been shut down.");
 	}
 }

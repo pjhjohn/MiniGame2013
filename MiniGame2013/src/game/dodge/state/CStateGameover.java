@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import app.main.AppOption;
 
 // Disable Thread Enable Flag
 public class CStateGameover extends AState {
@@ -44,7 +45,7 @@ public class CStateGameover extends AState {
 		case MotionEvent.ACTION_UP :
 			if(isActionDown){
 				if(isSettingObjDown){
-					AlertDialog dialog = AppManager.getAlertDialog();
+					AlertDialog dialog = AppOption.getAlertDialog();
 					dialog.show();  
 										
 					WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();  

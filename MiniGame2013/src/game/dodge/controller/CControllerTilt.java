@@ -56,7 +56,7 @@ public class CControllerTilt extends AController implements SensorEventListener{
 			float coefficient = (float)(1/(Math.abs(Math.cos(initial_roll)) + 0.1));				// Correcting coefficient of Roll-initiated pitch error
 			player.setSpeedX(super.sensitivity * -Radian2Degree(values[1]) * coefficient);			// pitch
 			player.setSpeedY(super.sensitivity * (current_roll - initial_roll));			
-		}		
+		}
 	}
 	@Override
 	public void init(){
