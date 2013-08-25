@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import app.main.AppOption;
 
 
 // Disable Previous Thread & Assign New Thread
@@ -51,7 +52,7 @@ public class CStatePregame extends AState {
 		case MotionEvent.ACTION_UP :
 			if(isActionDown){
 				if(isSettingBtnDown){
-					AlertDialog dialog = AppManager.getAlertDialog();
+					AlertDialog dialog = AppOption.getAlertDialog();
 					WindowManager.LayoutParams lp = new WindowManager.LayoutParams();  
 					lp.copyFrom(dialog.getWindow().getAttributes());  
 					lp.width = (int) (AppManager.getDeviceWidth()/(float)1.5);  

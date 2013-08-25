@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 public class AnimatableObjContainer extends AnimatableObj{
 	private Hashtable<String, AnimatableObj> container;
 	private ArrayList<String> key_mapper;
 	public AnimatableObjContainer() {
 		super();
-		Log.i("AnimatableObjContainer", "Constructor");
 		this.container = new Hashtable<String, AnimatableObj>();
 		this.key_mapper = new ArrayList<String>();
 	}
 	
 	public AnimatableObj add(String key, AnimatableObj object){
-		Log.i("AnimatableObjContainer", "Add" + key);
 		AnimatableObj removed_obj = null;
 		boolean key_existance = false;
 		for(int i = 0; i < key_mapper.size(); i++) if(key.compareTo(key_mapper.get(i))==0) {
@@ -69,19 +66,10 @@ public class AnimatableObjContainer extends AnimatableObj{
 
 	@Override
 	public void update() {
-		AnimatableObj element = null;
-		for(int i = 0; i < key_mapper.size(); i++) {
-			element = container.get(key_mapper.get(i));
-			element.update();
-		}
+		for(int i = 0; i < key_mapper.size(); i++) container.get(key_mapper.get(i)).update();
 	}
 	@Override
 	public void draw(Canvas canvas){
-//		AnimatableObj element = null;
-		for(int i = 0; i < key_mapper.size(); i++) {
-			Log.i("AnimatableContainer", "Before Drawing #"+i);
-			container.get(key_mapper.get(i)).draw(canvas);
-			Log.i("AnimatableContainer", "After Drawing #"+i);
-		}
+		for(int i = 0; i < key_mapper.size(); i++) container.get(key_mapper.get(i)).draw(canvas);
 	}
 }

@@ -6,7 +6,6 @@ import org.pjhjohn.framework.animatable.AnimatableObjContainer;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -39,9 +38,7 @@ public class AnimatableSurfaceView extends SurfaceView implements Callback {
 	
 	@Override
 	public void onDraw(Canvas canvas){
-		Log.w("AnimatableSurfaceView", "Before container drawing, container is " + (container.isEmpty()? "empty":"not empty"));
 		if(!container.isEmpty()) container.draw(canvas);
-		Log.w("AnimatableSurfaceView", "After container drawing");
 	}
 	// Implement object registration.
 	public void register(String key, AnimatableObj obj){
@@ -54,27 +51,9 @@ public class AnimatableSurfaceView extends SurfaceView implements Callback {
 		this.container.clear();
 	}
 
-//	// Implement IAnimatable
-//	@Override
-//	public void start() {
-//		Log.w("AnimatableSurfaceView", "start");
-//		this.container.start();
-//	}
-//	@Override
-//	public void stop() {
-//		Log.w("AnimatableSurfaceView", "stop");
-//		this.container.stop();
-//	}
-//	@Override
-//	public boolean isRunning() {
-//		Log.w("AnimatableSurfaceView", "isRunning");
-//		return this.container.isRunning();
-//	}	
-//	
 	// Implement SurfaceView.Callback
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		Log.w("AnimatableSurfaceView", "surfaceCreated");
 		thread = new AnimatableSurfaceViewThread(getHolder(), this);
 		this.thread.setThreadEnable(true);
 		this.thread.start();

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 public class CListenerTouch extends AListener implements OnTouchListener{
-	private boolean enable;
+	private boolean enable = true;
 	private static AListener singleton = new CListenerTouch();
 	private CListenerTouch() {
 		super();
