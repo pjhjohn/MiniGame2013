@@ -1,8 +1,10 @@
 package game.dodge.controller;
 
+import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
-import org.pjhjohn.framework.controller.AController;
+import org.pjhjohn.framework.controller.AUnitController;
 import org.pjhjohn.framework.controller.IController;
 import org.pjhjohn.framework.drawable.DrawableObj;
 import org.pjhjohn.framework.drawable.IDrawable;
@@ -13,7 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import app.main.AppOption;
 
-public class CControllerJoystic extends AController {
+public class CControllerJoystic extends AUnitController {
 	private static IController singleton = new CControllerJoystic();
 	public static IController getInstance(){ return singleton; }
 	
@@ -29,6 +31,7 @@ public class CControllerJoystic extends AController {
 	
 	private CControllerJoystic() {
 		super();
+		super.controllee = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 		super.sensitivity = (AppOption.Dodge.Sensitivity.JOYSTIC_MIN + AppOption.Dodge.Sensitivity.JOYSTIC_MAX)/2;
 		controller_background.setBitmap(AppManager.getBitmap(R.drawable.joystic_background));
 		controller_handle.setBitmap(AppManager.getBitmap(R.drawable.joystic_handle));
@@ -42,7 +45,7 @@ public class CControllerJoystic extends AController {
 	}
 
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
+	public boolean update(MotionEvent event) {
 		this.event_dummy.setPosition(event.getX(), event.getY());
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN:
@@ -56,15 +59,15 @@ public class CControllerJoystic extends AController {
 						controller_background.getX() + controller_background_radius * (event.getX() - controller_background.getX())/controller_background.distanceTo(event_dummy),
 						controller_background.getY() + controller_background_radius * (event.getY() - controller_background.getY())/controller_background.distanceTo(event_dummy)
 						);				
-				player.setSpeedX(super.sensitivity*(controller_handle.getX() - controller_background.getX()));
-				player.setSpeedY(super.sensitivity*(controller_handle.getY() - controller_background.getY()));
+				controllee.setSpeedX(super.sensitivity*(controller_handle.getX() - controller_background.getX()));
+				controllee.setSpeedY(super.sensitivity*(controller_handle.getY() - controller_background.getY()));
 			}
 			break;
 		case MotionEvent.ACTION_UP:
 			iscontrolActive = false;
 			controller_handle.setPosition(controller_x, controller_y);
-			player.setAccX(-player.getSpeedX()/10);
-			player.setAccY(-player.getSpeedY()/10);
+			controllee.setAccX(-controllee.getSpeedX()/10);
+			controllee.setAccY(-controllee.getSpeedY()/10);
 		}
 		return true;
 	}

@@ -12,5 +12,5 @@ import android.view.MotionEvent;
 
 public interface IObserver {
 	public void update(SensorEvent event);
-	public void update(MotionEvent event);
+	public boolean update(MotionEvent event);
 }

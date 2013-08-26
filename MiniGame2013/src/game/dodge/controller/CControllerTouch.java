@@ -1,39 +1,42 @@
 package game.dodge.controller;
 
-import org.pjhjohn.framework.controller.AController;
+import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
+
+import org.pjhjohn.framework.controller.AUnitController;
 import org.pjhjohn.framework.controller.IController;
 
 import android.view.MotionEvent;
-import android.view.View;
 import app.main.AppOption;
 
-public class CControllerTouch extends AController {
+public class CControllerTouch extends AUnitController {
 	private static IController singleton = new CControllerTouch();
 	private CControllerTouch() {
 		super();
+		super.controllee = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 		super.sensitivity = (AppOption.Dodge.Sensitivity.TOUCH_MIN + AppOption.Dodge.Sensitivity.TOUCH_MAX)/2;
 	}
 	public static IController getInstance(){
 		return singleton;
 	}
 	@Override
-	public boolean onTouch(View view, MotionEvent event) {
+	public boolean update(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			player.setSpeedX(super.sensitivity * (event.getX() - player.getX()));
-			player.setSpeedY(super.sensitivity * (event.getY() - player.getY()));
-			player.setAccX(-super.sensitivity*super.sensitivity*(event.getX() - player.getX())/2);
-			player.setAccY(-super.sensitivity*super.sensitivity*(event.getY() - player.getY())/2);
+			controllee.setSpeedX(super.sensitivity * (event.getX() - controllee.getX()));
+			controllee.setSpeedY(super.sensitivity * (event.getY() - controllee.getY()));
+			controllee.setAccX(-super.sensitivity*super.sensitivity*(event.getX() - controllee.getX())/2);
+			controllee.setAccY(-super.sensitivity*super.sensitivity*(event.getY() - controllee.getY())/2);
 			break;
 		case MotionEvent.ACTION_MOVE:
-			player.setSpeedX(super.sensitivity * (event.getX() - player.getX()));
-			player.setSpeedY(super.sensitivity * (event.getY() - player.getY()));
-			player.setAccX(0);
-			player.setAccY(0);
+			controllee.setSpeedX(super.sensitivity * (event.getX() - controllee.getX()));
+			controllee.setSpeedY(super.sensitivity * (event.getY() - controllee.getY()));
+			controllee.setAccX(0);
+			controllee.setAccY(0);
 			break;
 		case MotionEvent.ACTION_UP:
-			player.setAccX(-player.getSpeedX()/10);
-			player.setAccY(-player.getSpeedY()/10);
+			controllee.setAccX(-controllee.getSpeedX()/10);
+			controllee.setAccY(-controllee.getSpeedY()/10);
 			break;
 		} return true;
 	}

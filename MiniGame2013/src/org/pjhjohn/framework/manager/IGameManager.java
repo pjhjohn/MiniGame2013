@@ -3,7 +3,7 @@ package org.pjhjohn.framework.manager;
 import android.graphics.Canvas;
 
 public interface IGameManager {
-	void onCreate();	// ONLY ONCE for the first time.
+	void onCreate();		// ONLY ONCE for the first time.
 	void onGameReady();		// Game Ready : Load resources
 	void onGameStart();		// Game Start
 	void onGamePause();		// Game Pause : Release Thread
@@ -13,7 +13,6 @@ public interface IGameManager {
 	
 	void update();			// update units per thread-loop
 	void updateBackground();// update background per thread-loop
-	void setState(IState nextState);
 	void drawSurface(Canvas canvas);
 	boolean isGameOver();
 }

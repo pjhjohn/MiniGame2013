@@ -14,7 +14,6 @@ import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import app.main.AppOption;
@@ -43,7 +42,7 @@ public class CStatePregame extends AState {
 	}
 	// Touch SettingBtn : Alert Dialog | Other : To CStatePlaying
 	@Override
-	public boolean onTouch(View view, MotionEvent event) {
+	public boolean update(MotionEvent event) {
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN :
 			if(GameSpeedButton.getInstance().isHit(event.getX(), event.getY())) isSettingBtnDown = true;
@@ -61,7 +60,7 @@ public class CStatePregame extends AState {
 					Window window = dialog.getWindow();  
 					window.setAttributes(lp);  
 					window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));  
-				} else gameManager.setState(CStatePlaying.getInstance());
+				} else AppManager.setState(CStatePlaying.getInstance());
 			} isActionDown = false;
 			isSettingBtnDown = false;
 		} return isActionDown;
