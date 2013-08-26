@@ -3,7 +3,6 @@ package org.pjhjohn.framework.view;
 import org.pjhjohn.framework.manager.AppManager;
 import org.pjhjohn.framework.manager.IGameManager;
 import org.pjhjohn.framework.manager.IState;
-import org.pjhjohn.framework.sensorlistener.AListener;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -22,65 +21,61 @@ import android.view.View.OnTouchListener;
  * These things should contain main game sequences such as onCreate / onPause / onResume / onDestroy
  * Automatically register / unregister corresponding resources / threads.
  */
-public abstract class AGameView extends SurfaceView implements OnTouchListener, SensorEventListener, IGameManager, SurfaceHolder.Callback{
-	protected IState state;
-	protected AListener listener;
+public abstract class AGameView extends SurfaceView implements OnTouchListener, SensorEventListener, IGameManager, SurfaceHolder.Callback {
 	protected AGameViewThread gameThread;
 	
+//	Constructor
 	private AGameView(Context context){
 		super(context);	// But Nobody can call this outside.
 	}
 	
+	
 	public AGameView(Context context, IState initialState){
 		super(context);
 		this.onCreate();
-		setState(initialState);		
+		AppManager.setGameView(this);
+		AppManager.setState(initialState);
 		this.gameThread = new AGameViewThread(this.getHolder());
 		this.gameThread.start();
 		this.setOnTouchListener(this);
 	}
+	
 //	Implement OnTouchListener
-	@Override 
+	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		return this.state.onTouch(view, event);
+		if(!view.equals(AppManager.getGameView())) Log.w("AGameView", "TouchTriggered View is not registered view.");
+		if(AppManager.getState()!=null) return AppManager.getState().update(event);
+		else return false;
 	}
+	
 //	Implement SensorEventListener
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 	}
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		//listener.notifyObservers();
+		if(AppManager.getState()!=null) AppManager.getState().update(event);
 	}
 	
-//	Implement IGameManager
-	@Override
-	public void setState(IState nextState) {
-		if(this.state!=null) this.state.dismiss();	// Exit State
-		this.state = nextState;						// Change to Next State
-		this.state.setGameManager(this);			// Set GameManager -> State
-		AppManager.setState(this.state);			// Set State -> Thread
-		this.state.init();							// Start State
-	}
-	
-	@Override 
-	public void drawSurface(Canvas canvas) {
+//	Implement IGameManager	
+	@Override public void drawSurface(Canvas canvas) {
 		this.onDraw(canvas);
 	}
-
-	public void onCreate() {
-		Log.i("AGameView", "onGameCreate");
+	@Override public void onCreate() {	
+		Log.i("AGameView", "onGameCreate");	
 		AppManager.setThreadFlag(true);
 	}
-	public void onGameReady() {	Log.i("AGameView", "onGameReady" );	}
-	public void onGameStart() {	Log.i("AGameView", "onGameStart" );	}
-	public void onGameResume(){ Log.i("AGameView", "onGameResume");	}
-	public void onGamePause() {	Log.i("AGameView", "onGamePause" );	}
-	public void onGameOver()  {	Log.i("AGameView", "onGameOver"  );	}
-	public void onDestroy() {
-		if(AppManager.getController()!=null) AppManager.getController().destroy();
+	@Override public void onDestroy() {
+		Log.i("AGameView", "onGameDestroy");	
+		if(AppManager.getController()!=null) AppManager.getController().dismiss();
 		AppManager.setState(null);
 	}	
+	@Override public void onGameReady() {	Log.i("AGameView", "onGameReady" );	}
+	@Override public void onGameStart() {	Log.i("AGameView", "onGameStart" );	}
+	@Override public void onGameResume(){ Log.i("AGameView", "onGameResume");	}
+	@Override public void onGamePause() {	Log.i("AGameView", "onGamePause" );	}
+	@Override public void onGameOver()  {	Log.i("AGameView", "onGameOver"  );	}
+
 	
 //	Implement SurfaceHolder.Callback
 	@Override
@@ -104,7 +99,6 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 			} catch (InterruptedException e) {
 				// try again shutting down the thread
 			}
-		}
-		Log.d("AGameView", "Thread has been shut down.");
+		} Log.d("AGameView", "Thread has been shut down.");
 	}
 }

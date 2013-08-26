@@ -21,17 +21,14 @@ public class AnimatableObjBackground extends AnimatableObj {
 			stars[i].setPosition(AppManager.getDeviceWidth()*rand.nextFloat(), AppManager.getDeviceHeight()*rand.nextFloat());
 			stars[i].setSpeed(0, 2*(AppOption.Dodge.STAR_SPEED_MIN + AppOption.Dodge.STAR_SPEED_RANGE * rand.nextFloat()));
 		}
-		Log.v("AnimatableOBjBackground", "Star Created");
 	}
 	@Override
 	public void update(){
-		Log.v("AnimatableObjBackground", "update");
 		if(stars==null) return;
 		else for(int i = 0; i < stars.length; i++) stars[i].update();
 	}
 	@Override
 	public void draw(Canvas canvas) {
-		Log.v("AnimatableObjBackground", "draw");
 		if(stars==null) return;
 		else for(int i = 0; i < stars.length; i++) stars[i].draw(canvas);
 	}

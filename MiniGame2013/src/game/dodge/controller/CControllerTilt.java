@@ -1,44 +1,34 @@
 package game.dodge.controller;
 
-import org.pjhjohn.framework.controller.AController;
+import game.dodge.unit.CUnitFactory;
+import game.dodge.unit.CUnitTypePlayer;
+
+import org.pjhjohn.framework.controller.AUnitController;
 import org.pjhjohn.framework.controller.IController;
-import org.pjhjohn.framework.manager.AppManager;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import app.main.AppOption;
 
-public class CControllerTilt extends AController implements SensorEventListener{
-	private SensorManager sensorManager;
+public class CControllerTilt extends AUnitController {
 	private float[] gravity = null;
 	private float[] magnetic = null;
 	private float initial_roll;
 	private float current_roll;
 	private static IController singleton = new CControllerTilt();
 	private CControllerTilt() {
-		super();		
+		super();
+		super.controllee = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 		super.sensitivity = (AppOption.Dodge.Sensitivity.TILT_MIN + AppOption.Dodge.Sensitivity.TILT_MAX)/2;
-		sensorManager = AppManager.getSensorManager();
-		Log.i("sensor","sensormanager received");
 	}
 	public static IController getInstance(){
 		return singleton;
 	}
+	
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
-		return false;
-	}
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-	}
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		Log.i("sensor","changed");
+	public void update(SensorEvent event){
 		switch(event.sensor.getType()){
 		case Sensor.TYPE_ACCELEROMETER:
 			this.gravity = event.values.clone();
@@ -54,22 +44,20 @@ public class CControllerTilt extends AController implements SensorEventListener{
 			current_roll = -Radian2Degree(values[2]);
 			
 			float coefficient = (float)(1/(Math.abs(Math.cos(initial_roll)) + 0.1));				// Correcting coefficient of Roll-initiated pitch error
-			player.setSpeedX(super.sensitivity * -Radian2Degree(values[1]) * coefficient);			// pitch
-			player.setSpeedY(super.sensitivity * (current_roll - initial_roll));			
+			controllee.setSpeedX(super.sensitivity * -Radian2Degree(values[1]) * coefficient);			// pitch
+			controllee.setSpeedY(super.sensitivity * (current_roll - initial_roll));			
 		}
 	}
+	
 	@Override
 	public void init(){
-		player.setSpeedX(0);
-		player.setSpeedY(0);
-		sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
-		sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_UI);
+		controllee.setSpeedX(0);
+		controllee.setSpeedY(0);
 		Log.i("sensor","registered");
 		this.initial_roll = current_roll;
 	}
 	@Override
-	public void destroy(){
-		sensorManager.unregisterListener(this);
+	public void dismiss(){
 		Log.i("sensor","unregistered");
 	}
 	private float Radian2Degree(float radian) {

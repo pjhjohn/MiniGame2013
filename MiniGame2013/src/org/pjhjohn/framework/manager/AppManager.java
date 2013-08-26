@@ -36,7 +36,14 @@ public class AppManager {
 
 	// State
 	private static IState state;
-	public static void setState(IState s) {	AppManager.state = s;	}
+	public static void setState(IState nextState) {
+		if(AppManager.state!=null) AppManager.state.dismiss();	// Exit State
+		AppManager.state = nextState;							// Change to Next State
+		if(AppManager.state!=null) {
+			AppManager.state.setGameManager(AppManager.gameView);	// Set GameManager -> State
+			AppManager.state.init();								// Start State
+		}
+	}
 	public static IState getState(){ return AppManager.state;		}
 		
 	// Controller

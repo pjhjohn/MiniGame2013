@@ -15,7 +15,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import app.main.AppOption;
@@ -36,7 +35,7 @@ public class CStateGameover extends AState {
 		m_soundManager.addSound(0, R.raw.gamover);
 	}
 	@Override
-	public boolean onTouch(View view, MotionEvent event) {
+	public boolean update(MotionEvent event) {
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN :
 			if(GameSpeedButton.getInstance().isHit(event.getX(), event.getY())) isSettingObjDown = true;
@@ -56,7 +55,7 @@ public class CStateGameover extends AState {
 					Window window = dialog.getWindow();
 					window.setAttributes(layoutParams);  
 					window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));  
-				} else gameManager.setState(CStatePregame.getInstance());
+				} else AppManager.setState(CStatePregame.getInstance());
 			} isActionDown = false;
 			isSettingObjDown = false;
 		} return isActionDown;

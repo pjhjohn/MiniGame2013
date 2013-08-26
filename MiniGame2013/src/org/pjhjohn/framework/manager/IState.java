@@ -1,9 +1,10 @@
 package org.pjhjohn.framework.manager;
 
-import android.graphics.Canvas;
-import android.view.View.OnTouchListener;
+import org.pjhjohn.framework.controller.IObserver;
 
-public interface IState extends OnTouchListener{
+import android.graphics.Canvas;
+
+public interface IState extends IObserver {
 	void init();								// State Initialization
 	void update();								// Thread-Update
 	void dismiss();								// State Destruction

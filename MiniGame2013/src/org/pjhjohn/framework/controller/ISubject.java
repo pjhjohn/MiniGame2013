@@ -1,6 +1,5 @@
-package org.pjhjohn.framework.sensorlistener;
+package org.pjhjohn.framework.controller;
 
-import org.pjhjohn.framework.controller.IObserver;
 
 public interface ISubject {
 	public void registerObserver(IObserver observer);
