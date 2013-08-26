@@ -29,6 +29,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 		super(context);	// But Nobody can call this outside.
 	}
 	
+	
 	public AGameView(Context context, IState initialState){
 		super(context);
 		this.onCreate();
@@ -42,7 +43,6 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 //	Implement OnTouchListener
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		Log.w("AGameView", "onTouch");
 		if(!view.equals(AppManager.getGameView())) Log.w("AGameView", "TouchTriggered View is not registered view.");
 		if(AppManager.getState()!=null) return AppManager.getState().update(event);
 		else return false;
@@ -51,11 +51,9 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 //	Implement SensorEventListener
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
-		Log.w("AGameView", "onSensorChanged");
 	}
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		Log.w("AGameView", "onSensorChanged");
 		if(AppManager.getState()!=null) AppManager.getState().update(event);
 	}
 	
@@ -68,6 +66,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 		AppManager.setThreadFlag(true);
 	}
 	@Override public void onDestroy() {
+		Log.i("AGameView", "onGameDestroy");	
 		if(AppManager.getController()!=null) AppManager.getController().dismiss();
 		AppManager.setState(null);
 	}	

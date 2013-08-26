@@ -5,17 +5,14 @@ import game.dodge.unit.CUnitTypePlayer;
 
 import org.pjhjohn.framework.controller.AUnitController;
 import org.pjhjohn.framework.controller.IController;
-import org.pjhjohn.framework.manager.AppManager;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 import app.main.AppOption;
 
-public class CControllerTilt extends AUnitController implements SensorEventListener{
-	private SensorManager sensorManager;
+public class CControllerTilt extends AUnitController {
 	private float[] gravity = null;
 	private float[] magnetic = null;
 	private float initial_roll;
@@ -25,18 +22,13 @@ public class CControllerTilt extends AUnitController implements SensorEventListe
 		super();
 		super.controllee = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
 		super.sensitivity = (AppOption.Dodge.Sensitivity.TILT_MIN + AppOption.Dodge.Sensitivity.TILT_MAX)/2;
-		sensorManager = AppManager.getSensorManager();
-		Log.i("sensor","sensormanager received");
 	}
 	public static IController getInstance(){
 		return singleton;
 	}
+	
 	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
-	}
-	@Override
-	public void onSensorChanged(SensorEvent event) {
-		Log.i("sensor","changed");
+	public void update(SensorEvent event){
 		switch(event.sensor.getType()){
 		case Sensor.TYPE_ACCELEROMETER:
 			this.gravity = event.values.clone();
@@ -56,18 +48,16 @@ public class CControllerTilt extends AUnitController implements SensorEventListe
 			controllee.setSpeedY(super.sensitivity * (current_roll - initial_roll));			
 		}
 	}
+	
 	@Override
 	public void init(){
 		controllee.setSpeedX(0);
 		controllee.setSpeedY(0);
-		sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
-		sensorManager.registerListener(this,sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_UI);
 		Log.i("sensor","registered");
 		this.initial_roll = current_roll;
 	}
 	@Override
 	public void dismiss(){
-		sensorManager.unregisterListener(this);
 		Log.i("sensor","unregistered");
 	}
 	private float Radian2Degree(float radian) {

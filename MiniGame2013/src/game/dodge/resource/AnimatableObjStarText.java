@@ -6,7 +6,6 @@ import org.pjhjohn.framework.manager.AppManager;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
 
 public class AnimatableObjStarText extends AnimatableObj {
 	private float textX = 400;
@@ -27,9 +26,7 @@ public class AnimatableObjStarText extends AnimatableObj {
 	}
 	@Override
 	public void draw(Canvas canvas){
-		Log.i("AnimatableObjStarText", "Before Draw");
 		starText.draw(canvas);
-		Log.i("AnimatableObjStarText", "After Draw");
 	}
 	
 	// Local Method
