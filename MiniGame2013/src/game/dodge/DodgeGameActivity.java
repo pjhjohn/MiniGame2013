@@ -2,8 +2,8 @@ package game.dodge;
 
 import game.main.R;
 
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.view.AGameActivity;
+import org.pjhjohn.framework.main.AGameActivity;
+import org.pjhjohn.framework.main.AppManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

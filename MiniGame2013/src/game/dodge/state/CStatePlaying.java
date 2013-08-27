@@ -1,8 +1,8 @@
 package game.dodge.state;
 
-import org.pjhjohn.framework.manager.AState;
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.manager.IState;
+import org.pjhjohn.framework.main.AState;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.main.IState;
 
 // Start Re-Assigned Thread
 public class CStatePlaying extends AState {
@@ -13,7 +13,6 @@ public class CStatePlaying extends AState {
 	}	
 	@Override
 	public void init() {
-		// Initialize Controller ( Especially Gravity Controller )
 		this.gameManager.onGameStart();
 		AppManager.getController().init();
 	}

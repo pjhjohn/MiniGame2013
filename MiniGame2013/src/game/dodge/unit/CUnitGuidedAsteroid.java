@@ -1,7 +1,7 @@
 package game.dodge.unit;
 
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IUnit;
+import org.pjhjohn.framework.resource.AUnit;
+import org.pjhjohn.framework.resource.IUnit;
 
 import app.main.AppOption;
 

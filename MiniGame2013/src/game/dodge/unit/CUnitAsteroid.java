@@ -1,8 +1,8 @@
 package game.dodge.unit;
 
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IUnit;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.resource.AUnit;
+import org.pjhjohn.framework.resource.IUnit;
 
 public class CUnitAsteroid extends AUnit {
 	@Override 

@@ -11,13 +11,13 @@ import game.main.R;
 import java.util.ArrayList;
 import java.util.Random;
 
-import org.pjhjohn.framework.animatable.AnimatableObj;
-import org.pjhjohn.framework.drawable.DrawableObj;
-import org.pjhjohn.framework.drawable.IDrawable;
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IFactory;
-import org.pjhjohn.framework.view.AGameView;
+import org.pjhjohn.framework.main.AGameView;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.resource.AUnit;
+import org.pjhjohn.framework.resource.AnimatableObj;
+import org.pjhjohn.framework.resource.DrawableObj;
+import org.pjhjohn.framework.resource.Drawable;
+import org.pjhjohn.framework.resource.IFactory;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -48,20 +48,18 @@ public class DodgeGameView extends AGameView {
 	private AnimatableObj 	 background;
 	private CountDownTimer   timer;
 	
-	private Random 	random;
-	private Paint 	textPaint;
-	private float 	score;
-	private float	highScore;
-	private long	startSystemTime;
+	private Random random;
+	private Paint  textPaint;
 	
 	public DodgeGameView(Context context){
 		super(context, CStatePregame.getInstance());
+		this.gameScore = CScoreDodge.getInstance();
 	}
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		this.unitFactory = (IFactory) CUnitFactory.getInstance();
+		this.unitFactory = CUnitFactory.getInstance();
 		this.settingBtn = GameSpeedButton.getInstance();
 		this.background = new AnimatableObjBackground();
 		this.asteroids = new ArrayList<AUnit>();
@@ -70,7 +68,6 @@ public class DodgeGameView extends AGameView {
 		this.textPaint.setColor(Color.WHITE);
 		this.textPaint.setAntiAlias(true);
 		this.textPaint.setTextSize(AppManager.getDeviceHeight()/16);
-		this.highScore= 0;
 		this.player = unitFactory.create(CUnitTypePlayer.getInstance());
 		this.timer = new CountDownTimer(10000000, 2000) {
 			@Override
@@ -78,11 +75,11 @@ public class DodgeGameView extends AGameView {
 				AUnit newUnit = unitFactory.create((millisUntilFinished%10000)==0 ? CUnitTypeGuidedAsteroid.getInstance() : CUnitTypeAsteroid.getInstance());
 				int rand = random.nextInt(4);
 				switch(rand){
-					case 0: newUnit.setPosition(0, random.nextFloat() * AppManager.getDeviceHeight());									break;
+					case 0: newUnit.setPosition(0, random.nextFloat() * AppManager.getDeviceHeight());								break;
 					case 1: newUnit.setPosition(AppManager.getDeviceWidth(), random.nextFloat() * AppManager.getDeviceHeight());	break;
-					case 2: newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), 0);									break;
+					case 2: newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), 0);								break;
 					case 3: newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), AppManager.getDeviceHeight());	break;
-				} asteroids.add(AsteroidWithInitialSpeed(newUnit));
+				} asteroids.add(getInitialSpeedAsteroid(newUnit));
 			}
 			
 			@Override
@@ -93,6 +90,7 @@ public class DodgeGameView extends AGameView {
 	}
 	@Override
 	public void onGameReady() {
+		super.onGameReady();
 		this.player.setPosition(AppManager.getDeviceWidth() / 2, AppManager.getDeviceHeight() / 2);
 		// Initialize Asteroids
 		this.asteroids.clear();
@@ -101,13 +99,13 @@ public class DodgeGameView extends AGameView {
 			while (true) {
 				newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), random.nextFloat() * AppManager.getDeviceHeight());
 				if(player.distanceTo(newUnit) > AppOption.Dodge.ASTEROID_SAFETY_RANGE) break;
-			} this.asteroids.add(AsteroidWithInitialSpeed(newUnit));
+			} this.asteroids.add(getInitialSpeedAsteroid(newUnit));
 		}
 		this.timer.cancel();
 	}
 	@Override
 	public void onGameStart() {
-		this.startSystemTime = System.currentTimeMillis();
+		super.onGameStart();
 		this.timer.start();
 	}
 	
@@ -115,25 +113,23 @@ public class DodgeGameView extends AGameView {
 	public void onDraw(Canvas canvas) {
 		canvas.drawColor(Color.BLACK);												 	// Layer 0 : BLACK BACKGROUND
 		this.background.draw(canvas);						 							// Layer 1 : Background-floating Stars
-		for(AUnit asteroid : asteroids) asteroid.draw(canvas, IDrawable.Align.CENTER);	// Layer 2 : Asteroids
+		for(AUnit asteroid : asteroids) asteroid.draw(canvas, Drawable.Align.CENTER);	// Layer 2 : Asteroids
 		// Layer 3 : Score & Time 
 		this.textPaint.setTextAlign(Align.LEFT);
-		canvas.drawText("최고득점: " + highScore, AppOption.Dodge.PADDING_SCORETEXT , this.textPaint.getTextSize() + AppOption.Dodge.PADDING_SCORETEXT, this.textPaint);
+		canvas.drawText("Hi-Score : " + this.gameScore.hiScore(), AppOption.Dodge.PADDING_SCORETEXT , this.textPaint.getTextSize() + AppOption.Dodge.PADDING_SCORETEXT, this.textPaint);
 		this.textPaint.setTextAlign(Align.RIGHT);
-		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth() - AppOption.Dodge.PADDING_SCORETEXT, this.textPaint.getTextSize() + AppOption.Dodge.PADDING_SCORETEXT, this.textPaint);		
+		canvas.drawText("시간 : " + this.gameTimer, AppManager.getDeviceWidth() - AppOption.Dodge.PADDING_SCORETEXT, this.textPaint.getTextSize() + AppOption.Dodge.PADDING_SCORETEXT, this.textPaint);		
 		// Layer 4 : Setting Button & Player & Controller(Optional)
-		this.settingBtn.draw(canvas, IDrawable.Align.CENTER);
-		this.player.draw(canvas, IDrawable.Align.CENTER);
+		this.settingBtn.draw(canvas, Drawable.Align.CENTER);
+		this.player.draw(canvas, Drawable.Align.CENTER);
 		AppManager.getController().draw(canvas);
 	}
 	
 //	Implement IGameManager
 	@Override
 	public void update() {
-		score = (System.currentTimeMillis() - this.startSystemTime) / 100;
 		player.update();
 		for(AUnit asteroid:asteroids) asteroid.update();
-		this.highScore = (highScore < score)? score : highScore;
 	}
 	@Override
 	public void updateBackground(){
@@ -152,13 +148,7 @@ public class DodgeGameView extends AGameView {
 	}
 		
 //	Private Class & Methods
-	private String score2string(float score){
-		int min, sec, ms = (int)score;
-		min = ms/600;		ms = ms - min * 600;
-		sec = ms/10;		ms = ms - sec * 10;
-		return ((min<10)?("0"+min):min)+":"+((sec<10)?("0"+sec):sec)+":"+ms;
-	}
-	private AUnit AsteroidWithInitialSpeed(AUnit asteroid){
+	private AUnit getInitialSpeedAsteroid(AUnit asteroid){
 		float diff_x = asteroid.getX() - player.getX();
 		float diff_y = asteroid.getY() - player.getY();
 		double degree = Math.toDegrees(Math.atan(diff_y / diff_x)) + (random.nextFloat() * 2 * AppOption.Dodge.ASTEROID_ANGLE_RANGE - AppOption.Dodge.ASTEROID_ANGLE_RANGE);

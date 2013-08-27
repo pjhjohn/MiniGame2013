@@ -1,6 +1,6 @@
 package game.dodge.unit;
 
-import org.pjhjohn.framework.unit.IUnitType;
+import org.pjhjohn.framework.resource.IUnitType;
 
 public class CUnitTypeAsteroid implements IUnitType{
 	private static IUnitType singleton;

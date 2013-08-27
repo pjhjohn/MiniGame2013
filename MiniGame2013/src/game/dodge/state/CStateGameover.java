@@ -5,15 +5,14 @@ import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
-import org.pjhjohn.framework.manager.AState;
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.manager.IState;
-import org.pjhjohn.framework.manager.SoundManager;
+import org.pjhjohn.framework.main.AState;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.main.IState;
+import org.pjhjohn.framework.main.SoundManager;
 
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,7 +20,7 @@ import app.main.AppOption;
 
 // Disable Thread Enable Flag
 public class CStateGameover extends AState {
-	private SoundManager m_soundManager = SoundManager.getInstance();
+	private SoundManager soundManager = SoundManager.getInstance();
 	private boolean isActionDown;
 	private boolean isSettingObjDown;	
 	
@@ -31,8 +30,8 @@ public class CStateGameover extends AState {
 		super();
 		this.isActionDown = false;
 		this.isSettingObjDown = false;
-		m_soundManager.init(AppManager.getContext());
-		m_soundManager.addSound(0, R.raw.gamover);
+		soundManager.init(AppManager.getContext());
+		soundManager.addSound(0, R.raw.gamover);
 	}
 	@Override
 	public boolean update(MotionEvent event) {
@@ -62,9 +61,9 @@ public class CStateGameover extends AState {
 	}
 	@Override
 	public void init() {
-		Log.i("ApplicationState","Start Initializing"+this.toString());
+		this.gameManager.onGameOver();
 		CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance()).setBitmap(AppManager.getBitmap(R.drawable.ship_destroyed_mid));
-		this.m_soundManager.play(0, SoundManager.PLAY_SINGLE);
+		this.soundManager.play(0, SoundManager.PLAY_SINGLE);
 	}
 	@Override
 	public void update(){

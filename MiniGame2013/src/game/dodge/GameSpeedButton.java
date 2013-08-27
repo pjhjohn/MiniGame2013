@@ -2,8 +2,8 @@ package game.dodge;
 
 import game.main.R;
 
-import org.pjhjohn.framework.drawable.DrawableObj;
-import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.resource.DrawableObj;
 
 public class GameSpeedButton extends DrawableObj {
 	private static GameSpeedButton singleton = new GameSpeedButton();
