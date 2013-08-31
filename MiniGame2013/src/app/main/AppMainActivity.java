@@ -4,7 +4,7 @@ import game.bubble.BubbleActivity;
 import game.dodge.DodgeActivity;
 import game.snowcraft.SnowCraftActivity;
 
-import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.main.AppManager;
 
 import android.app.Activity;
 import android.content.Intent;

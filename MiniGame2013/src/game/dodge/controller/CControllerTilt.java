@@ -3,13 +3,12 @@ package game.dodge.controller;
 import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;
 
-import org.pjhjohn.framework.controller.AUnitController;
-import org.pjhjohn.framework.controller.IController;
+import org.pjhjohn.framework.sub.AUnitController;
+import org.pjhjohn.framework.sub.IController;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.util.Log;
 import app.main.AppOption;
 
 public class CControllerTilt extends AUnitController {
@@ -19,8 +18,7 @@ public class CControllerTilt extends AUnitController {
 	private float current_roll;
 	private static IController singleton = new CControllerTilt();
 	private CControllerTilt() {
-		super();
-		super.controllee = CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance());
+		super(CUnitFactory.getInstance().create(CUnitTypePlayer.getInstance()));
 		super.sensitivity = (AppOption.Dodge.Sensitivity.TILT_MIN + AppOption.Dodge.Sensitivity.TILT_MAX)/2;
 	}
 	public static IController getInstance(){
@@ -30,11 +28,12 @@ public class CControllerTilt extends AUnitController {
 	@Override
 	public void update(SensorEvent event){
 		switch(event.sensor.getType()){
-		case Sensor.TYPE_ACCELEROMETER:
+		case Sensor.TYPE_ACCELEROMETER : 
 			this.gravity = event.values.clone();
 			break;
 		case Sensor.TYPE_MAGNETIC_FIELD:
 			this.magnetic = event.values.clone();
+			break;
 		}
 		if(gravity!=null && magnetic!=null){
 			float[] R = new float[16];
@@ -51,14 +50,12 @@ public class CControllerTilt extends AUnitController {
 	
 	@Override
 	public void init(){
-		controllee.setSpeedX(0);
-		controllee.setSpeedY(0);
-		Log.i("sensor","registered");
+		controllee.setSpeed(0, 0);
 		this.initial_roll = current_roll;
 	}
 	@Override
 	public void dismiss(){
-		Log.i("sensor","unregistered");
+		
 	}
 	private float Radian2Degree(float radian) {
 		return radian * 180 / (float)Math.PI;

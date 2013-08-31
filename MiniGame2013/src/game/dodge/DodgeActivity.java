@@ -3,9 +3,8 @@ package game.dodge;
 import game.dodge.controller.CControllerJoystic;
 import game.dodge.controller.CControllerTilt;
 import game.dodge.controller.CControllerTouch;
-import game.dodge.rank.RankingActivity;
 
-import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.main.AppManager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,29 +34,26 @@ public class DodgeActivity extends Activity {
 		mainView = new DodgeView(this);
 		setContentView(mainView);
 		// Set View & Click-event Listeners to Buttons
-		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnClickListener(btnOnClickListener);
-		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnClickListener(btnOnClickListener);
-		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnClickListener(btnOnClickListener);
-		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnClickListener(btnOnClickListener);
-		((Button)mainView.findViewById(DodgeView.ID_BTN1)).setOnTouchListener(btnOnTouchListener);
-		((Button)mainView.findViewById(DodgeView.ID_BTN2)).setOnTouchListener(btnOnTouchListener);
-		((Button)mainView.findViewById(DodgeView.ID_BTN3)).setOnTouchListener(btnOnTouchListener);
-		((Button)mainView.findViewById(DodgeView.ID_BTN4)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_TOUCH)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_JOYSTIC)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_TILT)).setOnClickListener(btnOnClickListener);
+		((Button)mainView.findViewById(DodgeView.ID_TOUCH)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_JOYSTIC)).setOnTouchListener(btnOnTouchListener);
+		((Button)mainView.findViewById(DodgeView.ID_TILT)).setOnTouchListener(btnOnTouchListener);
 	}
 		
 	private Button.OnClickListener btnOnClickListener = new View.OnClickListener() {
 		public void onClick(View view){
 			switch(view.getId()){
-				case DodgeView.ID_BTN1 : 
+				case DodgeView.ID_TOUCH : 
 					AppManager.setController(CControllerTouch.getInstance());
 					break;
-				case DodgeView.ID_BTN2 : 
+				case DodgeView.ID_JOYSTIC : 
 					AppManager.setController(CControllerJoystic.getInstance());
 					break;
-				case DodgeView.ID_BTN3 : 
+				case DodgeView.ID_TILT : 
 					AppManager.setController(CControllerTilt.getInstance());
 					break;
-				case DodgeView.ID_BTN4 : startActivity(new Intent(DodgeActivity.this, RankingActivity.class));
 				default : return;
 			}	startActivity(new Intent(DodgeActivity.this, DodgeGameActivity.class));
 		}

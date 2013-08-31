@@ -5,10 +5,10 @@ import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
-import org.pjhjohn.framework.manager.AState;
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.manager.IState;
-import org.pjhjohn.framework.unit.AUnit;
+import org.pjhjohn.framework.main.AState;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.main.IState;
+import org.pjhjohn.framework.resource.AUnit;
 
 import android.app.AlertDialog;
 import android.graphics.Color;

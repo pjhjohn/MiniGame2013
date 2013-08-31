@@ -3,16 +3,16 @@ package game.dodge.unit;
 
 import game.main.R;
 
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IFactory;
-import org.pjhjohn.framework.unit.IUnitType;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.resource.AUnit;
+import org.pjhjohn.framework.resource.IFactory;
+import org.pjhjohn.framework.resource.IUnitType;
 
 
 public class CUnitFactory implements IFactory {
-	private static CUnitFactory singleton = new CUnitFactory();
+	private static IFactory singleton = new CUnitFactory();
 	private CUnitFactory(){}
-	public static CUnitFactory getInstance(){ return singleton; }
+	public static IFactory getInstance(){ return singleton; }
 	
 	@Override
 	public AUnit create(IUnitType type) {

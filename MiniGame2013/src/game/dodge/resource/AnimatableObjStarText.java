@@ -1,8 +1,8 @@
 package game.dodge.resource;
 
 
-import org.pjhjohn.framework.animatable.AnimatableObj;
-import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.resource.AnimatableObj;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
