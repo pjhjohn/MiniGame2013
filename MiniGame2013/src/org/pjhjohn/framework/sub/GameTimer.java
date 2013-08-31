@@ -1,9 +1,9 @@
 package org.pjhjohn.framework.sub; 
 
-public class AGameTimer implements ITimer{
-	private static ITimer singleton = new AGameTimer();
-	private AGameTimer(){}
-	public static ITimer getInstance(){ return AGameTimer.singleton; }
+public class GameTimer implements ITimer{
+	private static ITimer singleton = new GameTimer();
+	private GameTimer(){}
+	public static ITimer getInstance(){ return GameTimer.singleton; }
 	
 	private boolean isRunning;
 	private long startTime;

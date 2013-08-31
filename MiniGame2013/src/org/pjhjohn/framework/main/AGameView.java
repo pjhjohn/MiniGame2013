@@ -1,6 +1,6 @@
 package org.pjhjohn.framework.main;
 
-import org.pjhjohn.framework.sub.AGameTimer;
+import org.pjhjohn.framework.sub.GameTimer;
 import org.pjhjohn.framework.sub.IScore;
 import org.pjhjohn.framework.sub.ITimer;
 
@@ -35,7 +35,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 		super(context);
 		this.onCreate();
 		this.gameScore = null;
-		this.gameTimer = AGameTimer.getInstance();
+		this.gameTimer = GameTimer.getInstance();
 		AppManager.setGameView(this);
 		AppManager.setState(initialState);
 		this.gameThread = new AGameViewThread(this.getHolder());

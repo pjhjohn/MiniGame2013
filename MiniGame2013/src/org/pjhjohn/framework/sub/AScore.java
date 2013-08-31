@@ -6,7 +6,7 @@ public abstract class AScore implements IScore{
 	protected ITimer gameTimer;
 	
 	public AScore() {
-		this.gameTimer = AGameTimer.getInstance();
+		this.gameTimer = GameTimer.getInstance();
 		this.HiScore = 0;
 		this.currentScore = 0;
 	}
