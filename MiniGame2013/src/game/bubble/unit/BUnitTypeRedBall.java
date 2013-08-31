@@ -1,6 +1,6 @@
 package game.bubble.unit;
 
-import org.pjhjohn.framework.unit.IUnitType;
+import org.pjhjohn.framework.resource.IUnitType;
 
 public class BUnitTypeRedBall implements IUnitType{
 	private static IUnitType singleton = new BUnitTypeRedBall();

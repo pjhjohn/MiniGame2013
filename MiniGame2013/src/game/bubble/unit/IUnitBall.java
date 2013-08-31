@@ -1,6 +1,6 @@
 package game.bubble.unit;
 
-import org.pjhjohn.framework.unit.IUnitType;
+import org.pjhjohn.framework.resource.IUnitType;
 
 
 public interface IUnitBall {
@@ -17,5 +17,6 @@ public interface IUnitBall {
 	public boolean getLL();
 	public boolean getRD();
 	public boolean getLD();
-	//public void setMoving(boolean _mv);
+	public void setMoving(boolean _mv);
+	public void shooting(float x, float y);
 }

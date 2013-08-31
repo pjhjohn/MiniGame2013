@@ -1,12 +1,10 @@
 package game.bubble.state;
 
-import org.pjhjohn.framework.state.AState;
-import org.pjhjohn.framework.state.IState;
+import org.pjhjohn.framework.main.AState;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.main.IState;
 
-
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 
 public class BStatePregame extends AState{
 
@@ -15,14 +13,14 @@ public class BStatePregame extends AState{
 	public static IState getInstance(){ return singleton; }
 	private boolean isActionDown = false;
 	@Override
-	public boolean onTouch(View v, MotionEvent event) {
+	public boolean update(MotionEvent event) {
 		switch(event.getAction()){
 		case MotionEvent.ACTION_DOWN :
 			isActionDown=true;
 			break;
 		case MotionEvent.ACTION_UP :
 			if(isActionDown)
-				gameManager.setState(BStatePlaying.getInstance());
+				AppManager.setState(BStatePlaying.getInstance());
 			isActionDown=false;
 		}
 		return isActionDown;

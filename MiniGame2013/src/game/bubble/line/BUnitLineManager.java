@@ -1,9 +1,8 @@
 package game.bubble.line;
 
-import org.pjhjohn.framework.drawable.IDrawable;
+import org.pjhjohn.framework.resource.Drawable;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 public class BUnitLineManager {
 	private BUnitLine[] lineArr;
@@ -34,7 +33,7 @@ public class BUnitLineManager {
 		for(int i=0 ; i<lineNum ; i++){
 			for(int j=0; j<lineArr[i].getContainerSize(); j++){
 				if(lineArr[i].getElement(j)!=null)
-					lineArr[i].getElement(j).draw(canvas, IDrawable.Align.CENTER);
+					lineArr[i].getElement(j).draw(canvas, Drawable.Align.CENTER);
 			}
 		}
 	}

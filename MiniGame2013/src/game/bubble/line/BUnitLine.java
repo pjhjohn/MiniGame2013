@@ -4,8 +4,8 @@ import game.bubble.unit.BUnitBall;
 import game.bubble.unit.BUnitFactory;
 import game.bubble.unit.BUnitTypeRandBall;
 
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IFactory;
+import org.pjhjohn.framework.resource.AUnit;
+import org.pjhjohn.framework.resource.IFactory;
 
 public class BUnitLine {
 	private IFactory unitFactory;

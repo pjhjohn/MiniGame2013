@@ -1,6 +1,5 @@
 package game.bubble;
 
-<<<<<<< HEAD
 import game.bubble.line.BUnitLineManager;
 import game.bubble.state.BStatePregame;
 import game.bubble.unit.BUnitBall;
@@ -9,18 +8,11 @@ import game.bubble.unit.BUnitTypePlayer;
 import game.bubble.unit.BUnitTypeRandBall;
 import game.main.R;
 
-
-import org.pjhjohn.framework.drawable.IDrawable;
-import org.pjhjohn.framework.manager.AppManager;
-import org.pjhjohn.framework.unit.AUnit;
-import org.pjhjohn.framework.unit.IFactory;
-import org.pjhjohn.framework.view.AGameView;
-=======
-import game.dodge.resource.AnimatableObjBackground;
-import game.dodge.resource.AnimatableObjStarText;
-
-import org.pjhjohn.framework.view.AnimatableSurfaceView;
->>>>>>> origin/pjhjohn
+import org.pjhjohn.framework.main.AGameView;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.resource.AUnit;
+import org.pjhjohn.framework.resource.Drawable;
+import org.pjhjohn.framework.resource.IFactory;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -57,7 +49,6 @@ public class BubbleView extends AGameView{
 		this.textPaint.setTextSize(AppManager.getDeviceHeight()/16);
 		this.player = unitFactory.create(BUnitTypePlayer.getInstance());
 //		this.lineManager = BUnitLineManager.getInstance();
-
 		this.score = 0;
 		this.Gameover=false;
 	}
@@ -83,8 +74,8 @@ public class BubbleView extends AGameView{
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.drawBitmap(_bg, 0, 0, null);
-		movingBall.draw(canvas, IDrawable.Align.CENTER);
-		player.draw(canvas, IDrawable.Align.CENTER);
+		movingBall.draw(canvas, Drawable.Align.CENTER);
+		player.draw(canvas, Drawable.Align.CENTER);
 		lineManager.drawBall(canvas);
 		this.textPaint.setTextAlign(Align.RIGHT);
 		canvas.drawText("½Ã°£ : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
@@ -98,7 +89,7 @@ public class BubbleView extends AGameView{
 		if(threadCount%80==0)
 			this.Gameover = lineManager.pushDown();
 		player.update();
-		
+		movingBall.update();
 	}
 	@Override
 	public void updateBackground() {
@@ -118,4 +109,5 @@ public class BubbleView extends AGameView{
 		sec = ms/10;		ms = ms - sec * 10;
 		return ((min<10)?("0"+min):min)+":"+((sec<10)?("0"+sec):sec)+":"+ms;
 	}
+	public BUnitBall getMovingBall(){ return (BUnitBall)movingBall; }
 }
