@@ -10,7 +10,7 @@ public class AGameViewThread extends Thread{
 	public AGameViewThread(SurfaceHolder holder){
 		this.holder = holder;
 	}
-	
+	@Override
 	public void run() {
 		Canvas canvas = null;
 		long tBegin, tDiff;

@@ -1,45 +1,75 @@
 package org.pjhjohn.framework.sub; 
 
-public class GameTimer implements ITimer{
-	private static ITimer singleton = new GameTimer();
-	private GameTimer(){}
-	public static ITimer getInstance(){ return GameTimer.singleton; }
+import java.util.ArrayList;
+
+import android.util.Log;
+
+public class GameTimer {
+	private static GameTimer singleton = new GameTimer();
+	private GameTimer(){
+		timerContainer = new ArrayList<CountDownTimerPausable>();
+	}
+	public static GameTimer getInstance(){ return GameTimer.singleton; }
+	private ArrayList<CountDownTimerPausable> timerContainer;
 	
 	private boolean isRunning;
 	private long startTime;
 	private long elapsedTime;
-	@Override
+	// Implement ITimer
 	public void reset() {
-		this.elapsedTime = 0;
+		Log.i("GameTimer", "reset");
 		this.isRunning = false;
+		this.elapsedTime = 0;
 	}
 
-	@Override
 	public void start() {
+		Log.i("GameTimer", "start " + timerContainer.size() + " timers.");
+		for(CountDownTimerPausable timer : timerContainer) {
+			Log.w("GameTimer", timer.toString());
+			timer = timer.start();
+		}
 		this.startTime = System.currentTimeMillis();
 		this.isRunning = true;
 	}
 
-	@Override
 	public long pause() {
+		Log.i("GameTimer", "pause");
+		for(CountDownTimerPausable timer : timerContainer) timer.pause();
 		this.elapsedTime += System.currentTimeMillis() - startTime;
 		this.isRunning = false;
 		return elapsedTime;
 	}
 	
-	@Override
 	public long stop() {
-		long time = pause();
+		Log.i("GameTimer", "stop");
+		for(CountDownTimerPausable timer : timerContainer) timer.cancel();
+		this.elapsedTime += System.currentTimeMillis() - startTime;
 		this.isRunning = false;
-		return time;
+		return elapsedTime;
 	}
 	
-	@Override
 	public long get() {
 		if(isRunning) return elapsedTime + System.currentTimeMillis() - startTime;
 		else return elapsedTime;
 	}
+	// Local Method
+	public void registerCountDownTimer(CountDownTimerPausable timer){
+		this.timerContainer.add(timer);
+	}
 	
+	public void unregisterCountDownTimer(CountDownTimerPausable timer){
+		this.timerContainer.remove(timer);
+	}
+
+	public void unregisterCountDownTimer(int index) {
+		this.timerContainer.remove(index);
+	}
+
+	public void unregisterAll(){
+		this.timerContainer.clear();
+	}
+	
+	// Override Object
 	@Override
 	public String toString() {
 		long score = this.get() / 100;

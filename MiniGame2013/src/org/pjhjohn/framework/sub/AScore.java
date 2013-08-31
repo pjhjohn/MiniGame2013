@@ -3,7 +3,7 @@ package org.pjhjohn.framework.sub;
 public abstract class AScore implements IScore{
 	protected long HiScore;
 	protected long currentScore;
-	protected ITimer gameTimer;
+	protected GameTimer gameTimer;
 	
 	public AScore() {
 		this.gameTimer = GameTimer.getInstance();
