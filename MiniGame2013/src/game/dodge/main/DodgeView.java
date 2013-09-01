@@ -1,4 +1,4 @@
-package game.dodge;
+package game.dodge.main;
 
 import game.dodge.resource.AnimatableObjBackground;
 import game.dodge.resource.AnimatableObjStarText;

@@ -24,10 +24,7 @@ public class GameTimer {
 
 	public void start() {
 		Log.i("GameTimer", "start " + timerContainer.size() + " timers.");
-		for(CountDownTimerPausable timer : timerContainer) {
-			Log.w("GameTimer", timer.toString());
-			timer = timer.start();
-		}
+		for(CountDownTimerPausable timer : timerContainer) timer = timer.start();
 		this.startTime = System.currentTimeMillis();
 		this.isRunning = true;
 	}

@@ -1,4 +1,4 @@
-package game.dodge;
+package game.dodge.sub;
 
 import org.pjhjohn.framework.sub.AScore;
 import org.pjhjohn.framework.sub.IScore;

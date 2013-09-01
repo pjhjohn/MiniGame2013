@@ -1,7 +1,7 @@
 package app.main;
 
 import game.bubble.BubbleActivity;
-import game.dodge.DodgeActivity;
+import game.dodge.main.DodgeActivity;
 import game.snowcraft.SnowCraftActivity;
 
 import org.pjhjohn.framework.main.AppManager;

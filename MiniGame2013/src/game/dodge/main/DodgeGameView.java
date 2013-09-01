@@ -1,15 +1,17 @@
-package game.dodge;
+package game.dodge.main;
 
 import game.dodge.resource.AnimatableObjBackground;
-import game.dodge.state.CStatePregame;
+import game.dodge.resource.GameSpeedButton;
+import game.dodge.sub.CScoreDodge;
+import game.dodge.sub.CStatePregame;
 import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypeAsteroid;
 import game.dodge.unit.CUnitTypeGuidedAsteroid;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.pjhjohn.framework.main.AGameView;
 import org.pjhjohn.framework.main.AppManager;
@@ -45,7 +47,7 @@ public class DodgeGameView extends AGameView {
 	private IFactory 		 unitFactory;
 	private AUnit 			 player;
 	private DrawableObj 	 settingBtn;
-	private ArrayList<AUnit> asteroids;
+	private CopyOnWriteArrayList<AUnit> asteroids;
 	private AnimatableObj 	 background;
 	
 	private Random random;
@@ -62,7 +64,7 @@ public class DodgeGameView extends AGameView {
 		this.unitFactory = CUnitFactory.getInstance();
 		this.settingBtn = GameSpeedButton.getInstance();
 		this.background = new AnimatableObjBackground();
-		this.asteroids = new ArrayList<AUnit>();
+		this.asteroids = new CopyOnWriteArrayList<AUnit>();
 		this.random = new Random();
 		this.textPaint = new Paint();
 		this.textPaint.setColor(Color.WHITE);
