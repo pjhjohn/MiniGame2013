@@ -33,7 +33,7 @@ public class BControllerTouch extends AUnitController {
 		case MotionEvent.ACTION_UP:
 			mvBall=(BUnitBall) ((BubbleView)AppManager.getGameView()).getMovingBall();
 			mvBall.shooting(event.getX(), event.getY());
-			
+			mvBall.setMoving(true);
 			break;
 		} return true;
 	}

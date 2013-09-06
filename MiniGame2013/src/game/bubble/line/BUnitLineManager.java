@@ -1,5 +1,7 @@
 package game.bubble.line;
 
+import game.bubble.unit.BUnitBall;
+
 import org.pjhjohn.framework.resource.Drawable;
 
 import android.graphics.Canvas;
@@ -10,13 +12,13 @@ public class BUnitLineManager {
 	private boolean Size;//if true, create line contains 8, else 7
 //	private static BUnitLineManager singleton = new BUnitLineManager();
 	public BUnitLineManager() {
-		lineArr= new BUnitLine[8];
+		lineArr= new BUnitLine[16];
 		lineNum = 0;
 		Size = true;
 	}
 //	public static BUnitLineManager getInstance(){ return singleton; }
 	public boolean pushDown(){//true if gameover
-		if (++lineNum>4)
+		if (++lineNum>16)
 			return true;
 		for(int i=lineNum ; i>0 ;i--){
 			lineArr[i]=lineArr[i-1];
@@ -36,5 +38,9 @@ public class BUnitLineManager {
 					lineArr[i].getElement(j).draw(canvas, Drawable.Align.CENTER);
 			}
 		}
+	}
+	public boolean insertBall(BUnitBall mv){
+		
+		return true;
 	}
 }

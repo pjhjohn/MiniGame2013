@@ -36,19 +36,12 @@ public class BUnitBall extends AUnit implements IUnitBall{
 	public boolean getRD(){ return RD; }
 	public boolean getLD(){ return LD; }
 	public void setMoving(boolean _mv){ moving = _mv; }
+	public boolean getMoving() { return moving; }
 	public void shooting(float x, float y){
 		float centx = AppManager.getDeviceWidth()/2;
 		float centy = (AppManager.getDeviceHeight()*11)/12;
 		this.setPosition(centx, centy);
 		float proportion = (float)(50/Math.sqrt(Math.pow(x-centx,2) + Math.pow(y-centy,2)));
 		this.setSpeed((x-centx)*proportion, (y-centy)*proportion);
-		Log.v("BUnitBall", "X"+this.getSpeedX());
-		Log.v("BUnitBall", "Y"+this.getSpeedY());
-		if(this.getX()<0 || this.getX()>AppManager.getDeviceWidth() || this.getY()<0 && this.getY()>AppManager.getDeviceHeight()){
-			this.moving = false;
-			this.setSpeed(0, 0);
-			return;
-		}
-		
 	}
 }

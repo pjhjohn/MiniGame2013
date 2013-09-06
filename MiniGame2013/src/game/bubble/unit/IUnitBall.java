@@ -18,5 +18,6 @@ public interface IUnitBall {
 	public boolean getRD();
 	public boolean getLD();
 	public void setMoving(boolean _mv);
+	public boolean getMoving();
 	public void shooting(float x, float y);
 }

@@ -13,6 +13,8 @@ import org.pjhjohn.framework.main.AppManager;
 import org.pjhjohn.framework.resource.AUnit;
 import org.pjhjohn.framework.resource.Drawable;
 import org.pjhjohn.framework.resource.IFactory;
+import org.pjhjohn.framework.sub.CountDownTimerPausable;
+import org.pjhjohn.framework.sub.GameTimer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,6 +23,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 public class BubbleView extends AGameView{
 	private IFactory unitFactory;
@@ -29,11 +32,10 @@ public class BubbleView extends AGameView{
 	private BUnitLineManager lineManager;
 
 	private Paint textPaint;
-	private float score;
-	private long startSystemTime;
-	private int threadCount;
 	Bitmap _bg;
 	private boolean Gameover;
+	private boolean tick;
+	private boolean timer;
 	
 	public BubbleView(Context context) {
 		super(context, BStatePregame.getInstance());
@@ -49,7 +51,6 @@ public class BubbleView extends AGameView{
 		this.textPaint.setTextSize(AppManager.getDeviceHeight()/16);
 		this.player = unitFactory.create(BUnitTypePlayer.getInstance());
 //		this.lineManager = BUnitLineManager.getInstance();
-		this.score = 0;
 		this.Gameover=false;
 	}
 	
@@ -58,16 +59,26 @@ public class BubbleView extends AGameView{
 		super.onGameReady();
 //		this.lineManager.init();
 		this.lineManager = new BUnitLineManager();
+		this.tick = false;
+		this.timer = false;
 		this.Gameover = this.lineManager.pushDown();
 		this.player.setPosition(AppManager.getDeviceWidth()/2, (AppManager.getDeviceHeight()*11)/12);
 		this.player.setBitmap(Bitmap.createScaledBitmap(AppManager.getBitmap(R.drawable.cannon), (int)BUnitBall.getRadius()*2, (int)BUnitBall.getRadius()*2, true));
 		this.movingBall = unitFactory.create(BUnitTypeRandBall.getInstance());
 		this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
-	}
-	@Override
-	public void onGameStart() {
-		super.onGameStart();
-		this.startSystemTime = System.currentTimeMillis();
+		this.gameTimer.unregisterAll();
+		this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 2000){
+			@Override
+			public void onTick(long millisUntilFinished){
+				tick = true;
+				Log.v("tick", "hi, tick is " + tick + "\n"+millisUntilFinished);
+			}
+			@Override
+			public void onFinish(){
+				Log.v("tick","finished");
+				timer = true;
+			}
+		});
 	}
 	
 	@Override
@@ -78,18 +89,44 @@ public class BubbleView extends AGameView{
 		player.draw(canvas, Drawable.Align.CENTER);
 		lineManager.drawBall(canvas);
 		this.textPaint.setTextAlign(Align.RIGHT);
-		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
+//		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
 //		AppManager.getController().draw(canvas);
 	}
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		threadCount++;
-		score = (System.currentTimeMillis() - this.startSystemTime) / 100;
-		if(threadCount%80==0)
+		if(tick) Log.i("tick", "tick!!");
+		if(this.tick && !((BUnitBall) movingBall).getMoving()){
 			this.Gameover = lineManager.pushDown();
+			this.tick=false;
+		}//line내리기
+		if(this.timer){
+			this.timer = false;
+//			this.gameTimer.unregisterAll();
+//			this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 200){
+//				public void onTick(long millisUntilFinished){ 
+//					tick = true; 
+//					Log.v("tick", "tick is " + tick + ", ms remained : "+millisUntilFinished);
+//				}
+//				public void onFinish(){
+//					timer = true;
+//					Log.v("tick", "Tick onFisish");
+//				}
+//			});
+		}
 		player.update();
 		movingBall.update();
+		if (movingBall.getX()<=0 || movingBall.getX()>=AppManager.getDeviceWidth())
+			movingBall.setSpeedX(-movingBall.getSpeedX());
+		if(movingBall.getY()<=0){//공이 위쪽 벽에 닿으면
+			movingBall.setSpeedY(0);
+			((BUnitBall) movingBall).setMoving(false);
+			//멈춘 볼을 라인에 넣어야함
+			this.movingBall = unitFactory.create(BUnitTypeRandBall.getInstance());
+			this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
+			((BUnitBall) movingBall).setMoving(false);
+		}
+			
 	}
 	@Override
 	public void updateBackground() {
@@ -101,13 +138,14 @@ public class BubbleView extends AGameView{
 		// TODO Auto-generated method stub
 		if(Gameover)
 			this.player.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ship_destroyed_mid));
+		this.gameTimer.stop();
 		return Gameover;
 	}
-	private String score2string(float score){
-		int min, sec, ms = (int)score;
-		min = ms/600;		ms = ms - min * 600;
-		sec = ms/10;		ms = ms - sec * 10;
-		return ((min<10)?("0"+min):min)+":"+((sec<10)?("0"+sec):sec)+":"+ms;
-	}
+//	private String score2string(float score){
+//		int min, sec, ms = (int)score;
+//		min = ms/600;		ms = ms - min * 600;
+//		sec = ms/10;		ms = ms - sec * 10;
+//		return ((min<10)?("0"+min):min)+":"+((sec<10)?("0"+sec):sec)+":"+ms;
+//	}
 	public BUnitBall getMovingBall(){ return (BUnitBall)movingBall; }
 }
