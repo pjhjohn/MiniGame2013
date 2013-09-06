@@ -1,6 +1,6 @@
-package game.dodge.state;
+package game.dodge.sub;
 
-import game.dodge.GameSpeedButton;
+import game.dodge.resource.GameSpeedButton;
 import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;

@@ -1,4 +1,4 @@
-package game.dodge.controller;
+package game.dodge.sub;
 
 import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypePlayer;

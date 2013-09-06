@@ -1,4 +1,4 @@
-package game.dodge.state;
+package game.dodge.sub;
 
 import org.pjhjohn.framework.main.AState;
 import org.pjhjohn.framework.main.AppManager;

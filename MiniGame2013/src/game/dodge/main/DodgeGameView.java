@@ -1,23 +1,26 @@
-package game.dodge;
+package game.dodge.main;
 
 import game.dodge.resource.AnimatableObjBackground;
-import game.dodge.state.CStatePregame;
+import game.dodge.resource.GameSpeedButton;
+import game.dodge.sub.CScoreDodge;
+import game.dodge.sub.CStatePregame;
 import game.dodge.unit.CUnitFactory;
 import game.dodge.unit.CUnitTypeAsteroid;
 import game.dodge.unit.CUnitTypeGuidedAsteroid;
 import game.dodge.unit.CUnitTypePlayer;
 import game.main.R;
 
-import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.pjhjohn.framework.main.AGameView;
 import org.pjhjohn.framework.main.AppManager;
 import org.pjhjohn.framework.resource.AUnit;
 import org.pjhjohn.framework.resource.AnimatableObj;
-import org.pjhjohn.framework.resource.DrawableObj;
 import org.pjhjohn.framework.resource.Drawable;
+import org.pjhjohn.framework.resource.DrawableObj;
 import org.pjhjohn.framework.resource.IFactory;
+import org.pjhjohn.framework.sub.CountDownTimerPausable;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -25,7 +28,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.os.CountDownTimer;
+import android.util.Log;
 import android.widget.Toast;
 import app.main.AppOption;
 
@@ -44,9 +47,8 @@ public class DodgeGameView extends AGameView {
 	private IFactory 		 unitFactory;
 	private AUnit 			 player;
 	private DrawableObj 	 settingBtn;
-	private ArrayList<AUnit> asteroids;
+	private CopyOnWriteArrayList<AUnit> asteroids;
 	private AnimatableObj 	 background;
-	private CountDownTimer   timer;
 	
 	private Random random;
 	private Paint  textPaint;
@@ -62,31 +64,13 @@ public class DodgeGameView extends AGameView {
 		this.unitFactory = CUnitFactory.getInstance();
 		this.settingBtn = GameSpeedButton.getInstance();
 		this.background = new AnimatableObjBackground();
-		this.asteroids = new ArrayList<AUnit>();
+		this.asteroids = new CopyOnWriteArrayList<AUnit>();
 		this.random = new Random();
 		this.textPaint = new Paint();
 		this.textPaint.setColor(Color.WHITE);
 		this.textPaint.setAntiAlias(true);
 		this.textPaint.setTextSize(AppManager.getDeviceHeight()/16);
 		this.player = unitFactory.create(CUnitTypePlayer.getInstance());
-		this.timer = new CountDownTimer(10000000, 2000) {
-			@Override
-			public void onTick(long millisUntilFinished) {
-				AUnit newUnit = unitFactory.create((millisUntilFinished%10000)==0 ? CUnitTypeGuidedAsteroid.getInstance() : CUnitTypeAsteroid.getInstance());
-				int rand = random.nextInt(4);
-				switch(rand){
-					case 0: newUnit.setPosition(0, random.nextFloat() * AppManager.getDeviceHeight());								break;
-					case 1: newUnit.setPosition(AppManager.getDeviceWidth(), random.nextFloat() * AppManager.getDeviceHeight());	break;
-					case 2: newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), 0);								break;
-					case 3: newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), AppManager.getDeviceHeight());	break;
-				} asteroids.add(getInitialSpeedAsteroid(newUnit));
-			}
-			
-			@Override
-			public void onFinish() {
-				Toast.makeText(AppManager.getContext(), "CountDownTimer Done", Toast.LENGTH_SHORT).show();
-			}
-		};
 	}
 	@Override
 	public void onGameReady() {
@@ -101,12 +85,26 @@ public class DodgeGameView extends AGameView {
 				if(player.distanceTo(newUnit) > AppOption.Dodge.ASTEROID_SAFETY_RANGE) break;
 			} this.asteroids.add(getInitialSpeedAsteroid(newUnit));
 		}
-		this.timer.cancel();
-	}
-	@Override
-	public void onGameStart() {
-		super.onGameStart();
-		this.timer.start();
+		this.gameTimer.unregisterAll();
+		this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 1000){
+			@Override
+			public void onTick(long millisUntilFinished) {
+				Log.e("DodgeGameView", ""+millisUntilFinished+"ms");
+				AUnit newUnit = unitFactory.create((millisUntilFinished%5000)<1000 ? CUnitTypeGuidedAsteroid.getInstance() : CUnitTypeAsteroid.getInstance());
+				int rand = random.nextInt(4);
+				switch(rand){
+					case 0: newUnit.setPosition(0, random.nextFloat() * AppManager.getDeviceHeight());								break;
+					case 1: newUnit.setPosition(AppManager.getDeviceWidth(), random.nextFloat() * AppManager.getDeviceHeight());	break;
+					case 2: newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), 0);								break;
+					case 3: newUnit.setPosition(random.nextFloat() * AppManager.getDeviceWidth(), AppManager.getDeviceHeight());	break;
+				} asteroids.add(getInitialSpeedAsteroid(newUnit));
+			}
+			@Override
+			public void onFinish() {
+				Log.e("DodgeGameView", "onFinish");
+				Toast.makeText(AppManager.getContext(), "CountDownTimer Done", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 	
 	@Override

@@ -1,8 +1,8 @@
-package game.dodge;
+package game.dodge.main;
 
-import game.dodge.controller.CControllerJoystic;
-import game.dodge.controller.CControllerTilt;
-import game.dodge.controller.CControllerTouch;
+import game.dodge.sub.CControllerJoystic;
+import game.dodge.sub.CControllerTilt;
+import game.dodge.sub.CControllerTouch;
 
 import org.pjhjohn.framework.main.AppManager;
 

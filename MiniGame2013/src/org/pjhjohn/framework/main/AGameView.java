@@ -1,8 +1,7 @@
 package org.pjhjohn.framework.main;
 
-import org.pjhjohn.framework.sub.AGameTimer;
+import org.pjhjohn.framework.sub.GameTimer;
 import org.pjhjohn.framework.sub.IScore;
-import org.pjhjohn.framework.sub.ITimer;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -23,7 +22,7 @@ import android.view.View.OnTouchListener;
  */
 public abstract class AGameView extends SurfaceView implements OnTouchListener, SensorEventListener, IGameManager, SurfaceHolder.Callback {
 	protected AGameViewThread gameThread;
-	protected ITimer gameTimer;
+	protected GameTimer gameTimer;
 	protected IScore gameScore;
 	
 //	Constructor
@@ -33,9 +32,9 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 	
 	public AGameView(Context context, IState initialState){
 		super(context);
-		this.onCreate();
 		this.gameScore = null;
-		this.gameTimer = AGameTimer.getInstance();
+		this.gameTimer = GameTimer.getInstance();
+		this.onCreate();
 		AppManager.setGameView(this);
 		AppManager.setState(initialState);
 		this.gameThread = new AGameViewThread(this.getHolder());
@@ -65,13 +64,14 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 		this.onDraw(canvas);
 	}
 	@Override public void onCreate() {	
-		Log.i("AGameView", "onGameCreate");	
+		Log.i("AGameView", "onCreate");	
 		AppManager.setThreadFlag(true);
 	}
 	@Override public void onDestroy() {
-		Log.i("AGameView", "onGameDestroy");	
+		Log.i("AGameView", "onDestroy");	
 		if(AppManager.getController()!=null) AppManager.getController().dismiss();
 		AppManager.setState(null);
+		this.gameTimer.unregisterAll();
 	}	
 	@Override public void onGameReady() {
 		this.gameTimer.reset();

@@ -11,10 +11,9 @@ import android.widget.Toast;
 
 public abstract class AGameActivity extends Activity {
 	protected AGameView gameView;
-	private AGameView sensor_attached_view;
+	private AGameView sensorAttachedView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// FullScreen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
@@ -30,15 +29,15 @@ public abstract class AGameActivity extends Activity {
 	@Override
 	protected void onResume(){	// Register Sensor
 		super.onResume();
-		this.sensor_attached_view = AppManager.getGameView();
-		AppManager.getSensorManager().registerListener(sensor_attached_view,AppManager.getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
-		AppManager.getSensorManager().registerListener(sensor_attached_view,AppManager.getSensorManager().getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_UI);
+		this.sensorAttachedView = AppManager.getGameView();
+		AppManager.getSensorManager().registerListener(sensorAttachedView,AppManager.getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
+		AppManager.getSensorManager().registerListener(sensorAttachedView,AppManager.getSensorManager().getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_UI);
 	}
 	@Override
 	protected void onPause(){	// Unregister Sensor : What Happens when view changes in single activity???
 		super.onPause();
-		if(sensor_attached_view.equals(AppManager.getGameView())==false) Toast.makeText(AppManager.getContext(), "View has changed inside single Activity.", Toast.LENGTH_SHORT).show();
-		AppManager.getSensorManager().unregisterListener(sensor_attached_view);
+		if(sensorAttachedView.equals(AppManager.getGameView())==false) Toast.makeText(AppManager.getContext(), "View has changed inside single Activity.", Toast.LENGTH_SHORT).show();
+		AppManager.getSensorManager().unregisterListener(sensorAttachedView);
 	}
 	@Override
 	protected void onStop(){

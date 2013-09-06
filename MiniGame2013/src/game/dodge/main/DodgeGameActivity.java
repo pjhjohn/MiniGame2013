@@ -1,4 +1,4 @@
-package game.dodge;
+package game.dodge.main;
 
 import game.main.R;
 
