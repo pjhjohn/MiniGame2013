@@ -1,60 +1,151 @@
 package game.bubble;
 
-import game.dodge.resource.AnimatableObjBackground;
-import game.dodge.resource.AnimatableObjStarText;
+import game.bubble.line.BUnitLineManager;
+import game.bubble.state.BStatePregame;
+import game.bubble.unit.BUnitBall;
+import game.bubble.unit.BUnitFactory;
+import game.bubble.unit.BUnitTypePlayer;
+import game.bubble.unit.BUnitTypeRandBall;
+import game.main.R;
 
-import org.pjhjohn.framework.view.AnimatableSurfaceView;
+import org.pjhjohn.framework.main.AGameView;
+import org.pjhjohn.framework.main.AppManager;
+import org.pjhjohn.framework.resource.AUnit;
+import org.pjhjohn.framework.resource.Drawable;
+import org.pjhjohn.framework.resource.IFactory;
+import org.pjhjohn.framework.sub.CountDownTimerPausable;
+import org.pjhjohn.framework.sub.GameTimer;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Typeface;
-import android.widget.Button;
-import android.widget.RelativeLayout;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.util.Log;
 
-public class BubbleView extends RelativeLayout{
-	public static final int ID_BACKGROUND 	= 0x01;
-	public static final int ID_BTN1 		= 0x10;
-	public static final int ID_BTN2 		= 0x11;
-	public static final int ID_BTN3 		= 0x12;
-	public static final int ID_BTN4 		= 0x13;
-	public static final int ID_STARTEXT 	= 0x20;
-	
-	private Button btnTouch;
-	private Button btnCtrl;
-	private Button btnTilt;
-	private Button btnRank;
-	private AnimatableSurfaceView snurfaceView;
+public class BubbleView extends AGameView{
+	private IFactory unitFactory;
+	private AUnit player;
+	private AUnit movingBall;
+	private BUnitLineManager lineManager;
+
+	private Paint textPaint;
+	Bitmap _bg;
+	private boolean Gameover;
+	private boolean tick;
+	private boolean timer;
 	
 	public BubbleView(Context context) {
-		super(context);
-		snurfaceView = new AnimatableSurfaceView(context, Color.BLACK);
-		snurfaceView.register("bubble", new AnimatableObjStarText("Bubble"));
-		snurfaceView.register("background", new AnimatableObjBackground());
-		this.addView(snurfaceView);
-		
-		btnTouch = makeButton("Touch"  , ID_BTN1, 0, 0);
-		btnCtrl = makeButton("Joystic", ID_BTN2, RelativeLayout.BELOW, btnTouch.getId());
-		btnTilt = makeButton("Tilt"   , ID_BTN3, RelativeLayout.BELOW, btnCtrl.getId());
-		btnRank = makeButton("Ranking", ID_BTN4, RelativeLayout.BELOW, btnTilt.getId());
-		this.addView(btnTouch);
-		this.addView(btnCtrl);
-		this.addView(btnTilt);
-		this.addView(btnRank);
+		super(context, BStatePregame.getInstance());
 	}
-	private Button makeButton(String text, int id, int verb, int anchor){
-		float scale = getContext().getResources().getDisplayMetrics().density;
-		LayoutParams buttonLayoutParams = new LayoutParams((int)(110*scale), LayoutParams.WRAP_CONTENT);
-		buttonLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
-		buttonLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-		if(verb!=0)	buttonLayoutParams.addRule(verb, anchor);
-		Button rtnBtn = new Button(getContext());
-		rtnBtn.setBackgroundColor(Color.TRANSPARENT);
-		rtnBtn.setLayoutParams(buttonLayoutParams);
-		rtnBtn.setTypeface(null, Typeface.ITALIC);
-		rtnBtn.setTextColor(Color.WHITE);
-		rtnBtn.setTextSize(22);
-		rtnBtn.setText(text);
-		rtnBtn.setId(id);
-		return rtnBtn;
+	@Override
+	public void onCreate(){
+		super.onCreate();
+		this._bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+		this.unitFactory = BUnitFactory.getInstance();
+		this.textPaint = new Paint();
+		this.textPaint.setColor(Color.WHITE);
+		this.textPaint.setAntiAlias(true);
+		this.textPaint.setTextSize(AppManager.getDeviceHeight()/16);
+		this.player = unitFactory.create(BUnitTypePlayer.getInstance());
+//		this.lineManager = BUnitLineManager.getInstance();
+		this.Gameover=false;
 	}
+	
+	@Override
+	public void onGameReady() {
+		super.onGameReady();
+//		this.lineManager.init();
+		this.lineManager = new BUnitLineManager();
+		this.tick = false;
+		this.timer = false;
+		this.Gameover = this.lineManager.pushDown();
+		this.player.setPosition(AppManager.getDeviceWidth()/2, (AppManager.getDeviceHeight()*11)/12);
+		this.player.setBitmap(Bitmap.createScaledBitmap(AppManager.getBitmap(R.drawable.cannon), (int)BUnitBall.getRadius()*2, (int)BUnitBall.getRadius()*2, true));
+		this.movingBall = unitFactory.create(BUnitTypeRandBall.getInstance());
+		this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
+		this.gameTimer.unregisterAll();
+		this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 2000){
+			@Override
+			public void onTick(long millisUntilFinished){
+				tick = true;
+				Log.v("tick", "hi, tick is " + tick + "\n"+millisUntilFinished);
+			}
+			@Override
+			public void onFinish(){
+				Log.v("tick","finished");
+				timer = true;
+			}
+		});
+	}
+	
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		canvas.drawBitmap(_bg, 0, 0, null);
+		movingBall.draw(canvas, Drawable.Align.CENTER);
+		player.draw(canvas, Drawable.Align.CENTER);
+		lineManager.drawBall(canvas);
+		this.textPaint.setTextAlign(Align.RIGHT);
+//		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
+//		AppManager.getController().draw(canvas);
+	}
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		if(tick) Log.i("tick", "tick!!");
+		if(this.tick && !((BUnitBall) movingBall).getMoving()){
+			this.Gameover = lineManager.pushDown();
+			this.tick=false;
+		}//line내리기
+		if(this.timer){
+			this.timer = false;
+//			this.gameTimer.unregisterAll();
+//			this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 200){
+//				public void onTick(long millisUntilFinished){ 
+//					tick = true; 
+//					Log.v("tick", "tick is " + tick + ", ms remained : "+millisUntilFinished);
+//				}
+//				public void onFinish(){
+//					timer = true;
+//					Log.v("tick", "Tick onFisish");
+//				}
+//			});
+		}
+		player.update();
+		movingBall.update();
+		if (movingBall.getX()<=0 || movingBall.getX()>=AppManager.getDeviceWidth())
+			movingBall.setSpeedX(-movingBall.getSpeedX());
+		if(movingBall.getY()<=0){//공이 위쪽 벽에 닿으면
+			movingBall.setSpeedY(0);
+			((BUnitBall) movingBall).setMoving(false);
+			//멈춘 볼을 라인에 넣어야함
+			this.movingBall = unitFactory.create(BUnitTypeRandBall.getInstance());
+			this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
+			((BUnitBall) movingBall).setMoving(false);
+		}
+			
+	}
+	@Override
+	public void updateBackground() {
+		// TODO Auto-generated method stub
+	}
+	
+	@Override
+	public boolean isGameOver() {
+		// TODO Auto-generated method stub
+		if(Gameover)
+			this.player.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ship_destroyed_mid));
+		this.gameTimer.stop();
+		return Gameover;
+	}
+//	private String score2string(float score){
+//		int min, sec, ms = (int)score;
+//		min = ms/600;		ms = ms - min * 600;
+//		sec = ms/10;		ms = ms - sec * 10;
+//		return ((min<10)?("0"+min):min)+":"+((sec<10)?("0"+sec):sec)+":"+ms;
+//	}
+	public BUnitBall getMovingBall(){ return (BUnitBall)movingBall; }
 }
