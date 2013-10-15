@@ -3,7 +3,7 @@ package game.snowcraft;
 import game.dodge.resource.AnimatableObjBackground;
 import game.dodge.resource.AnimatableObjStarText;
 
-import org.pjhjohn.framework.view.AnimatableSurfaceView;
+import org.pjhjohn.framework.main.AnimatableSurfaceView;
 
 import android.content.Context;
 import android.graphics.Color;

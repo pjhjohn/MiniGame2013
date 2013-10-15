@@ -31,7 +31,7 @@ public class BControllerTouch extends AUnitController {
 			((BUnitPlayer)controllee).rotate(event.getX(), event.getY());
 			break;
 		case MotionEvent.ACTION_UP:
-			mvBall=(BUnitBall) ((BubbleView)AppManager.getGameView()).getMovingBall();
+			mvBall=((BubbleView)AppManager.getGameView()).getMovingBall();
 			mvBall.shooting(event.getX(), event.getY());
 			mvBall.setMoving(true);
 			break;
@@ -40,27 +40,19 @@ public class BControllerTouch extends AUnitController {
 
 	@Override
 	public void setSensitivity(int _current, int _max) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void setDefaultSensitivity() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public float getProgressRatio() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public float getSensitivity() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-
 }

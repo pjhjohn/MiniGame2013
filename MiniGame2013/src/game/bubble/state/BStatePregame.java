@@ -19,19 +19,14 @@ public class BStatePregame extends AState{
 			isActionDown=true;
 			break;
 		case MotionEvent.ACTION_UP :
-			if(isActionDown)
-				AppManager.setState(BStatePlaying.getInstance());
+			if(isActionDown) AppManager.setState(BStatePlaying.getInstance());
 			isActionDown=false;
-		}
+		} 
 		return isActionDown;
 	}
 
 	@Override
 	public void init() {
-
-//		AppManager.getController().init();
 		this.gameManager.onGameReady();
 	}
-	
-
 }

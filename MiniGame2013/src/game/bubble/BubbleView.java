@@ -14,7 +14,6 @@ import org.pjhjohn.framework.resource.AUnit;
 import org.pjhjohn.framework.resource.Drawable;
 import org.pjhjohn.framework.resource.IFactory;
 import org.pjhjohn.framework.sub.CountDownTimerPausable;
-import org.pjhjohn.framework.sub.GameTimer;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -28,7 +27,7 @@ import android.util.Log;
 public class BubbleView extends AGameView{
 	private IFactory unitFactory;
 	private AUnit player;
-	private AUnit movingBall;
+	private BUnitBall movingBall;
 	private BUnitLineManager lineManager;
 
 	private Paint textPaint;
@@ -64,10 +63,10 @@ public class BubbleView extends AGameView{
 		this.Gameover = this.lineManager.pushDown();
 		this.player.setPosition(AppManager.getDeviceWidth()/2, (AppManager.getDeviceHeight()*11)/12);
 		this.player.setBitmap(Bitmap.createScaledBitmap(AppManager.getBitmap(R.drawable.cannon), (int)BUnitBall.getRadius()*2, (int)BUnitBall.getRadius()*2, true));
-		this.movingBall = unitFactory.create(BUnitTypeRandBall.getInstance());
+		this.movingBall = (BUnitBall)unitFactory.create(BUnitTypeRandBall.getInstance());
 		this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
 		this.gameTimer.unregisterAll();
-		this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 2000){
+		this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 1000){
 			@Override
 			public void onTick(long millisUntilFinished){
 				tick = true;
@@ -92,11 +91,12 @@ public class BubbleView extends AGameView{
 //		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
 //		AppManager.getController().draw(canvas);
 	}
-	@Override
+	@Override 
+	public void updateBackground() {}
+	@Override 
 	public void update() {
-		// TODO Auto-generated method stub
 		if(tick) Log.i("tick", "tick!!");
-		if(this.tick && !((BUnitBall) movingBall).getMoving()){
+		if(this.tick && !movingBall.getMoving()){
 			this.Gameover = lineManager.pushDown();
 			this.tick=false;
 		}//line내리기
@@ -120,32 +120,20 @@ public class BubbleView extends AGameView{
 			movingBall.setSpeedX(-movingBall.getSpeedX());
 		if(movingBall.getY()<=0){//공이 위쪽 벽에 닿으면
 			movingBall.setSpeedY(0);
-			((BUnitBall) movingBall).setMoving(false);
+			movingBall.setMoving(false);
 			//멈춘 볼을 라인에 넣어야함
-			this.movingBall = unitFactory.create(BUnitTypeRandBall.getInstance());
+			this.movingBall = (BUnitBall)unitFactory.create(BUnitTypeRandBall.getInstance());
 			this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
-			((BUnitBall) movingBall).setMoving(false);
+			movingBall.setMoving(false);
 		}
 			
 	}
-	@Override
-	public void updateBackground() {
-		// TODO Auto-generated method stub
-	}
-	
+
 	@Override
 	public boolean isGameOver() {
-		// TODO Auto-generated method stub
-		if(Gameover)
-			this.player.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ship_destroyed_mid));
-		this.gameTimer.stop();
+		if(Gameover) this.player.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ship_destroyed_mid));
 		return Gameover;
 	}
-//	private String score2string(float score){
-//		int min, sec, ms = (int)score;
-//		min = ms/600;		ms = ms - min * 600;
-//		sec = ms/10;		ms = ms - sec * 10;
-//		return ((min<10)?("0"+min):min)+":"+((sec<10)?("0"+sec):sec)+":"+ms;
-//	}
-	public BUnitBall getMovingBall(){ return (BUnitBall)movingBall; }
+
+	public BUnitBall getMovingBall(){ return movingBall; }
 }

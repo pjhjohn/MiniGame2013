@@ -6,7 +6,7 @@ import org.pjhjohn.framework.main.IState;
 
 public class BStatePlaying extends AState {
 	private static IState singleton = new BStatePlaying();
-	public BStatePlaying() {	super(); }
+	public BStatePlaying() { super(); }
 	public static IState getInstance() { return singleton; }
 	
 	@Override
@@ -16,9 +16,7 @@ public class BStatePlaying extends AState {
 	}
 	public void update(){
 		this.gameManager.update();
-		this.gameManager.updateBackground();
+//		this.gameManager.updateBackground();	// Function has empty body.
 		if(this.gameManager.isGameOver()) AppManager.setState(BStateGameover.getInstance());
 	}
-	
-
 }

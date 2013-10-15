@@ -14,7 +14,7 @@ public class AnimatableObjStarText extends AnimatableObj {
 
 	private float starSpeedMin = (float)0.5;
 	private float starSpeedRange = (float)2.5;
-	private int   starNumber = 5000;
+	private int   starNumber = 3000;
 
 	private StarText starText;
 	public AnimatableObjStarText(String text) {

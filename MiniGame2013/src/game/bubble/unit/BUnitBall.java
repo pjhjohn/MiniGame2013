@@ -5,21 +5,17 @@ import org.pjhjohn.framework.resource.AUnit;
 import org.pjhjohn.framework.resource.IUnit;
 import org.pjhjohn.framework.resource.IUnitType;
 
-import android.util.Log;
-
 public class BUnitBall extends AUnit implements IUnitBall{
 	private IUnitType btype;
 	private boolean moving=false;//Ã³À½¿¡ ½ò¶§ true
 	private boolean RU=false, LU=false, RR=false, LL=false, RD=false, LD=false;
 	private static float radius = AppManager.getDeviceWidth()/16;
 	public BUnitBall(IUnitType _balltype) {
-		// TODO Auto-generated constructor stub
 		btype = _balltype; 
 	}
 	public IUnitType getBallType() { return btype; }
 	@Override
 	public boolean isCrashed(IUnit _target) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	public static float getRadius() { return radius; }
@@ -38,8 +34,8 @@ public class BUnitBall extends AUnit implements IUnitBall{
 	public void setMoving(boolean _mv){ moving = _mv; }
 	public boolean getMoving() { return moving; }
 	public void shooting(float x, float y){
-		float centx = AppManager.getDeviceWidth()/2;
-		float centy = (AppManager.getDeviceHeight()*11)/12;
+		float centx = AppManager.getDeviceWidth() / 2;
+		float centy = AppManager.getDeviceHeight() * 11/12;
 		this.setPosition(centx, centy);
 		float proportion = (float)(50/Math.sqrt(Math.pow(x-centx,2) + Math.pow(y-centy,2)));
 		this.setSpeed((x-centx)*proportion, (y-centy)*proportion);

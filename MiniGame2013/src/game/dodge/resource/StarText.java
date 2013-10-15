@@ -164,6 +164,8 @@ public class StarText extends AnimatableObj {
 	public float getTextBoundTop(){
 		return this.textBound.top;
 	}
+	
+	// private stub
 	private void setActualTextSize(float size_in){
 		float size = 1;
 		switch((int)size_in){

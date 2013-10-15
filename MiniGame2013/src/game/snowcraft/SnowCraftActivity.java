@@ -1,6 +1,6 @@
 package game.snowcraft;
 
-import org.pjhjohn.framework.manager.AppManager;
+import org.pjhjohn.framework.main.AppManager;
 
 import android.app.Activity;
 import android.graphics.Color;

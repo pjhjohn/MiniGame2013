@@ -63,6 +63,7 @@ public class GameTimer {
 	}
 
 	public void unregisterAll(){
+		this.stop();
 		this.timerContainer.clear();
 	}
 	
