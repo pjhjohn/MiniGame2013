@@ -1,5 +1,7 @@
 package org.pjhjohn.framework.sub;
 
+import org.pjhjohn.framework.main.GameTimer;
+
 public abstract class AScore implements IScore{
 	protected long HiScore;
 	protected long currentScore;

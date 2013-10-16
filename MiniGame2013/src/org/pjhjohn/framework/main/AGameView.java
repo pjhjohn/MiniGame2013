@@ -1,6 +1,5 @@
 package org.pjhjohn.framework.main;
 
-import org.pjhjohn.framework.sub.GameTimer;
 import org.pjhjohn.framework.sub.IScore;
 
 import android.content.Context;
@@ -8,7 +7,6 @@ import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -27,7 +25,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 	
 //	Constructor
 	private AGameView(Context context){
-		super(context);	// But Nobody can call this outside.
+		super(context);
 	}	
 	
 	public AGameView(Context context, IState initialState){
@@ -45,7 +43,7 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 //	Implement OnTouchListener
 	@Override
 	public boolean onTouch(View view, MotionEvent event) {
-		if(!view.equals(AppManager.getGameView())) Log.w("AGameView", "TouchTriggered View is not registered view.");
+//		if(!view.equals(AppManager.getGameView())) Log.w("AGameView", "TouchTriggered View is not registered view.");
 		if(AppManager.getState()!=null) return AppManager.getState().update(event);
 		else return false;
 	}
@@ -60,41 +58,41 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 	}
 	
 //	Implement IGameManager	
-	@Override public void drawSurface(Canvas canvas) {
+	@Override
+	public void drawSurface(Canvas canvas) {
 		this.onDraw(canvas);
 	}
-	@Override public void onCreate() {	
-		Log.i("AGameView", "onCreate");	
+	@Override
+	public void onCreate() {	
 		AppManager.setThreadFlag(true);
 	}
-	@Override public void onDestroy() {
-		Log.i("AGameView", "onDestroy");	
+	@Override
+	public void onDestroy() {
 		if(AppManager.getController()!=null) AppManager.getController().dismiss();
 		AppManager.setState(null);
 		this.gameTimer.unregisterAll();
 	}	
-	@Override public void onGameReady() {
+	@Override
+	public void onGameReady(){
 		this.gameTimer.reset();
 		if(this.gameScore!=null) this.gameScore.reset();
-		Log.i("AGameView", "onGameReady" );	
 	}
-	@Override public void onGameStart() {
+	@Override
+	public void onGameStart(){
 		this.gameTimer.start();
-		Log.i("AGameView", "onGameStart" );	
 	}
-	@Override public void onGameResume(){
+	@Override
+	public void onGameResume(){
 		this.gameTimer.start();
-		Log.i("AGameView", "onGameResume");
 	}
-	@Override public void onGamePause() {
+	@Override
+	public void onGamePause(){
 		this.gameTimer.pause();
-		Log.i("AGameView", "onGamePause" );
 	}
-	@Override public void onGameOver()  {
+	@Override
+	public void onGameOver(){
 		this.gameTimer.stop();
-		Log.i("AGameView", "onGameOver"  );
 	}
-
 	
 //	Implement SurfaceHolder.Callback
 	@Override
@@ -118,6 +116,6 @@ public abstract class AGameView extends SurfaceView implements OnTouchListener, 
 			} catch (InterruptedException e) {
 				// try again shutting down the thread
 			}
-		} Log.d("AGameView", "Thread has been shut down.");
+		}
 	}
 }

@@ -1,6 +1,8 @@
-package org.pjhjohn.framework.sub; 
+package org.pjhjohn.framework.main; 
 
 import java.util.ArrayList;
+
+import org.pjhjohn.framework.sub.CountDownTimerPausable;
 
 import android.util.Log;
 
@@ -16,20 +18,20 @@ public class GameTimer {
 	private long startTime;
 	private long elapsedTime;
 	// Implement ITimer
-	public void reset() {
+	void reset() {
 		Log.i("GameTimer", "reset");
 		this.isRunning = false;
 		this.elapsedTime = 0;
 	}
 
-	public void start() {
+	void start() {
 		Log.i("GameTimer", "start " + timerContainer.size() + " timers.");
 		for(CountDownTimerPausable timer : timerContainer) timer = timer.start();
 		this.startTime = System.currentTimeMillis();
 		this.isRunning = true;
 	}
 
-	public long pause() {
+	long pause() {
 		Log.i("GameTimer", "pause");
 		for(CountDownTimerPausable timer : timerContainer) timer.pause();
 		this.elapsedTime += System.currentTimeMillis() - startTime;
@@ -37,7 +39,7 @@ public class GameTimer {
 		return elapsedTime;
 	}
 	
-	public long stop() {
+	long stop() {
 		Log.i("GameTimer", "stop");
 		for(CountDownTimerPausable timer : timerContainer) timer.cancel();
 		this.elapsedTime += System.currentTimeMillis() - startTime;

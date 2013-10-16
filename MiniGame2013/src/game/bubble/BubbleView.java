@@ -21,7 +21,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.util.Log;
 
 public class BubbleView extends AGameView{
@@ -31,7 +30,7 @@ public class BubbleView extends AGameView{
 	private BUnitLineManager lineManager;
 
 	private Paint textPaint;
-	Bitmap _bg;
+	Bitmap background;
 	private boolean Gameover;
 	private boolean tick;
 	private boolean timer;
@@ -42,7 +41,7 @@ public class BubbleView extends AGameView{
 	@Override
 	public void onCreate(){
 		super.onCreate();
-		this._bg = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
+		this.background = BitmapFactory.decodeResource(getResources(), R.drawable.bg);
 		this.unitFactory = BUnitFactory.getInstance();
 		this.textPaint = new Paint();
 		this.textPaint.setColor(Color.WHITE);
@@ -70,11 +69,9 @@ public class BubbleView extends AGameView{
 			@Override
 			public void onTick(long millisUntilFinished){
 				tick = true;
-				Log.v("tick", "hi, tick is " + tick + "\n"+millisUntilFinished);
 			}
 			@Override
 			public void onFinish(){
-				Log.v("tick","finished");
 				timer = true;
 			}
 		});
@@ -83,13 +80,10 @@ public class BubbleView extends AGameView{
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		canvas.drawBitmap(_bg, 0, 0, null);
+		canvas.drawBitmap(background, 0, 0, null);
 		movingBall.draw(canvas, Drawable.Align.CENTER);
 		player.draw(canvas, Drawable.Align.CENTER);
 		lineManager.drawBall(canvas);
-		this.textPaint.setTextAlign(Align.RIGHT);
-//		canvas.drawText("시간 : "+score2string(this.score), AppManager.getDeviceWidth()*(3/4), this.textPaint.getTextSize(), this.textPaint);
-//		AppManager.getController().draw(canvas);
 	}
 	@Override 
 	public void updateBackground() {}
@@ -100,22 +94,11 @@ public class BubbleView extends AGameView{
 			this.Gameover = lineManager.pushDown();
 			this.tick=false;
 		}//line내리기
-		if(this.timer){
-			this.timer = false;
-//			this.gameTimer.unregisterAll();
-//			this.gameTimer.registerCountDownTimer(new CountDownTimerPausable(1000000, 200){
-//				public void onTick(long millisUntilFinished){ 
-//					tick = true; 
-//					Log.v("tick", "tick is " + tick + ", ms remained : "+millisUntilFinished);
-//				}
-//				public void onFinish(){
-//					timer = true;
-//					Log.v("tick", "Tick onFisish");
-//				}
-//			});
-		}
+		if(this.timer) this.timer = false;
+		
 		player.update();
 		movingBall.update();
+		
 		if (movingBall.getX()<=0 || movingBall.getX()>=AppManager.getDeviceWidth())
 			movingBall.setSpeedX(-movingBall.getSpeedX());
 		if(movingBall.getY()<=0){//공이 위쪽 벽에 닿으면
@@ -125,8 +108,7 @@ public class BubbleView extends AGameView{
 			this.movingBall = (BUnitBall)unitFactory.create(BUnitTypeRandBall.getInstance());
 			this.movingBall.setPosition(AppManager.getDeviceWidth()/4, (AppManager.getDeviceHeight()*11)/12);
 			movingBall.setMoving(false);
-		}
-			
+		}	
 	}
 
 	@Override
@@ -135,5 +117,7 @@ public class BubbleView extends AGameView{
 		return Gameover;
 	}
 
-	public BUnitBall getMovingBall(){ return movingBall; }
+	public BUnitBall getMovingBall(){
+		return movingBall;
+	}
 }

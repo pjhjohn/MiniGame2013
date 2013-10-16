@@ -16,7 +16,6 @@ public class BStatePlaying extends AState {
 	}
 	public void update(){
 		this.gameManager.update();
-//		this.gameManager.updateBackground();	// Function has empty body.
 		if(this.gameManager.isGameOver()) AppManager.setState(BStateGameover.getInstance());
 	}
 }

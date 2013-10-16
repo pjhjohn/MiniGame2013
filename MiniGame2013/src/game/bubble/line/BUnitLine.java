@@ -9,93 +9,85 @@ import org.pjhjohn.framework.resource.IFactory;
 
 public class BUnitLine {
 	private IFactory unitFactory;
-	private AUnit[] ballContainer;
-	private int containerSize;
+	private BUnitBall[] container;
 	private int remainingBall;
 	private int floor;
 	private float radius = BUnitBall.getRadius();
-	public int getContainerSize(){ return containerSize; }
+	public int size(){ return container.length; }
 	public BUnitLine(boolean length) {
 		unitFactory = BUnitFactory.getInstance();
-		// TODO Auto-generated constructor stub
-		if(length){
-			containerSize = 8;
-			ballContainer = new AUnit[8];
-		}else{
-			containerSize = 7;
-			ballContainer = new AUnit[7];
-		}
+		if(length) container = new BUnitBall[8];
+		else container = new BUnitBall[7];
 		floor = 0;
 	}
-	public void FillLine(){
-		for(int i=0; i<containerSize ; i++)
-			ballContainer[i]=unitFactory.create(BUnitTypeRandBall.getInstance());
-		if(containerSize==8)
-			for(int i=0; i<containerSize ; i++){
-				ballContainer[i].setPosition( radius * (2*i+1), (float)(radius * (1 + floor*Math.sqrt(3))));
-			}
-		else
-			for(int i=0; i<containerSize ; i++){
-				ballContainer[i].setPosition( radius * (2*i+2), (float)(radius * (1 + floor*Math.sqrt(3))));
-			}
-		remainingBall = containerSize;
+	public void fillLine(){
+		for(int i = 0; i < container.length; i++) container[i] = (BUnitBall)unitFactory.create(BUnitTypeRandBall.getInstance());
+		for(int i = 0; i < container.length; i++) container[i].setPosition(radius * (2*i + (container.length==8?1:2)), (float)(radius * (1 + floor*Math.sqrt(3))));
+		remainingBall = container.length;
 	}
-	public void IncFloor(){ 
+	public void incFloor(){ 
 		floor++;
-		for(int i=0; i<containerSize ; i++)
-			ballContainer[i].setPosition( ballContainer[i].getX(), (float)(radius * (1 + floor*Math.sqrt(3))));
+		for(AUnit ball : container) if(ball!=null) ball.setY((float)(radius * (1 + floor*Math.sqrt(3))));
 	}
-	public void Linking(BUnitLine underline){
-		for(int i=0; i<containerSize-1 ; i++){
-			if(((BUnitBall)ballContainer[i]).getBallType().equals(((BUnitBall)ballContainer[i+1]).getBallType())){
-				((BUnitBall)ballContainer[i]).setRR(true);
-				((BUnitBall)ballContainer[i+1]).setLL(true);
+	public void linking(BUnitLine nextLine){
+		for(int i = 0; i < container.length-1 ; i++){
+			if(container[i].getBallType().equals(container[i+1].getBallType())){
+				container[i].setRR(true);
+				container[i+1].setLL(true);
 			}
 		}
-		if(underline != null){
-			if(containerSize==7){
-				for(int i=0; i<containerSize ; i++){
-					if(underline.getElement(i)!=null && ((BUnitBall)ballContainer[i]).getBallType().equals((((BUnitBall) (underline.getElement(i))).getBallType()))){
-						((BUnitBall)ballContainer[i]).setLD(true);
-						((BUnitBall)(underline.getElement(i))).setRU(true);
-					}
-					if(underline.getElement(i+1)!=null &&((BUnitBall)ballContainer[i]).getBallType().equals((((BUnitBall) (underline.getElement(i+1))).getBallType()))){
-						((BUnitBall)ballContainer[i]).setRD(true);
-						((BUnitBall)(underline.getElement(i+1))).setLU(true);
-					}
+		if(nextLine==null) return;
+		// For non-NULL nextLine
+		if(container.length==7){
+			for(int i=0; i<container.length ; i++){
+				if(nextLine.get(i)!=null && container[i].getBallType().equals(nextLine.get(i).getBallType())){
+					container[i].setLD(true);
+					nextLine.get(i).setRU(true);
 				}
-			}else{
-				if(underline.getElement(0)!=null && ((BUnitBall)ballContainer[0]).getBallType().equals((((BUnitBall) (underline.getElement(0))).getBallType()))){
-					((BUnitBall)ballContainer[0]).setRD(true);
-					((BUnitBall)(underline.getElement(0))).setLU(true);
-				}
-				for(int i=1; i<containerSize-1 ; i++){
-					if(underline.getElement(i-1)!=null && ((BUnitBall)ballContainer[i]).getBallType().equals((((BUnitBall) (underline.getElement(i-1))).getBallType()))){
-						((BUnitBall)ballContainer[i]).setLD(true);
-						((BUnitBall)(underline.getElement(i-1))).setRU(true);
-					}
-					if(underline.getElement(i)!=null && ((BUnitBall)ballContainer[i]).getBallType().equals((((BUnitBall) (underline.getElement(i))).getBallType()))){
-						((BUnitBall)ballContainer[i]).setRD(true);
-						((BUnitBall)(underline.getElement(i))).setLU(true);
-					}
-				}
-				if(underline.getElement(6)!=null && ((BUnitBall)ballContainer[7]).getBallType().equals((((BUnitBall) (underline.getElement(6))).getBallType()))){
-					((BUnitBall)ballContainer[7]).setLD(true);
-					((BUnitBall)(underline.getElement(6))).setRU(true);
+				if(nextLine.get(i+1)!=null &&container[i].getBallType().equals(nextLine.get(i+1).getBallType())){
+					container[i].setRD(true);
+					nextLine.get(i+1).setLU(true);
 				}
 			}
+		} else if(container.length==8) {	
+			if(nextLine.get(0)!=null && container[0].getBallType().equals(nextLine.get(0).getBallType())){
+				container[0].setRD(true);
+				nextLine.get(0).setLU(true);
+			}
+			for(int i=1; i<container.length-1 ; i++){
+				if(nextLine.get(i-1)!=null && container[i].getBallType().equals(nextLine.get(i-1).getBallType())){
+					container[i].setLD(true);
+					nextLine.get(i-1).setRU(true);
+				}
+				if(nextLine.get(i)!=null && container[i].getBallType().equals(nextLine.get(i).getBallType())){
+					container[i].setRD(true);
+					nextLine.get(i).setLU(true);
+				}
+			}
+			if(nextLine.get(6)!=null && container[7].getBallType().equals(nextLine.get(6).getBallType())){
+				container[7].setLD(true);
+				nextLine.get(6).setRU(true);
+			}
 		}
+	
 	}
-	public void addBall(int i, BUnitBall _ball){
-		if(i>=0 && i<containerSize && ballContainer[i]==null){
-			ballContainer[i] = _ball;
+	public void add(int index, BUnitBall ballToAdd){
+		if(index>=0 && index<container.length && container[index]==null){
+			container[index] = ballToAdd;
 			remainingBall++;
 			//linking 추가하기!!
 		}
 	}
-	public void removeBall(int i){ ballContainer[i]=null; }
-	public AUnit[] getContainer(){ return ballContainer; }
-	public AUnit getElement(int i){ return ballContainer[i]; }
-	public boolean isEmpty() { return (remainingBall==0) ; }//비었으면 true
-	
+	public void remove(int index){
+		container[index] = null;
+	}
+	public BUnitBall[] getContainer(){
+		return container;
+	}
+	public BUnitBall get(int index){
+		return container[index];
+	}
+	public boolean isEmpty() {
+		return (remainingBall==0);
+	}	
 }
